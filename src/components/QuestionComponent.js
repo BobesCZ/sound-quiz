@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import loadYtScript from '../utils/loadYtScript';
 import PlayerControlPanel from './PlayerControlPanel';
+import QuestionControl from './QuestionControl';
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Container from '@material-ui/core/Container';
 
@@ -9,6 +10,29 @@ function QuestionComponent() {
     id: 'b1RKaRgVFKk',
     startSeconds: 10,
     endSeconds: 20,
+  };
+
+  const questionObject = {
+    questionText: 'Choose the most suitable genre:',
+    answers: [
+      {
+        id: 1,
+        answerText: "Black metal",
+      },
+      {
+        id: 2,
+        answerText: "Metalcore",
+      },
+      {
+        id: 3,
+        answerText: "Thrash metal",
+      },
+      {
+        id: 4,
+        answerText: "Power metal",
+      },
+    ],
+    correctAnswer: 2
   };
 
   const [playerObject, setPlayerObject] = useState(null);
@@ -85,7 +109,10 @@ function QuestionComponent() {
 
       {!playerObject
         ? <CircularProgress />
-        : <PlayerControlPanel player={playerObject} isPlaying={isPlaying} isLoading={isLoading} videoObject={videoObject} progress={progress} />
+        : <>
+          <PlayerControlPanel player={playerObject} isPlaying={isPlaying} isLoading={isLoading} videoObject={videoObject} progress={progress} />
+          <QuestionControl questionObject={questionObject} />
+        </>
       }
 
     </Container>

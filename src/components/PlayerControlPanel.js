@@ -8,7 +8,7 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
 
-function PlayPauseButton(props) {
+function PlayerControlPanel(props) {
   const player = props.player;
   const isPlaying = props.isPlaying;
   const isLoading = props.isLoading;
@@ -42,25 +42,28 @@ function PlayPauseButton(props) {
       </Grid>
 
       <Grid>
-        <ButtonGroup color="primary" aria-label="outlined primary button group">
-          {isLoading
-            ? <Button variant="outlined" color="primary">
-              <CircularProgress size={24} /> Play
+        <Box mb={3}>
+          <ButtonGroup color="primary" aria-label="outlined primary button group">
+            {isLoading
+              ? <Button variant="outlined" color="primary">
+                <CircularProgress size={24} /> Play
             </Button>
-            : <Button variant="outlined" color="primary" onClick={handleButtonPlayClick}>
-              {isPlaying
-                ? <> <PauseIcon /> Pause </>
-                : <> <PlayArrowIcon /> Play </>
-              }
-            </Button>
-          }
-          <Button variant="outlined" color="primary" onClick={handleButtonReplayClick}>
-            <ReplayIcon /> Replay
+              : <Button variant="outlined" color="primary" onClick={handleButtonPlayClick}>
+                {isPlaying
+                  ? <> <PauseIcon /> Pause </>
+                  : <> <PlayArrowIcon /> Play </>
+                }
+              </Button>
+            }
+            <Button variant="outlined" color="primary" onClick={handleButtonReplayClick}>
+              <ReplayIcon /> Replay
           </Button>
-        </ButtonGroup>
+          </ButtonGroup>
+        </Box>
+
       </Grid>
     </Grid>
   );
 }
 
-export default PlayPauseButton;
+export default PlayerControlPanel;
