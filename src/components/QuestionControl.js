@@ -1,28 +1,29 @@
-import React, { useState } from 'react';
+import { useContext } from 'react';
 import { QuestionRadioCorrect, QuestionRadioWrong } from './QuestionRadio';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import RadioGroup from '@material-ui/core/RadioGroup';
+import AppDispatch from '../context/AppDispatch';
 
 function QuestionControl(props) {
+  const questionId = props.questionId;
   const questionObject = props.questionObject;
-  const [answer, setAnswer] = useState(null);
-  const [answerChecked, setAnswerChecked] = useState(false);
+
+  const answer = props.appState.userAnswers[questionId] ? props.appState.userAnswers[questionId].answer : null;
+  const answerChecked = props.appState.userAnswers[questionId] ? props.appState.userAnswers[questionId].isChecked : null;
+  const dispatch = useContext(AppDispatch);
 
   function handleChange(event) {
     if (answer === null) {
-      setAnswer(parseInt(event.target.value));
+      const answer = { answer: parseInt(event.target.value), isChecked: false }
+      dispatch({ type: 'SET_USER_ANSWER', payload: { questionId, answer } });
 
       setTimeout(() => {
-        setCorrectAnswer();
-      }, 1500)
+        const answer = { answer: parseInt(event.target.value), isChecked: true }
+        dispatch({ type: 'SET_USER_ANSWER', payload: { questionId, answer } });
+      }, 1400)
     }
-  }
-
-  function setCorrectAnswer(event) {
-    // setAnswer(questionObject.correctAnswer);
-    setAnswerChecked(true);
   }
 
   function getControl(id) {
