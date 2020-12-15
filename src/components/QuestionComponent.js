@@ -7,14 +7,9 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import Container from '@material-ui/core/Container';
 
 function QuestionComponent(props) {
-  const videoObject = {
-    id: 'b1RKaRgVFKk',
-    startSeconds: 10,
-    endSeconds: 20,
-  };
-
   const questionId = props.questionId;
   const questionObject = data[questionId];
+  const videoObject = data[questionId].video;
 
   const [playerObject, setPlayerObject] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);

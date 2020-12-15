@@ -11,6 +11,7 @@ import data from './data/data';
 import AppDispatch from './context/AppDispatch';
 import reducer from './context/reducer';
 import initialState from './context/initialState';
+import ResultComponent from './components/ResultComponent';
 
 function App() {
   const [appState, dispatch] = useReducer(reducer, initialState);
@@ -19,6 +20,7 @@ function App() {
     root: {
       maxWidth: 400,
       flexGrow: 1,
+      marginTop: 32,
     },
   });
 
@@ -34,28 +36,37 @@ function App() {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
+  const isStepChecked = () => {
+    return (appState.userAnswers.hasOwnProperty(activeStep) && appState.userAnswers[activeStep].isChecked);
+  };
+
   return (
     <AppDispatch.Provider value={dispatch}>
       <Container>
-        <QuestionComponent appState={appState} questionId={activeStep} />
+        {activeStep === questionCount
+          ? <ResultComponent appState={appState} questionCount={questionCount} />
+          : <>
+            <QuestionComponent appState={appState} questionId={activeStep} />
 
-        <MobileStepper
-          variant="progress"
-          steps={questionCount}
-          position="static"
-          activeStep={activeStep}
-          className={classes.root}
-          nextButton={
-            <Button size="small" variant="contained" color="primary" onClick={handleNext} disabled={(activeStep + 1) === questionCount}>
-              Next <KeyboardArrowRight />
-            </Button>
-          }
-          backButton={
-            <Button size="small" variant="contained" color="primary" onClick={handleBack} disabled={activeStep === 0}>
-              <KeyboardArrowLeft /> Back
-            </Button>
-          }
-        />
+            <MobileStepper
+              variant="progress"
+              steps={questionCount}
+              position="static"
+              activeStep={activeStep}
+              className={classes.root}
+              nextButton={
+                <Button size="small" variant="contained" color="primary" onClick={handleNext} disabled={!isStepChecked()}>
+                  Next <KeyboardArrowRight />
+                </Button>
+              }
+              backButton={
+                <Button size="small" variant="contained" color="primary" onClick={handleBack} disabled={activeStep === 0}>
+                  <KeyboardArrowLeft /> Back
+              </Button>
+              }
+            />
+          </>
+        }
       </Container>
     </AppDispatch.Provider>
   );

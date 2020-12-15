@@ -1,6 +1,11 @@
 const questions = [
   {
     questionText: 'Choose the most suitable genre:',
+    video: {
+      id: 'b1RKaRgVFKk',
+      startSeconds: 10,
+      endSeconds: 20,
+    },
     answers: [
       {
         id: 1,
@@ -23,6 +28,11 @@ const questions = [
   },
   {
     questionText: 'Choose the most suitable genre:',
+    video: {
+      id: 'b1RKaRgVFKk',
+      startSeconds: 10,
+      endSeconds: 20,
+    },
     answers: [
       {
         id: 1,
@@ -45,6 +55,11 @@ const questions = [
   },
   {
     questionText: 'Choose the most suitable genre:',
+    video: {
+      id: 'b1RKaRgVFKk',
+      startSeconds: 10,
+      endSeconds: 20,
+    },
     answers: [
       {
         id: 1,
