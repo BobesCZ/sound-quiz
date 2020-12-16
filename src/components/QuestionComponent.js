@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState, useEffect } from 'react';
 import loadYtScript from '../utils/loadYtScript';
 import PlayerControlPanel from './PlayerControlPanel';
 import QuestionControl from './QuestionControl';
@@ -20,9 +20,32 @@ function QuestionComponent(props) {
 
   const [progress, setProgress] = useState(0);
 
+  useEffect(() => {
+    // restart player
+    if (playerObject !== null && typeof playerObject === "object") {
+      playerObject.pauseVideo();
+      playerObject.destroy();
+    }
+
+    if (!window.onYouTubeIframeAPIReady) {
+      window.onYouTubeIframeAPIReady = function () {
+        createPlayer();
+      }
+    }
+    else {
+      createPlayer();
+    }
+
+    return () => {
+      clearInterval(videoEndTimer);
+      setProgress(0);
+      setIsPlaying(false);
+    };
+  }, [questionId]);
+
   loadYtScript();
 
-  window.onYouTubeIframeAPIReady = function () {
+  function createPlayer() {
     player = new YT.Player('player', { // eslint-disable-line
       width: '0',
       height: '0',

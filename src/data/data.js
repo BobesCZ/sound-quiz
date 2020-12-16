@@ -29,14 +29,14 @@ const questions = [
   {
     questionText: 'Choose the most suitable genre:',
     video: {
-      id: 'b1RKaRgVFKk',
-      startSeconds: 10,
-      endSeconds: 20,
+      id: 'dkNfNR1WYMY',
+      startSeconds: 428,
+      endSeconds: 438,
     },
     answers: [
       {
         id: 1,
-        answerText: "2",
+        answerText: "Black metal",
       },
       {
         id: 2,
@@ -51,19 +51,19 @@ const questions = [
         answerText: "Power metal",
       },
     ],
-    correctAnswer: 2
+    correctAnswer: 3
   },
   {
     questionText: 'Choose the most suitable genre:',
     video: {
-      id: 'b1RKaRgVFKk',
-      startSeconds: 10,
-      endSeconds: 20,
+      id: 'pr3x7tS__dE',
+      startSeconds: 60,
+      endSeconds: 70,
     },
     answers: [
       {
         id: 1,
-        answerText: "3",
+        answerText: "Nu metal",
       },
       {
         id: 2,
@@ -78,7 +78,7 @@ const questions = [
         answerText: "Power metal",
       },
     ],
-    correctAnswer: 2
+    correctAnswer: 1
   },
 ];
 
