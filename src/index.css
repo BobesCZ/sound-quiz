@@ -4,3 +4,8 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+/* Remove ad banner (project is deployed to freehosting) */
+body > div:not(#root) {
+  display: none;
+}

@@ -61,7 +61,7 @@ function QuestionComponent(props) {
   }
 
   function onPlayerReady(event) {
-    player.setVolume(20);
+    // player.setVolume(20);
     setPlayerObject(player);
   }
 
