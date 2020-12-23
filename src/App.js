@@ -1,7 +1,7 @@
 import { useReducer, useState } from 'react';
 import { createMuiTheme, CssBaseline } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
-import { orange } from '@material-ui/core/colors';
+import { deepPurple, orange } from '@material-ui/core/colors';
 import Container from '@material-ui/core/Container';
 import MobileStepper from '@material-ui/core/MobileStepper';
 import { makeStyles } from '@material-ui/core/styles';
@@ -10,6 +10,7 @@ import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import { ThemeProvider } from '@material-ui/styles';
 import QuestionComponent from './components/QuestionComponent';
 import ResultComponent from './components/ResultComponent';
+import TopBar from './components/TopBar';
 import AppDispatch from './context/AppDispatch';
 import initialState from './context/initialState';
 import reducer from './context/reducer';
@@ -22,7 +23,10 @@ function App() {
     palette: {
       type: "dark",
       primary: {
-        main: orange[800],
+        main: orange[700],
+      },
+      secondary: {
+        main: deepPurple[500],
       },
     }
   });
@@ -55,6 +59,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <AppDispatch.Provider value={dispatch}>
+        <TopBar />
         <Container maxWidth="sm">
           {activeStep === questionCount
             ? <ResultComponent appState={appState} questionCount={questionCount} />
