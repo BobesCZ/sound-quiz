@@ -3,6 +3,7 @@ import QuestionComponent from './components/QuestionComponent';
 import Container from '@material-ui/core/Container';
 import MobileStepper from '@material-ui/core/MobileStepper';
 import Button from '@material-ui/core/Button';
+import { createMuiTheme, CssBaseline } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { useState, useReducer } from 'react';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
@@ -12,9 +13,20 @@ import AppDispatch from './context/AppDispatch';
 import reducer from './context/reducer';
 import initialState from './context/initialState';
 import ResultComponent from './components/ResultComponent';
+import { ThemeProvider } from "@material-ui/styles";
+import { orange } from '@material-ui/core/colors';
 
 function App() {
   const [appState, dispatch] = useReducer(reducer, initialState);
+
+  const theme = createMuiTheme({
+    palette: {
+      type: "dark",
+      primary: {
+        main: orange[800],
+      },
+    }
+  });
 
   const useStyles = makeStyles({
     root: {
@@ -41,34 +53,37 @@ function App() {
   };
 
   return (
-    <AppDispatch.Provider value={dispatch}>
-      <Container>
-        {activeStep === questionCount
-          ? <ResultComponent appState={appState} questionCount={questionCount} />
-          : <>
-            <QuestionComponent appState={appState} questionId={activeStep} />
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <AppDispatch.Provider value={dispatch}>
+        <Container maxWidth="sm">
+          {activeStep === questionCount
+            ? <ResultComponent appState={appState} questionCount={questionCount} />
+            : <>
+              <QuestionComponent appState={appState} questionId={activeStep} />
 
-            <MobileStepper
-              variant="progress"
-              steps={questionCount}
-              position="static"
-              activeStep={activeStep}
-              className={classes.root}
-              nextButton={
-                <Button size="small" variant="contained" color="primary" onClick={handleNext} disabled={!isStepChecked()}>
-                  Next <KeyboardArrowRight />
-                </Button>
-              }
-              backButton={
-                <Button size="small" variant="contained" color="primary" onClick={handleBack} disabled={activeStep === 0}>
-                  <KeyboardArrowLeft /> Back
+              <MobileStepper
+                variant="progress"
+                steps={questionCount}
+                position="static"
+                activeStep={activeStep}
+                className={classes.root}
+                nextButton={
+                  <Button size="small" variant="contained" color="primary" onClick={handleNext} disabled={!isStepChecked()}>
+                    Next <KeyboardArrowRight />
+                  </Button>
+                }
+                backButton={
+                  <Button size="small" variant="contained" color="primary" onClick={handleBack} disabled={activeStep === 0}>
+                    <KeyboardArrowLeft /> Back
               </Button>
-              }
-            />
-          </>
-        }
-      </Container>
-    </AppDispatch.Provider>
+                }
+              />
+            </>
+          }
+        </Container>
+      </AppDispatch.Provider>
+    </ThemeProvider>
   );
 }
 
