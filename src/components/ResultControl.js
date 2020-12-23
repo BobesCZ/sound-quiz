@@ -1,7 +1,7 @@
-import Typography from '@material-ui/core/Typography';
+import { useEffect, useState } from 'react';
 import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
 import ResultProgress from './ResultProgress';
-import { useState, useEffect } from 'react';
 
 function ResultControl(props) {
   const [progress, setProgress] = useState(10);

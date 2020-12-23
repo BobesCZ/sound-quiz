@@ -1,6 +1,6 @@
-import { withStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { green, grey } from '@material-ui/core/colors';
+import { withStyles } from '@material-ui/core/styles';
 
 const styles = {
   root: {

@@ -1,6 +1,6 @@
-import ResultControl from './ResultControl';
-import data from '../data/data';
 import Box from '@material-ui/core/Box';
+import data from '../data/data';
+import ResultControl from './ResultControl';
 
 function ResultComponent(props) {
   const userAnswers = props.appState.userAnswers;

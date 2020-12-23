@@ -1,10 +1,10 @@
 import { useContext } from 'react';
-import { QuestionRadioCorrect, QuestionRadioWrong } from './QuestionRadio';
 import FormControl from '@material-ui/core/FormControl';
-import FormLabel from '@material-ui/core/FormLabel';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormLabel from '@material-ui/core/FormLabel';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import AppDispatch from '../context/AppDispatch';
+import { QuestionRadioCorrect, QuestionRadioWrong } from './QuestionRadio';
 
 function QuestionControl(props) {
   const questionId = props.questionId;

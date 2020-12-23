@@ -1,7 +1,6 @@
-import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
 import { green, grey, red } from '@material-ui/core/colors';
 import Radio from '@material-ui/core/Radio';
+import { withStyles } from '@material-ui/core/styles';
 
 const stylesCorrect = {
   "@keyframes pulseGreen": {
@@ -107,4 +106,4 @@ function QuestionRadio(props) {
 const QuestionRadioCorrect = withStyles(stylesCorrect)(QuestionRadio);
 const QuestionRadioWrong = withStyles(stylesWrong)(QuestionRadio);
 
-export { QuestionRadioCorrect, QuestionRadioWrong }
+export { QuestionRadioCorrect, QuestionRadioWrong };

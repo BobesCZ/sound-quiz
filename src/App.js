@@ -1,20 +1,19 @@
-import './App.css';
-import QuestionComponent from './components/QuestionComponent';
+import { useReducer, useState } from 'react';
+import { createMuiTheme, CssBaseline } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+import { orange } from '@material-ui/core/colors';
 import Container from '@material-ui/core/Container';
 import MobileStepper from '@material-ui/core/MobileStepper';
-import Button from '@material-ui/core/Button';
-import { createMuiTheme, CssBaseline } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { useState, useReducer } from 'react';
-import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
-import data from './data/data';
-import AppDispatch from './context/AppDispatch';
-import reducer from './context/reducer';
-import initialState from './context/initialState';
+import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
+import { ThemeProvider } from '@material-ui/styles';
+import QuestionComponent from './components/QuestionComponent';
 import ResultComponent from './components/ResultComponent';
-import { ThemeProvider } from "@material-ui/styles";
-import { orange } from '@material-ui/core/colors';
+import AppDispatch from './context/AppDispatch';
+import initialState from './context/initialState';
+import reducer from './context/reducer';
+import data from './data/data';
 
 function App() {
   const [appState, dispatch] = useReducer(reducer, initialState);

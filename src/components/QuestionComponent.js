@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Container from '@material-ui/core/Container';
+import data from '../data/data';
 import loadYtScript from '../utils/loadYtScript';
 import PlayerControlPanel from './PlayerControlPanel';
 import QuestionControl from './QuestionControl';
-import data from '../data/data';
-import CircularProgress from "@material-ui/core/CircularProgress";
-import Container from '@material-ui/core/Container';
 
 function QuestionComponent(props) {
   const questionId = props.questionId;
