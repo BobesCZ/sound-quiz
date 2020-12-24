@@ -1,52 +1,117 @@
-import { useContext } from 'react';
-import FormControl from '@material-ui/core/FormControl';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormLabel from '@material-ui/core/FormLabel';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import AppDispatch from '../context/AppDispatch';
-import { QuestionRadioCorrect, QuestionRadioWrong } from './QuestionRadio';
+import { useEffect, useState } from 'react';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import data from '../data/data';
+import loadYtScript from '../utils/loadYtScript';
+import PlayerPanel from './PlayerPanel';
+import QuestionForm from './QuestionForm';
 
 function QuestionControl(props) {
   const questionId = props.questionId;
-  const questionObject = props.questionObject;
+  const questionObject = data[questionId];
+  const videoObject = data[questionId].video;
 
-  const answer = props.appState.userAnswers[questionId] ? props.appState.userAnswers[questionId].answer : null;
-  const answerChecked = props.appState.userAnswers[questionId] ? props.appState.userAnswers[questionId].isChecked : null;
-  const dispatch = useContext(AppDispatch);
+  const [playerObject, setPlayerObject] = useState(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const playerCheckInterval = 250;
+  let player;
+  let videoEndTimer;
 
-  function handleChange(event) {
-    if (answer === null) {
-      const answer = { answer: parseInt(event.target.value), isChecked: false }
-      dispatch({ type: 'SET_USER_ANSWER', payload: { questionId, answer } });
+  const [progress, setProgress] = useState(0);
 
-      setTimeout(() => {
-        const answer = { answer: parseInt(event.target.value), isChecked: true }
-        dispatch({ type: 'SET_USER_ANSWER', payload: { questionId, answer } });
-      }, 1400)
+  useEffect(() => {
+    // restart player
+    if (playerObject !== null && typeof playerObject === "object") {
+      playerObject.pauseVideo();
+      playerObject.destroy();
     }
+
+    if (!window.onYouTubeIframeAPIReady) {
+      window.onYouTubeIframeAPIReady = function () {
+        createPlayer();
+      }
+    }
+    else {
+      createPlayer();
+    }
+
+    return () => {
+      clearInterval(videoEndTimer);
+      setProgress(0);
+      setIsPlaying(false);
+    };
+  }, [questionId]);
+
+  loadYtScript();
+
+  function createPlayer() {
+    player = new YT.Player('player', { // eslint-disable-line
+      width: '0',
+      height: '0',
+      videoId: videoObject.id,
+      playerVars: {
+        start: videoObject.startSeconds,
+      },
+      events: {
+        'onReady': onPlayerReady,
+        'onStateChange': onPlayerStateChange,
+      }
+    });
   }
 
-  function getControl(id) {
-    if (questionObject.correctAnswer === id) {
-      return <QuestionRadioCorrect waitingAnimation={answerChecked ? false : true} isCorrect={questionObject.correctAnswer === id ? true : false} />;
+  function onPlayerReady(event) {
+    // player.setVolume(20);
+    setPlayerObject(player);
+  }
+
+  function onPlayerStateChange(event) {
+    if (player.getPlayerState() === YT.PlayerState.BUFFERING) { // eslint-disable-line
+      setIsLoading(true);
     } else {
-      return <QuestionRadioWrong waitingAnimation={answerChecked ? false : true} isCorrect={questionObject.correctAnswer === id ? true : false} />;
+      setIsLoading(false);
+    }
+
+    if (player.getPlayerState() === YT.PlayerState.PLAYING) { // eslint-disable-line
+      setIsPlaying(true);
+
+      videoEndTimer = setInterval(() => {
+        setProgress((oldProgress) => {
+          if (oldProgress >= 100) {
+            return 100;
+          }
+          const progress = (player.getCurrentTime() - videoObject.startSeconds) / (videoObject.endSeconds - videoObject.startSeconds) * 100;
+          return Math.min(progress, 100);
+        });
+
+        if (player.getCurrentTime() >= videoObject.endSeconds) {
+          player.pauseVideo();
+          player.seekTo(videoObject.startSeconds);
+          clearInterval(videoEndTimer);
+          setProgress(0);
+        }
+      }, playerCheckInterval)
+    } else {
+      setIsPlaying(false);
+      clearInterval(videoEndTimer);
+
+      if (Math.round(player.getCurrentTime()) === videoObject.startSeconds) {
+        setProgress(0);
+      }
     }
   }
 
   return (
-    <>
-      <FormControl component="fieldset">
-        <FormLabel component="legend">
-          {questionObject.questionText}
-        </FormLabel>
-        <RadioGroup aria-label="question" name="question1" value={answer} onChange={handleChange}>
-          {questionObject.answers.map((answerObject) => (
-            <FormControlLabel key={answerObject.id} value={answerObject.id} control={getControl(answerObject.id)} label={answerObject.answerText} />
-          ))}
-        </RadioGroup>
-      </FormControl>
-    </>
+    <div>
+      <div id="player"></div>
+
+      {!playerObject
+        ? <CircularProgress />
+        : <>
+          <PlayerPanel player={playerObject} isPlaying={isPlaying} isLoading={isLoading} videoObject={videoObject} progress={progress} />
+          <QuestionForm appState={props.appState} questionId={questionId} questionObject={questionObject} />
+        </>
+      }
+    </div>
   );
 }
 

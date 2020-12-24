@@ -1,39 +1,35 @@
-import { useEffect, useState } from 'react';
 import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
-import ResultProgress from './ResultProgress';
+import data from '../data/data';
+import ResultGraph from './ResultGraph';
 
 function ResultControl(props) {
-  const [progress, setProgress] = useState(10);
-  const score = props.value;
+  const userAnswers = props.appState.userAnswers;
+  const questionCount = props.questionCount;
 
-  useEffect(() => {
-    setProgress(score);
+  let correctAnswersCount = 0;
 
-    return () => {
-      setProgress(0);
-    };
-  }, [score]);
+  Object.keys(userAnswers).map(item => {
+    const isCorrect = userAnswers[item].answer === data[item].correctAnswer ? 1 : 0;
+    correctAnswersCount += isCorrect;
+    return 0;
+  })
+
+  const score = correctAnswersCount / questionCount * 100;
 
   return (
-    <Box position="relative" display="inline-flex" mb={3}>
-      <ResultProgress variant="determinate" value={progress} />
-      <ResultProgress variant="static" value={100} />
+    <>
       <Box
-        top={0}
-        left={0}
-        bottom={0}
-        right={0}
-        position="absolute"
+        my={3}
         display="flex"
+        flexDirection="column"
         alignItems="center"
         justifyContent="center"
       >
-        <Typography variant="h5" component="div" color="textSecondary">
-          {`${Math.round(props.value)}%`}
-        </Typography>
+        <ResultGraph value={score} />
+        Correct answers: {correctAnswersCount} / {questionCount}
       </Box>
-    </Box>
+    </>
   );
 }
+
 export default ResultControl;

@@ -8,7 +8,7 @@ import PauseIcon from '@material-ui/icons/Pause';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import ReplayIcon from '@material-ui/icons/Replay';
 
-function PlayerControlPanel(props) {
+function PlayerPanel(props) {
   const player = props.player;
   const isPlaying = props.isPlaying;
   const isLoading = props.isLoading;
@@ -45,25 +45,35 @@ function PlayerControlPanel(props) {
         <Box mb={3}>
           <ButtonGroup color="primary" aria-label="outlined primary button group">
             {isLoading
-              ? <Button variant="outlined" color="primary">
-                <CircularProgress size={24} /> Play
-            </Button>
-              : <Button variant="outlined" color="primary" onClick={handleButtonPlayClick}>
-                {isPlaying
-                  ? <> <PauseIcon /> Pause </>
-                  : <> <PlayArrowIcon /> Play </>
-                }
+              ? <Button
+                variant="outlined"
+                color="primary"
+                startIcon={<CircularProgress size={24} />}
+              >
+                Play
+              </Button>
+              : <Button
+                variant="outlined"
+                color="primary"
+                onClick={handleButtonPlayClick}
+                startIcon={isPlaying ? <PauseIcon /> : <PlayArrowIcon />}
+              >
+                {isPlaying ? "Pause" : "Play"}
               </Button>
             }
-            <Button variant="outlined" color="primary" onClick={handleButtonReplayClick}>
-              <ReplayIcon /> Replay
-          </Button>
+            <Button
+              variant="outlined"
+              color="primary"
+              onClick={handleButtonReplayClick}
+              startIcon={<ReplayIcon />}
+            >
+              Replay
+            </Button>
           </ButtonGroup>
         </Box>
-
       </Grid>
     </Grid>
   );
 }
 
-export default PlayerControlPanel;
+export default PlayerPanel;
