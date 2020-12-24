@@ -2,11 +2,51 @@ import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import Grid from '@material-ui/core/Grid';
+import { grey } from '@material-ui/core/colors';
 import LinearProgress from '@material-ui/core/LinearProgress';
+import { makeStyles } from '@material-ui/core/styles';
+import AlbumIcon from '@material-ui/icons/Album';
 import PauseIcon from '@material-ui/icons/Pause';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import ReplayIcon from '@material-ui/icons/Replay';
+
+const useStyles = makeStyles((theme) => ({
+  playerArea: {
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    alignItems: "flex-start",
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(4),
+    backgroundColor: grey[800],
+  },
+  controlsBox: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    width: "100%",
+    flexGrow: 1,
+  },
+  progressBox: {
+    width: "100%",
+    flexGrow: 1,
+  },
+  imageIconWrap: {
+    backgroundColor: grey[600],
+    opacity: 0.3,
+    marginRight: theme.spacing(1),
+  },
+  imageIcon: {
+    fontSize: 80,
+    color: grey[200],
+  },
+  buttonsWrap: {
+    display: "flex",
+    justifyContent: "center",
+    width: "100%",
+    flexGrow: 1,
+  }
+}));
 
 function PlayerPanel(props) {
   const player = props.player;
@@ -14,6 +54,7 @@ function PlayerPanel(props) {
   const isLoading = props.isLoading;
   const progress = props.progress;
   const startSeconds = props.videoObject.startSeconds;
+  const classes = useStyles();
 
   function handleButtonPlayClick(event) {
     if (player.getPlayerState() === YT.PlayerState.PLAYING) { // eslint-disable-line
@@ -29,21 +70,14 @@ function PlayerPanel(props) {
   }
 
   return (
-    <Grid
-      container
-      direction="row"
-      justify="center"
-      alignItems="flex-start"
-    >
-      <Grid item xs={12}>
-        <Box my={3}>
-          <LinearProgress variant="determinate" value={progress} />
+    <Box p={1} className={classes.playerArea}>
+      <Box mb={2} className={classes.controlsBox}>
+        <Box p={1} className={classes.imageIconWrap}>
+          <AlbumIcon className={classes.imageIcon} />
         </Box>
-      </Grid>
 
-      <Grid>
-        <Box mb={3}>
-          <ButtonGroup color="primary" aria-label="outlined primary button group">
+        <Box className={classes.buttonsWrap}>
+          <ButtonGroup color="primary" aria-label="player buttons">
             {isLoading
               ? <Button
                 variant="outlined"
@@ -71,8 +105,12 @@ function PlayerPanel(props) {
             </Button>
           </ButtonGroup>
         </Box>
-      </Grid>
-    </Grid>
+      </Box>
+
+      <Box mb={1} className={classes.progressBox}>
+        <LinearProgress variant="determinate" value={progress} />
+      </Box>
+    </Box>
   );
 }
 

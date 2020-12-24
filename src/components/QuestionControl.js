@@ -1,9 +1,21 @@
 import { useEffect, useState } from 'react';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { makeStyles } from '@material-ui/core/styles';
 import data from '../data/data';
 import loadYtScript from '../utils/loadYtScript';
 import PlayerPanel from './PlayerPanel';
 import QuestionForm from './QuestionForm';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    position: "absolute",
+    top: "50%",
+    bottom: "50%",
+    left: "50%",
+    right: "50%",
+    margin: -20,
+  },
+}));
 
 function QuestionControl(props) {
   const questionId = props.questionId;
@@ -18,6 +30,7 @@ function QuestionControl(props) {
   let videoEndTimer;
 
   const [progress, setProgress] = useState(0);
+  const classes = useStyles();
 
   useEffect(() => {
     // restart player
@@ -105,7 +118,7 @@ function QuestionControl(props) {
       <div id="player"></div>
 
       {!playerObject
-        ? <CircularProgress />
+        ? <CircularProgress className={classes.root} />
         : <>
           <PlayerPanel player={playerObject} isPlaying={isPlaying} isLoading={isLoading} videoObject={videoObject} progress={progress} />
           <QuestionForm appState={props.appState} questionId={questionId} questionObject={questionObject} />

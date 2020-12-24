@@ -8,23 +8,22 @@ import data from '../data/data';
 import QuestionControl from './QuestionControl';
 import ResultControl from './ResultControl';
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+    marginTop: theme.spacing(4),
+    padding: 0,
+  },
+  backButton: {
+    minWidth: "auto",
+  }
+}));
+
 function QuizDetailPage(props) {
   const appState = props.appState;
-
-  const useStyles = makeStyles({
-    root: {
-      flexGrow: 1,
-      marginTop: 32,
-      padding: 0,
-    },
-    backButton: {
-      minWidth: "auto",
-    }
-  });
-
-  const classes = useStyles();
   const questionCount = data.length;
   const [activeStep, setActiveStep] = useState(0);
+  const classes = useStyles();
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);

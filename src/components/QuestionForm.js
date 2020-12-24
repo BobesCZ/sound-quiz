@@ -3,10 +3,21 @@ import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormLabel from '@material-ui/core/FormLabel';
 import RadioGroup from '@material-ui/core/RadioGroup';
+import { makeStyles } from '@material-ui/core/styles';
 import AppDispatch from '../context/AppDispatch';
 import {
   QuestionRadioCorrect, QuestionRadioWrong,
 } from '../elements/QuestionRadio';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    marginBottom: theme.spacing(2),
+    '&$focused': {
+      color: 'rgba(255, 255, 255, 0.7)',
+    },
+  },
+  focused: {}
+}));
 
 function QuestionForm(props) {
   const questionId = props.questionId;
@@ -15,6 +26,7 @@ function QuestionForm(props) {
   const answer = props.appState.userAnswers[questionId] ? props.appState.userAnswers[questionId].answer : null;
   const answerChecked = props.appState.userAnswers[questionId] ? props.appState.userAnswers[questionId].isChecked : null;
   const dispatch = useContext(AppDispatch);
+  const classes = useStyles();
 
   function handleChange(event) {
     if (answer === null) {
@@ -39,7 +51,7 @@ function QuestionForm(props) {
   return (
     <>
       <FormControl component="fieldset">
-        <FormLabel component="legend">
+        <FormLabel classes={{ root: classes.root, focused: classes.focused }} component="legend">
           {questionObject.questionText}
         </FormLabel>
         <RadioGroup aria-label="question" name="question1" value={answer} onChange={handleChange}>

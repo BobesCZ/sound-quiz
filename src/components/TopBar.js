@@ -10,16 +10,16 @@ import Typography from '@material-ui/core/Typography';
 // import CloseIcon from '@material-ui/icons/Close';
 import { ReactComponent as Logo } from '../assets/icon.svg';
 
-function TopBar() {
-  const useStyles = makeStyles((theme) => ({
-    menuButton: {
-      marginRight: theme.spacing(1),
-    },
-    title: {
-      flexGrow: 1,
-    },
-  }));
+const useStyles = makeStyles((theme) => ({
+  menuButton: {
+    marginRight: theme.spacing(1),
+  },
+  title: {
+    flexGrow: 1,
+  },
+}));
 
+function TopBar() {
   const classes = useStyles();
 
   return (
