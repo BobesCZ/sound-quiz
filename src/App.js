@@ -3,7 +3,7 @@ import { createMuiTheme, CssBaseline } from '@material-ui/core';
 import { deepPurple, orange } from '@material-ui/core/colors';
 import Container from '@material-ui/core/Container';
 import { ThemeProvider } from '@material-ui/styles';
-import QuizDetailPage from './components/QuizDetailPage';
+import QuizListPage from './components/QuizListPage';
 import TopBar from './components/TopBar';
 import AppDispatch from './context/AppDispatch';
 import initialState from './context/initialState';
@@ -30,7 +30,7 @@ function App() {
       <AppDispatch.Provider value={dispatch}>
         <TopBar />
         <Container maxWidth="sm">
-          <QuizDetailPage appState={appState} />
+          <QuizListPage appState={appState} />
         </Container>
       </AppDispatch.Provider>
     </ThemeProvider>
