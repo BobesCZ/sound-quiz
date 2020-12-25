@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles } from '@material-ui/core/styles';
-import data from '../data/data';
 import loadYtScript from '../utils/loadYtScript';
 import PlayerPanel from './PlayerPanel';
 import QuestionForm from './QuestionForm';
@@ -18,9 +17,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function QuestionControl(props) {
+  const questionsArray = props.questionsArray;
   const questionId = props.questionId;
-  const questionObject = data[questionId];
-  const videoObject = data[questionId].video;
+  const questionObject = questionsArray[questionId];
+  const videoObject = questionObject.video;
 
   const [playerObject, setPlayerObject] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -53,7 +53,7 @@ function QuestionControl(props) {
       setProgress(0);
       setIsPlaying(false);
     };
-  }, [questionId]);
+  }, [questionId]); // eslint-disable-line 
 
   loadYtScript();
 

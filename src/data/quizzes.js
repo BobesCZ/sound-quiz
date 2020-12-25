@@ -19,5 +19,4 @@ const quizzes = {
   },
 };
 
-
 export default quizzes;

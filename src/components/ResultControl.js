@@ -1,15 +1,15 @@
 import Box from '@material-ui/core/Box';
-import data from '../data/data';
 import ResultGraph from './ResultGraph';
 
 function ResultControl(props) {
   const userAnswers = props.appState.userAnswers;
-  const questionCount = props.questionCount;
+  const questionsArray = props.questionsArray;
+  const questionCount = questionsArray.length;
 
   let correctAnswersCount = 0;
 
   Object.keys(userAnswers).map(item => {
-    const isCorrect = userAnswers[item].answer === data[item].correctAnswer ? 1 : 0;
+    const isCorrect = userAnswers[item].answer === questionsArray[item].correctAnswer ? 1 : 0;
     correctAnswersCount += isCorrect;
     return 0;
   })

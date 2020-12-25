@@ -5,7 +5,7 @@ import MobileStepper from '@material-ui/core/MobileStepper';
 import { makeStyles } from '@material-ui/core/styles';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
-import data from '../data/data';
+import questions from '../data/questions';
 import QuestionControl from './QuestionControl';
 import ResultControl from './ResultControl';
 
@@ -22,11 +22,17 @@ const useStyles = makeStyles((theme) => ({
 
 function QuizDetailPage(props) {
   const appState = props.appState;
-  const questionCount = data.length;
   const [activeStep, setActiveStep] = useState(0);
   const classes = useStyles();
-  let { id } = useParams();
-  // console.log(id)
+
+  const { id: quizId } = useParams();
+  const questionsArray = questions[quizId];
+
+  if (questionsArray === undefined) {
+    return null;
+  }
+
+  const questionCount = questionsArray.length;
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -43,9 +49,9 @@ function QuizDetailPage(props) {
   return (
     <>
       {activeStep === questionCount
-        ? <ResultControl appState={appState} questionCount={questionCount} />
+        ? <ResultControl appState={appState} questionsArray={questionsArray} />
         : <>
-          <QuestionControl appState={appState} questionId={activeStep} />
+          <QuestionControl appState={appState} questionsArray={questionsArray} questionId={activeStep} />
 
           <MobileStepper
             variant="progress"
