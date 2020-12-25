@@ -5,7 +5,7 @@ function QuizListPage(props) {
   return (
     <>
       {Object.keys(quizzes).map((quizId) => (
-        <QuizCard quizId={quizId} quizObj={quizzes[quizId]} />
+        <QuizCard key={quizId} quizId={quizId} quizObj={quizzes[quizId]} />
       ))}
     </>
   );

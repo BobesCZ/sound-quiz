@@ -1,8 +1,10 @@
 import { useReducer } from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { createMuiTheme, CssBaseline } from '@material-ui/core';
 import { deepPurple, orange } from '@material-ui/core/colors';
 import Container from '@material-ui/core/Container';
 import { ThemeProvider } from '@material-ui/styles';
+import QuizDetailPage from './components/QuizDetailPage';
 import QuizListPage from './components/QuizListPage';
 import TopBar from './components/TopBar';
 import AppDispatch from './context/AppDispatch';
@@ -25,15 +27,24 @@ function App() {
   });
 
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <AppDispatch.Provider value={dispatch}>
-        <TopBar />
-        <Container maxWidth="sm">
-          <QuizListPage appState={appState} />
-        </Container>
-      </AppDispatch.Provider>
-    </ThemeProvider>
+    <Router>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <AppDispatch.Provider value={dispatch}>
+          <TopBar />
+          <Container maxWidth="sm">
+            <Switch>
+              <Route path="/quiz/:id">
+                <QuizDetailPage appState={appState} />
+              </Route>
+              <Route path="/">
+                <QuizListPage appState={appState} />
+              </Route>
+            </Switch>
+          </Container>
+        </AppDispatch.Provider>
+      </ThemeProvider>
+    </Router>
   );
 }
 

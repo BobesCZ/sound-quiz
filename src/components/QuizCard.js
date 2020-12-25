@@ -1,3 +1,4 @@
+import { Link as RouterLink } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -24,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function QuizCard(props) {
-  // const quizId = props.quizId;
+  const quizId = props.quizId;
   const quizObj = props.quizObj;
   const classes = useStyles();
 
@@ -57,6 +58,8 @@ function QuizCard(props) {
           variant="contained"
           color="primary"
           className={classes.conversionButton}
+          component={RouterLink}
+          to={`/quiz/${quizId}`}
         >
           Take a quiz
         </Button>

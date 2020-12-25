@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import MobileStepper from '@material-ui/core/MobileStepper';
 import { makeStyles } from '@material-ui/core/styles';
@@ -24,6 +25,8 @@ function QuizDetailPage(props) {
   const questionCount = data.length;
   const [activeStep, setActiveStep] = useState(0);
   const classes = useStyles();
+  let { id } = useParams();
+  // console.log(id)
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
