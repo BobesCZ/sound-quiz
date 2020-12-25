@@ -5,6 +5,7 @@ import { deepPurple, orange } from '@material-ui/core/colors';
 import Container from '@material-ui/core/Container';
 import { ThemeProvider } from '@material-ui/styles';
 import QuizDetailPage from './components/QuizDetailPage';
+import QuizInfoPage from './components/QuizInfoPage';
 import QuizListPage from './components/QuizListPage';
 import TopBar from './components/TopBar';
 import AppDispatch from './context/AppDispatch';
@@ -34,8 +35,11 @@ function App() {
           <TopBar />
           <Container maxWidth="sm">
             <Switch>
-              <Route path="/quiz/:id">
+              <Route path="/quiz/:id/questions">
                 <QuizDetailPage appState={appState} />
+              </Route>
+              <Route path="/quiz/:id">
+                <QuizInfoPage appState={appState} />
               </Route>
               <Route path="/">
                 <QuizListPage appState={appState} />

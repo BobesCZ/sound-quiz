@@ -1,4 +1,6 @@
+import { Link as RouterLink } from 'react-router-dom';
 import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
 import ResultGraph from './ResultGraph';
 
 function ResultControl(props) {
@@ -17,18 +19,28 @@ function ResultControl(props) {
   const score = correctAnswersCount / questionCount * 100;
 
   return (
-    <>
-      <Box
-        my={3}
-        display="flex"
-        flexDirection="column"
-        alignItems="center"
-        justifyContent="center"
-      >
-        <ResultGraph value={score} />
-        Correct answers: {correctAnswersCount} / {questionCount}
+    <Box
+      my={3}
+      display="flex"
+      flexDirection="column"
+      alignItems="center"
+      justifyContent="center"
+    >
+      <ResultGraph value={score} />
+      Correct answers: {correctAnswersCount} / {questionCount}
+
+      <Box mt={3}>
+        <Button
+          variant="contained"
+          color="primary"
+          size="large"
+          component={RouterLink}
+          to="/"
+        >
+          Choose another quiz
+        </Button>
       </Box>
-    </>
+    </Box>
   );
 }
 
