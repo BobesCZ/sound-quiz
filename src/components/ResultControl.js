@@ -1,22 +1,32 @@
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useParams } from 'react-router-dom';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
+import { makeStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
 import ResultGraph from './ResultGraph';
 
+const useStyles = makeStyles((theme) => ({
+  text: {
+    textAlign: "center",
+  },
+}));
+
 function ResultControl(props) {
-  const userAnswers = props.appState.userAnswers;
-  const questionsArray = props.questionsArray;
-  const questionCount = questionsArray.length;
+  const { id: quizId } = useParams();
+  const score = props.appState.availableQuizzes[quizId].finalScore;
+  const scoreLevel = score >= 90 ? "excellent" : score >= 60 ? "good" : "nevermind";
+  const classes = useStyles();
 
-  let correctAnswersCount = 0;
-
-  Object.keys(userAnswers).map(item => {
-    const isCorrect = userAnswers[item].answer === questionsArray[item].correctAnswer ? 1 : 0;
-    correctAnswersCount += isCorrect;
-    return 0;
-  })
-
-  const score = correctAnswersCount / questionCount * 100;
+  const titleTextObj = {
+    "excellent": "Excellent result",
+    "good": "Good job",
+    "nevermind": "Nevermind",
+  }
+  const paragraphTextObj = {
+    "excellent": "Wow, you have to be a real expert in this genre!",
+    "good": "It seems that you feel comfortable with this kind of music!",
+    "nevermind": "This isn't your favourite cup of music anyway, right?",
+  }
 
   return (
     <Box
@@ -27,7 +37,14 @@ function ResultControl(props) {
       justifyContent="center"
     >
       <ResultGraph value={score} />
-      Correct answers: {correctAnswersCount} / {questionCount}
+
+      <Typography variant="h6" className={classes.text} gutterBottom>
+        {titleTextObj[scoreLevel]}
+      </Typography>
+
+      <Typography variant="subtitle1" className={classes.text} gutterBottom>
+        {paragraphTextObj[scoreLevel]}
+      </Typography>
 
       <Box mt={3}>
         <Button

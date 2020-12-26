@@ -15,6 +15,8 @@ const quizzes = {
     difficulty: 'Hard',
     questionsCount: 0,
     questions: [],
+    userAnswers: [],
+    finalScore: null,
   },
   'b0fe33b7': {
     type: 'sound',
@@ -23,6 +25,8 @@ const quizzes = {
     difficulty: 'Easy',
     questionsCount: 0,
     questions: [],
+    userAnswers: [],
+    finalScore: null,
   },
   'c4082e41': {
     type: 'sound',
@@ -31,6 +35,8 @@ const quizzes = {
     difficulty: 'Medium',
     questionsCount: 0,
     questions: [],
+    userAnswers: [],
+    finalScore: null,
   },
 };
 

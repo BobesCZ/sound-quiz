@@ -61,7 +61,7 @@ function QuizDetailPage(props) {
   };
 
   const isStepChecked = () => {
-    return (appState.userAnswers.hasOwnProperty(activeStep) && appState.userAnswers[activeStep].isChecked);
+    return (appState.availableQuizzes[quizId].userAnswers.hasOwnProperty(activeStep) && appState.availableQuizzes[quizId].userAnswers[activeStep].isChecked);
   };
 
   return (

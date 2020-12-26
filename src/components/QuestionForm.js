@@ -1,4 +1,5 @@
 import { useContext } from 'react';
+import { useParams } from 'react-router-dom';
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormLabel from '@material-ui/core/FormLabel';
@@ -22,20 +23,21 @@ const useStyles = makeStyles((theme) => ({
 function QuestionForm(props) {
   const questionId = props.questionId;
   const questionObject = props.questionObject;
+  const { id: quizId } = useParams();
 
-  const answer = props.appState.userAnswers[questionId] ? props.appState.userAnswers[questionId].answer : null;
-  const answerChecked = props.appState.userAnswers[questionId] ? props.appState.userAnswers[questionId].isChecked : null;
+  const answer = props.appState.availableQuizzes[quizId].userAnswers[questionId] ? props.appState.availableQuizzes[quizId].userAnswers[questionId].answer : null;
+  const answerChecked = props.appState.availableQuizzes[quizId].userAnswers[questionId] ? props.appState.availableQuizzes[quizId].userAnswers[questionId].isChecked : null;
   const dispatch = useContext(AppDispatch);
   const classes = useStyles();
 
   function handleChange(event) {
     if (answer === null) {
       const answer = { answer: parseInt(event.target.value), isChecked: false }
-      dispatch({ type: 'SET_USER_ANSWER', payload: { questionId, answer } });
+      dispatch({ type: 'SET_USER_ANSWER', payload: { quizId, questionId, answer } });
 
       setTimeout(() => {
         const answer = { answer: parseInt(event.target.value), isChecked: true }
-        dispatch({ type: 'SET_USER_ANSWER', payload: { questionId, answer } });
+        dispatch({ type: 'SET_USER_ANSWER', payload: { quizId, questionId, answer } });
       }, 1400)
     }
   }
