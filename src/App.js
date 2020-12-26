@@ -1,4 +1,4 @@
-import { useReducer } from 'react';
+import { useEffect, useReducer } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { createMuiTheme, CssBaseline } from '@material-ui/core';
 import { deepPurple, orange } from '@material-ui/core/colors';
@@ -11,6 +11,7 @@ import TopBar from './components/TopBar';
 import AppDispatch from './context/AppDispatch';
 import initialState from './context/initialState';
 import reducer from './context/reducer';
+import quizzes from './data/quizzes';
 
 function App() {
   const [appState, dispatch] = useReducer(reducer, initialState);
@@ -26,6 +27,15 @@ function App() {
       },
     }
   });
+
+  const availableQuizzes = appState.availableQuizzes;
+
+  useEffect(() => {
+    if (!Object.keys(availableQuizzes).length) {
+      dispatch({ type: 'SET_AVAILABLE_QUIZZES', payload: { quizzes } });
+    }
+  }, [availableQuizzes, dispatch])
+
 
   return (
     <Router>

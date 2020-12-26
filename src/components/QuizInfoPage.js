@@ -10,8 +10,6 @@ import TimerIcon from '@material-ui/icons/Timer';
 import VolumeUpIcon from '@material-ui/icons/VolumeUp';
 import Alert from '@material-ui/lab/Alert';
 import AlertTitle from '@material-ui/lab/AlertTitle';
-import questions from '../data/questions';
-import quizzes from '../data/quizzes';
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -43,19 +41,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function QuizDetailPage(props) {
-  // const appState = props.appState;
   const classes = useStyles();
 
   const { id: quizId } = useParams();
-  const quizObj = quizzes[quizId];
+  const quizObj = props.appState.availableQuizzes[quizId];
 
   if (quizObj === undefined) {
-    return null;
-  }
-
-  const questionsArray = questions[quizId];
-
-  if (questionsArray === undefined) {
     return null;
   }
 
@@ -72,7 +63,7 @@ function QuizDetailPage(props) {
           Number of questions:
         </Typography>
 
-        {questionsArray.length}
+        {quizObj.questionsCount}
       </Box>
 
       <Box my={1} className={classes.infoRow}>

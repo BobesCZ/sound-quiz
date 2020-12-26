@@ -1,4 +1,34 @@
 const questions = {
+  b0fe33b7: [
+    {
+      // Parov Stelar - Booty Swing
+      questionText: 'Choose the most suitable genre:',
+      video: {
+        id: 'ga7hGR_74DQ',
+        startSeconds: 51,
+        endSeconds: 61,
+      },
+      answers: [
+        {
+          id: 1,
+          answerText: "Jazz fusion",
+        },
+        {
+          id: 2,
+          answerText: "Dixieland",
+        },
+        {
+          id: 3,
+          answerText: "Free jazz",
+        },
+        {
+          id: 4,
+          answerText: "Electro swing",
+        },
+      ],
+      correctAnswer: 4
+    },
+  ],
   f8b5b078: [
     {
       // Korpiklaani - Vodka

@@ -1,5 +1,6 @@
 const initialState = {
-  userAnswers: {}
+  availableQuizzes: {},
+  userAnswers: {},
 };
 
 export default initialState;
