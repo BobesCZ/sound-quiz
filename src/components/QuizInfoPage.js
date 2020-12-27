@@ -1,9 +1,11 @@
+import clsx from 'clsx';
 import { Link as RouterLink, useParams } from 'react-router-dom';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import CheckIcon from '@material-ui/icons/Check';
 import EqualizerIcon from '@material-ui/icons/Equalizer';
 import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
 import TimerIcon from '@material-ui/icons/Timer';
@@ -19,6 +21,10 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "flex-start",
     alignItems: "center",
+  },
+  scoreTextColor: {
+    color: theme.palette.primary.main,
+    fill: theme.palette.primary.main,
   },
   infoText: {
     marginRight: theme.spacing(1),
@@ -86,30 +92,50 @@ function QuizDetailPage(props) {
         {quizObj.difficulty}
       </Box>
 
-      <Divider className={classes.divider} />
+      {quizObj.finalScore &&
+        <Box my={1} className={clsx(classes.infoRow, classes.scoreTextColor)}>
+          <EqualizerIcon className={clsx(classes.infoIcon, classes.scoreTextColor)} fontSize="small" />
 
-      <Typography variant="h6" className={classes.title}>
-        Instructions
-      </Typography>
+          <Typography className={clsx(classes.infoText, classes.scoreTextColor)}>
+            Your result:
+          </Typography>
 
-      <Typography className={classes.instructionBox}>
-        1. Click Play button to play a short (10s) snippet of a song. You can play it unlimited times.
-      </Typography>
-
-      <Typography className={classes.instructionBox}>
-        2. Choose the most suitable answer. You'll instantly see if your answer is correct.
-      </Typography>
-
-      <Typography className={classes.instructionBox}>
-        3. Continue to next question until you reach the end.
-      </Typography>
+          {quizObj.finalScore}%
+        </Box>
+      }
 
       <Divider className={classes.divider} />
 
-      <Alert icon={<VolumeUpIcon fontSize="inherit" />} variant="outlined" severity="info">
-        <AlertTitle>Turn on the sound</AlertTitle>
-        You need to use your headphones (or audio speakers) to complete the quiz!
-      </Alert>
+      {quizObj.finalScore
+        ? <Alert icon={<CheckIcon fontSize="inherit" />} variant="outlined" severity="success">
+          <AlertTitle>Quiz completed</AlertTitle>
+            You have already taken this quiz with <strong>{quizObj.finalScore}%</strong> success. Unfortunately it's not possible to repeat the quiz at the moment.
+          </Alert>
+        : <>
+          <Typography variant="h6" className={classes.title}>
+            Instructions
+          </Typography>
+
+          <Typography className={classes.instructionBox}>
+            1. Click Play button to play a short (10s) snippet of a song. You can play it unlimited times.
+          </Typography>
+
+          <Typography className={classes.instructionBox}>
+            2. Choose the most suitable answer. You'll instantly see if your answer is correct.
+          </Typography>
+
+          <Typography className={classes.instructionBox}>
+            3. Continue to next question until you reach the end.
+          </Typography>
+
+          <Divider className={classes.divider} />
+
+          <Alert icon={<VolumeUpIcon fontSize="inherit" />} variant="outlined" severity="info">
+            <AlertTitle>Turn on the sound</AlertTitle>
+            You need to use your headphones (or audio speakers) to complete the quiz!
+          </Alert>
+        </>
+      }
 
       <Box className={classes.buttonRow}>
         <Button
@@ -119,8 +145,11 @@ function QuizDetailPage(props) {
           component={RouterLink}
           to={`/quiz/${quizId}/questions`}
         >
-          Start a quiz
-      </Button>
+          {quizObj.finalScore
+            ? "View your answers"
+            : "Start a quiz"
+          }
+        </Button>
       </Box>
     </Box >
   );

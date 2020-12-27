@@ -88,7 +88,7 @@ function QuizDetailPage(props) {
           <Box my={3} className={classes.nextButtonWrap}>
             <Button size="large" variant="contained" color="primary" onClick={handleNext} disabled={!isStepChecked()} endIcon={<KeyboardArrowRight />}>
               {showResultText
-                ? "See your results"
+                ? "View your results"
                 : "Next question"
               }
             </Button>

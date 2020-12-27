@@ -65,6 +65,8 @@ function QuizCard(props) {
             variant="text"
             className={clsx(classes.infoButton, classes.conversionButton)}
             startIcon={<CheckIcon />}
+            component={RouterLink}
+            to={`/quiz/${quizId}`}
           >
             Your score: {quizObj.finalScore}%
           </Button>
