@@ -1,3 +1,6 @@
+import randomizeAnswers from '../utils/randomizeAnswers';
+import shuffleArray from '../utils/shuffleArray';
+
 function reducer(state, action) {
   switch (action.type) {
     case 'SET_USER_ANSWER': {
@@ -26,6 +29,15 @@ function reducer(state, action) {
     }
     case 'SET_QUESTIONS_TO_QUIZ': {
       const { quizId, questions } = action.payload;
+      shuffleArray(questions);
+
+      questions.forEach(questionObj => {
+        const { finalAnswersArray, finalCorrectAnswerIndex } = randomizeAnswers(questionObj.sourceAnswers);
+        questionObj.answers = finalAnswersArray;
+        questionObj.correctAnswer = finalCorrectAnswerIndex;
+        delete questionObj.sourceAnswers;
+      })
+
       state.availableQuizzes[quizId].questions = questions;
       return { ...state };
     }

@@ -8,25 +8,12 @@ const questions = {
         startSeconds: 51,
         endSeconds: 61,
       },
-      answers: [
-        {
-          id: 1,
-          answerText: "Jazz fusion",
-        },
-        {
-          id: 2,
-          answerText: "Dixieland",
-        },
-        {
-          id: 3,
-          answerText: "Free jazz",
-        },
-        {
-          id: 4,
-          answerText: "Electro swing",
-        },
-      ],
-      correctAnswer: 4
+      sourceAnswers: {
+        correctAnswer: "Electro swing",
+        otherAnswerArray: ["Jazz fusion", "Dixieland", "Free jazz"],
+      },
+      answers: [],
+      correctAnswer: null,
     },
   ],
   f8b5b078: [
@@ -38,25 +25,12 @@ const questions = {
         startSeconds: 11,
         endSeconds: 21,
       },
-      answers: [
-        {
-          id: 1,
-          answerText: "Symphonic metal",
-        },
-        {
-          id: 2,
-          answerText: "Neoclassical metal",
-        },
-        {
-          id: 3,
-          answerText: "Speed metal",
-        },
-        {
-          id: 4,
-          answerText: "Folk metal",
-        },
-      ],
-      correctAnswer: 4
+      sourceAnswers: {
+        correctAnswer: "Folk metal",
+        otherAnswerArray: ["Gothic", "Neoclassical metal", "Speed metal", "Symphonic metal"]
+      },
+      answers: [],
+      correctAnswer: null,
     },
     {
       // Within Temptation - Mother Earth
@@ -66,25 +40,12 @@ const questions = {
         startSeconds: 195,
         endSeconds: 205,
       },
-      answers: [
-        {
-          id: 1,
-          answerText: "Power metal",
-        },
-        {
-          id: 2,
-          answerText: "Stoner metal",
-        },
-        {
-          id: 3,
-          answerText: "Symphonic metal",
-        },
-        {
-          id: 4,
-          answerText: "Pagan metal",
-        },
-      ],
-      correctAnswer: 3
+      sourceAnswers: {
+        correctAnswer: "Symphonic metal",
+        otherAnswerArray: ["Glam metal", "Pagan metal", "Power metal", "Stoner metal"],
+      },
+      answers: [],
+      correctAnswer: null,
     },
     {
       // Dream Theater - Octavarium
@@ -94,25 +55,12 @@ const questions = {
         startSeconds: 889,
         endSeconds: 899,
       },
-      answers: [
-        {
-          id: 1,
-          answerText: "Sludge metal",
-        },
-        {
-          id: 2,
-          answerText: "Industrial metal",
-        },
-        {
-          id: 3,
-          answerText: "Symphonic metal",
-        },
-        {
-          id: 4,
-          answerText: "Progressive metal",
-        },
-      ],
-      correctAnswer: 4
+      sourceAnswers: {
+        correctAnswer: "Progressive metal",
+        otherAnswerArray: ["Industrial metal", "Metalcore", "Symphonic metal", "Thrash metal"],
+      },
+      answers: [],
+      correctAnswer: null,
     },
     {
       // DragonForce - Through the Fire and Flames
@@ -122,25 +70,12 @@ const questions = {
         startSeconds: 100,
         endSeconds: 110,
       },
-      answers: [
-        {
-          id: 1,
-          answerText: "Groove metal",
-        },
-        {
-          id: 2,
-          answerText: "Industrial metal",
-        },
-        {
-          id: 3,
-          answerText: "Power metal",
-        },
-        {
-          id: 4,
-          answerText: "Hardcore",
-        },
-      ],
-      correctAnswer: 3
+      sourceAnswers: {
+        correctAnswer: "Power metal",
+        otherAnswerArray: ["Death metal", "Groove metal", "Hardcore", "Industrial metal"],
+      },
+      answers: [],
+      correctAnswer: null,
     },
     {
       // Candlemass - Solitude
@@ -150,25 +85,12 @@ const questions = {
         startSeconds: 196,
         endSeconds: 206,
       },
-      answers: [
-        {
-          id: 1,
-          answerText: "Doom metal",
-        },
-        {
-          id: 2,
-          answerText: "Black metal",
-        },
-        {
-          id: 3,
-          answerText: "Gothic metal",
-        },
-        {
-          id: 4,
-          answerText: "Hardcore",
-        },
-      ],
-      correctAnswer: 1
+      sourceAnswers: {
+        correctAnswer: "Doom metal",
+        otherAnswerArray: ["Black metal", "Death metal", "Hardcore", "Heavy metal"],
+      },
+      answers: [],
+      correctAnswer: null,
     },
     {
       // Lacuna Coil - Trip The Darkness
@@ -178,25 +100,12 @@ const questions = {
         startSeconds: 60,
         endSeconds: 70,
       },
-      answers: [
-        {
-          id: 1,
-          answerText: "Celtic metal",
-        },
-        {
-          id: 2,
-          answerText: "Djent",
-        },
-        {
-          id: 3,
-          answerText: "Doom metal",
-        },
-        {
-          id: 4,
-          answerText: "Gothic metal",
-        },
-      ],
-      correctAnswer: 4
+      sourceAnswers: {
+        correctAnswer: "Gothic metal",
+        otherAnswerArray: ["Celtic metal", "Djent", "Sludge metal", "Progressive metal"],
+      },
+      answers: [],
+      correctAnswer: null,
     },
     {
       // Iron Maiden - Fear of the Dark
@@ -206,25 +115,12 @@ const questions = {
         startSeconds: 206,
         endSeconds: 216,
       },
-      answers: [
-        {
-          id: 1,
-          answerText: "Glam metal",
-        },
-        {
-          id: 2,
-          answerText: "Heavy metal",
-        },
-        {
-          id: 3,
-          answerText: "Gothic metal",
-        },
-        {
-          id: 4,
-          answerText: "Crossover",
-        },
-      ],
-      correctAnswer: 2
+      sourceAnswers: {
+        correctAnswer: "Heavy metal",
+        otherAnswerArray: ["Crossover", "Deathcore", "Glam metal", "Sludge metal"],
+      },
+      answers: [],
+      correctAnswer: null,
     },
     {
       // Asking Alexandria - The Black
@@ -234,25 +130,12 @@ const questions = {
         startSeconds: 11,
         endSeconds: 21,
       },
-      answers: [
-        {
-          id: 1,
-          answerText: "Black metal",
-        },
-        {
-          id: 2,
-          answerText: "Thrash metal",
-        },
-        {
-          id: 3,
-          answerText: "Metalcore",
-        },
-        {
-          id: 4,
-          answerText: "Power metal",
-        },
-      ],
-      correctAnswer: 3
+      sourceAnswers: {
+        correctAnswer: "Metalcore",
+        otherAnswerArray: ["Black metal", "Power metal", "Speed metal", "Thrash metal"],
+      },
+      answers: [],
+      correctAnswer: null,
     },
     {
       // Metallica - The Day That Never Comes
@@ -262,25 +145,12 @@ const questions = {
         startSeconds: 433,
         endSeconds: 443,
       },
-      answers: [
-        {
-          id: 1,
-          answerText: "Power metal",
-        },
-        {
-          id: 2,
-          answerText: "Grindcore",
-        },
-        {
-          id: 3,
-          answerText: "Black metal",
-        },
-        {
-          id: 4,
-          answerText: "Thrash metal",
-        },
-      ],
-      correctAnswer: 4
+      sourceAnswers: {
+        correctAnswer: "Thrash metal",
+        otherAnswerArray: ["Doom metal", "Grindcore", "Nu metal", "Stoner metal"],
+      },
+      answers: [],
+      correctAnswer: null,
     },
     {
       // Korn - Here to Stay
@@ -290,25 +160,12 @@ const questions = {
         startSeconds: 60,
         endSeconds: 70,
       },
-      answers: [
-        {
-          id: 1,
-          answerText: "Nu metal",
-        },
-        {
-          id: 2,
-          answerText: "Progressive metal",
-        },
-        {
-          id: 3,
-          answerText: "Heavy metal",
-        },
-        {
-          id: 4,
-          answerText: "Deathcore",
-        },
-      ],
-      correctAnswer: 1
+      sourceAnswers: {
+        correctAnswer: "Nu metal",
+        otherAnswerArray: ["Deathcore", "Groove metal", "Heavy metal", "Progressive metal"]
+      },
+      answers: [],
+      correctAnswer: null,
     },
   ]
 }
