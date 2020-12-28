@@ -73,9 +73,7 @@ function QuizDetailPage(props) {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
-  const isStepChecked = () => {
-    return (appState.availableQuizzes[quizId].userAnswers.hasOwnProperty(activeStep) && appState.availableQuizzes[quizId].userAnswers[activeStep].isChecked);
-  };
+  const isQuestionChecked = appState.availableQuizzes[quizId].userAnswers.hasOwnProperty(activeStep) && appState.availableQuizzes[quizId].userAnswers[activeStep].isChecked;
 
   return (
     <>
@@ -83,10 +81,10 @@ function QuizDetailPage(props) {
         ? <ResultControl appState={appState} questionsArray={questionsArray} />
         : <>
 
-          <QuestionControl appState={appState} questionsArray={questionsArray} questionId={activeStep} />
+          <QuestionControl appState={appState} questionsArray={questionsArray} questionId={activeStep} isQuestionChecked={isQuestionChecked} />
 
           <Box my={3} className={classes.nextButtonWrap}>
-            <Button size="large" variant="contained" color="primary" onClick={handleNext} disabled={!isStepChecked()} endIcon={<KeyboardArrowRight />}>
+            <Button size="large" variant="contained" color="primary" onClick={handleNext} disabled={!isQuestionChecked} endIcon={<KeyboardArrowRight />}>
               {showResultText
                 ? "View your results"
                 : "Next question"

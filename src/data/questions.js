@@ -170,7 +170,6 @@ const questions = {
   ],
   f8b5b078: [
     {
-      // Korpiklaani - Vodka
       questionText: 'Choose the most suitable genre:',
       video: {
         id: 'e7kJRGPgvRQ',
@@ -181,11 +180,15 @@ const questions = {
         correctAnswer: "Folk metal",
         otherAnswerArray: ["Gothic", "Neoclassical metal", "Speed metal", "Symphonic metal"]
       },
+      answerInfo: {
+        imgUrl: "https://upload.wikimedia.org/wikipedia/en/thumb/9/9f/Karkelo_%28Korpiklaani_album_-_cover_art%29.jpg/220px-Karkelo_%28Korpiklaani_album_-_cover_art%29.jpg",
+        songName: "Korpiklaani - Vodka",
+        albumName: "Karkelo (2009)",
+      },
       answers: [],
       correctAnswer: null,
     },
     {
-      // Within Temptation - Mother Earth
       questionText: 'Choose the most suitable genre:',
       video: {
         id: 'reGlno9aUpw',
@@ -196,11 +199,15 @@ const questions = {
         correctAnswer: "Symphonic metal",
         otherAnswerArray: ["Glam metal", "Pagan metal", "Power metal", "Stoner metal"],
       },
+      answerInfo: {
+        imgUrl: "https://www.bontonland.cz/image.php?image=/fotky/66/p-21712-full.jpg&width=96&height=96",
+        songName: "Within Temptation - Mother Earth",
+        albumName: "Mother Earth (2000)",
+      },
       answers: [],
       correctAnswer: null,
     },
     {
-      // Dream Theater - Octavarium
       questionText: 'Choose the most suitable genre:',
       video: {
         id: 'ZVMIk3xYaYo',
@@ -211,11 +218,15 @@ const questions = {
         correctAnswer: "Progressive metal",
         otherAnswerArray: ["Industrial metal", "Metalcore", "Symphonic metal", "Thrash metal"],
       },
+      answerInfo: {
+        imgUrl: "https://www.bontonland.cz/image.php?image=/fotky/56/p-18524-full.jpg&width=96&height=96",
+        songName: "Dream Theater - Octavarium",
+        albumName: "Octavarium (2005)",
+      },
       answers: [],
       correctAnswer: null,
     },
     {
-      // DragonForce - Through the Fire and Flames
       questionText: 'Choose the most suitable genre:',
       video: {
         id: '0jgrCKhxE1s',
@@ -226,11 +237,15 @@ const questions = {
         correctAnswer: "Power metal",
         otherAnswerArray: ["Death metal", "Groove metal", "Hardcore", "Industrial metal"],
       },
+      answerInfo: {
+        imgUrl: "https://images-na.ssl-images-amazon.com/images/I/81JKCNvcd0L._SY355_.jpg",
+        songName: "DragonForce - Through the Fire and Flames",
+        albumName: "Inhuman Rampage (2005)",
+      },
       answers: [],
       correctAnswer: null,
     },
     {
-      // Candlemass - Solitude
       questionText: 'Choose the most suitable genre:',
       video: {
         id: 'woe_4gkS4XU',
@@ -241,11 +256,15 @@ const questions = {
         correctAnswer: "Doom metal",
         otherAnswerArray: ["Black metal", "Death metal", "Hardcore", "Heavy metal"],
       },
+      answerInfo: {
+        imgUrl: "https://i.ebayimg.com/images/g/PwgAAOSwJQdXC5xO/s-l300.jpg",
+        songName: "Candlemass - Solitude",
+        albumName: "Inhuman Rampage (1986)",
+      },
       answers: [],
       correctAnswer: null,
     },
     {
-      // Lacuna Coil - Trip The Darkness
       questionText: 'Choose the most suitable genre:',
       video: {
         id: 'VTT6picaCoQ',
@@ -256,11 +275,15 @@ const questions = {
         correctAnswer: "Gothic metal",
         otherAnswerArray: ["Celtic metal", "Djent", "Sludge metal", "Progressive metal"],
       },
+      answerInfo: {
+        imgUrl: "https://img.discogs.com/iyIldDANfnV1W37v-CAyU75NoW0=/fit-in/300x300/filters:strip_icc():format(jpeg):mode_rgb():quality(40)/discogs-images/R-3587269-1336380921.jpeg.jpg",
+        songName: "Lacuna Coil - Trip The Darkness",
+        albumName: "Underworld: Awakening (2012)",
+      },
       answers: [],
       correctAnswer: null,
     },
     {
-      // Iron Maiden - Fear of the Dark
       questionText: 'Choose the most suitable genre:',
       video: {
         id: 'bePCRKGUwAY',
@@ -271,11 +294,15 @@ const questions = {
         correctAnswer: "Heavy metal",
         otherAnswerArray: ["Crossover", "Deathcore", "Glam metal", "Sludge metal"],
       },
+      answerInfo: {
+        imgUrl: "https://www.bontonland.cz/image.php?image=/fotky/382/p-151325-full.jpg&width=96&height=96",
+        songName: "Iron Maiden - Fear of the Dark",
+        albumName: "Fear of the Dark (1992)",
+      },
       answers: [],
       correctAnswer: null,
     },
     {
-      // Asking Alexandria - The Black
       questionText: 'Choose the most suitable genre:',
       video: {
         id: 'b1RKaRgVFKk',
@@ -286,11 +313,15 @@ const questions = {
         correctAnswer: "Metalcore",
         otherAnswerArray: ["Black metal", "Power metal", "Speed metal", "Thrash metal"],
       },
+      answerInfo: {
+        imgUrl: "https://www.bontonland.cz/image.php?image=/fotky/301/p-121741-full.jpg&width=96&height=96",
+        songName: "Asking Alexandria - The Black",
+        albumName: "The Black (2016)",
+      },
       answers: [],
       correctAnswer: null,
     },
     {
-      // Metallica - The Day That Never Comes
       questionText: 'Choose the most suitable genre:',
       video: {
         id: 'dkNfNR1WYMY',
@@ -301,11 +332,15 @@ const questions = {
         correctAnswer: "Thrash metal",
         otherAnswerArray: ["Doom metal", "Grindcore", "Nu metal", "Stoner metal"],
       },
+      answerInfo: {
+        imgUrl: "https://www.bontonland.cz/image.php?image=/fotky/101/p-33396-full.jpg&width=96&height=96",
+        songName: "Metallica - The Day That Never Comes",
+        albumName: "Death Magnetic (2008)",
+      },
       answers: [],
       correctAnswer: null,
     },
     {
-      // Korn - Here to Stay
       questionText: 'Choose the most suitable genre:',
       video: {
         id: 'pr3x7tS__dE',
@@ -315,6 +350,11 @@ const questions = {
       sourceAnswers: {
         correctAnswer: "Nu metal",
         otherAnswerArray: ["Deathcore", "Groove metal", "Heavy metal", "Progressive metal"]
+      },
+      answerInfo: {
+        imgUrl: "https://www.bontonland.cz/image.php?image=/fotky/69/p-22835-full.jpg&width=96&height=96",
+        songName: "Korn - Here to Stay",
+        albumName: "Untouchables (2002)",
       },
       answers: [],
       correctAnswer: null,

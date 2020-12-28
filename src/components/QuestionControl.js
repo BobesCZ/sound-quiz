@@ -21,6 +21,7 @@ function QuestionControl(props) {
   const questionId = props.questionId;
   const questionObject = questionsArray[questionId];
   const videoObject = questionObject.video;
+  const answerInfo = props.isQuestionChecked ? questionObject.answerInfo : null;
 
   const [playerObject, setPlayerObject] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -120,7 +121,7 @@ function QuestionControl(props) {
       {!playerObject
         ? <CircularProgress className={classes.root} />
         : <>
-          <PlayerPanel player={playerObject} isPlaying={isPlaying} isLoading={isLoading} videoObject={videoObject} progress={progress} />
+          <PlayerPanel player={playerObject} isPlaying={isPlaying} isLoading={isLoading} videoObject={videoObject} progress={progress} answerInfo={answerInfo} />
           <QuestionForm appState={props.appState} questionId={questionId} questionObject={questionObject} />
         </>
       }
