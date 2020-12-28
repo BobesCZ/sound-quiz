@@ -67,7 +67,7 @@ function QuizDetailPage(props) {
   }
 
   const questionCount = questionsArray.length;
-  const showResultText = quiz.finalScore && quiz.userAnswers[activeStep] && quiz.userAnswers[activeStep].isChecked ? true : false;
+  const showResultText = quiz.finalScore !== null && quiz.userAnswers[activeStep] && quiz.userAnswers[activeStep].isChecked ? true : false;
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);

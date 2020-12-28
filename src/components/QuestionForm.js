@@ -13,6 +13,7 @@ import {
 const useStyles = makeStyles((theme) => ({
   root: {
     marginBottom: theme.spacing(2),
+    lineHeight: 1.5,
     '&$focused': {
       color: 'rgba(255, 255, 255, 0.7)',
     },

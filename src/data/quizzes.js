@@ -9,8 +9,8 @@ const setQuestionsCount = (questionsObj, quizzesObj) => {
 
 const quizzes = {
   'f8b5b078': {
-    type: 'sound',
-    name: 'Metal',
+    name: 'Metal subgenres',
+    description: 'Can you guess music genre only by listening a short demonstration?',
     estimatedMinutes: 3,
     difficulty: 'Hard',
     questionsCount: 0,
@@ -19,8 +19,8 @@ const quizzes = {
     finalScore: null,
   },
   'b0fe33b7': {
-    type: 'sound',
-    name: 'Jazz',
+    name: 'Jazz subgenres',
+    description: 'Can you guess music genre only by listening a short demonstration?',
     estimatedMinutes: 1,
     difficulty: 'Easy',
     questionsCount: 0,
@@ -29,8 +29,8 @@ const quizzes = {
     finalScore: null,
   },
   'c4082e41': {
-    type: 'sound',
-    name: 'Classical music',
+    name: 'Classical music (rock version)',
+    description: "Can you guess author or song name of famous classical music works of art? And can you handle with demonstrations played by modern rock/metal bands?",
     estimatedMinutes: 5,
     difficulty: 'Medium',
     questionsCount: 0,

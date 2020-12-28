@@ -59,7 +59,7 @@ function QuizDetailPage(props) {
   return (
     <Box my={2}>
       <Typography variant="h5" component="h2" className={classes.title}>
-        Sound quiz: {quizObj.name}
+        {quizObj.name}
       </Typography>
 
       <Box my={1} className={classes.infoRow}>
@@ -92,7 +92,13 @@ function QuizDetailPage(props) {
         {quizObj.difficulty}
       </Box>
 
-      {quizObj.finalScore &&
+      <Box mt={3} mb={1}>
+        <Typography>
+          {quizObj.description}
+        </Typography>
+      </Box>
+
+      {quizObj.finalScore !== null &&
         <Box my={1} className={clsx(classes.infoRow, classes.scoreTextColor)}>
           <EqualizerIcon className={clsx(classes.infoIcon, classes.scoreTextColor)} fontSize="small" />
 
@@ -106,11 +112,13 @@ function QuizDetailPage(props) {
 
       <Divider className={classes.divider} />
 
-      {quizObj.finalScore
-        ? <Alert icon={<CheckIcon fontSize="inherit" />} variant="outlined" severity="success">
-          <AlertTitle>Quiz completed</AlertTitle>
+      {quizObj.finalScore !== null
+        ? <Box my={3}>
+          <Alert icon={<CheckIcon fontSize="inherit" />} variant="outlined" severity="success">
+            <AlertTitle>Quiz completed</AlertTitle>
             You have already taken this quiz with <strong>{quizObj.finalScore}%</strong> success. Unfortunately it's not possible to repeat the quiz at the moment.
           </Alert>
+        </Box>
         : <>
           <Typography variant="h6" className={classes.title}>
             Instructions
@@ -128,12 +136,12 @@ function QuizDetailPage(props) {
             3. Continue to next question until you reach the end.
           </Typography>
 
-          <Divider className={classes.divider} />
-
-          <Alert icon={<VolumeUpIcon fontSize="inherit" />} variant="outlined" severity="info">
-            <AlertTitle>Turn on the sound</AlertTitle>
-            You need to use your headphones (or audio speakers) to complete the quiz!
-          </Alert>
+          <Box my={3}>
+            <Alert icon={<VolumeUpIcon fontSize="inherit" />} variant="outlined" severity="info">
+              <AlertTitle>Turn on the sound</AlertTitle>
+              You need to use your headphones (or audio speakers) to complete the quiz!
+            </Alert>
+          </Box>
         </>
       }
 
@@ -145,7 +153,7 @@ function QuizDetailPage(props) {
           component={RouterLink}
           to={`/quiz/${quizId}/questions`}
         >
-          {quizObj.finalScore
+          {quizObj.finalScore !== null
             ? "View your answers"
             : "Start a quiz"
           }

@@ -39,10 +39,10 @@ function QuizCard(props) {
     <Card className={clsx(classes.root, quizObj.finalScore !== null ? classes.rootCompleted : null)}>
       <CardContent>
         <Typography variant="h5" component="h2" gutterBottom>
-          Sound quiz: {quizObj.name}
+          {quizObj.name}
         </Typography>
         <Typography className={classes.title} color="textSecondary">
-          Can you guess music genre only by listening a short demonstration?
+          {quizObj.description}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>

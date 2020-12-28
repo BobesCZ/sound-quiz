@@ -35,7 +35,7 @@ function TopBar() {
           </IconButton>
 
           <Typography variant="h6" className={classes.title}>
-            Music styles
+            SoundQuiz
           </Typography>
         </Toolbar>
       </Container>
