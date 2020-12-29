@@ -8,10 +8,12 @@ import QuizDetailPage from './components/QuizDetailPage';
 import QuizInfoPage from './components/QuizInfoPage';
 import QuizListPage from './components/QuizListPage';
 import TopBar from './components/TopBar';
+import UserPage from './components/UserPage';
 import AppDispatch from './context/AppDispatch';
 import initialState from './context/initialState';
 import reducer from './context/reducer';
 import quizzes from './data/quizzes';
+import { loadFromStorage } from './utils/storage';
 
 function App() {
   const [appState, dispatch] = useReducer(reducer, initialState);
@@ -36,6 +38,12 @@ function App() {
     }
   }, [availableQuizzes, dispatch])
 
+  useEffect(() => {
+    const loadedUserAnswers = loadFromStorage();
+    if (loadedUserAnswers) {
+      dispatch({ type: 'SET_LOADED_ANSWERS', payload: { loadedUserAnswers } });
+    }
+  }, [])
 
   return (
     <Router>
@@ -50,6 +58,9 @@ function App() {
               </Route>
               <Route path="/quiz/:id">
                 <QuizInfoPage appState={appState} />
+              </Route>
+              <Route path="/user">
+                <UserPage appState={appState} />
               </Route>
               <Route path="/">
                 <QuizListPage appState={appState} />

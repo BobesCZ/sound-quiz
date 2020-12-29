@@ -1,5 +1,6 @@
 import randomizeAnswers from '../utils/randomizeAnswers';
 import shuffleArray from '../utils/shuffleArray';
+import { clearStorage, saveToStorage } from '../utils/storage';
 
 function reducer(state, action) {
   switch (action.type) {
@@ -20,6 +21,10 @@ function reducer(state, action) {
         quiz.finalScore = correctAnswersCount / quiz.questions.length * 100;
       };
 
+      if (answer.isChecked) {
+        saveToStorage(quizId, quiz)
+      }
+
       return { ...state };
     }
     case 'SET_AVAILABLE_QUIZZES': {
@@ -39,6 +44,24 @@ function reducer(state, action) {
       })
 
       state.availableQuizzes[quizId].questions = questions;
+      return { ...state };
+    }
+    case 'SET_LOADED_ANSWERS': {
+      const { loadedUserAnswers } = action.payload;
+      Object.keys(loadedUserAnswers).forEach(quizId => {
+        const { finalScore, userAnswers } = loadedUserAnswers[quizId];
+        state.availableQuizzes[quizId].finalScore = finalScore;
+        state.availableQuizzes[quizId].userAnswers = userAnswers;
+      })
+      return { ...state };
+    }
+    case 'RESET_AVAILABLE_QUIZZES': {
+      Object.keys(state.availableQuizzes).forEach(quizId => {
+        state.availableQuizzes[quizId].finalScore = null;
+        state.availableQuizzes[quizId].userAnswers = [];
+      })
+
+      clearStorage();
       return { ...state };
     }
     default:

@@ -40,6 +40,7 @@ const useStyles = makeStyles((theme) => ({
     lineHeight: 0,
     minWidth: 80 + 2 * theme.spacing(1),
     minHeight: 80 + 2 * theme.spacing(1),
+    textAlign: "center",
   },
   imageIcon: {
     fontSize: 80,
@@ -113,7 +114,7 @@ function PlayerPanel(props) {
             <Typography color="textSecondary" variant="body1" noWrap>
               {answerInfo ? answerInfo.songName : '\u00A0'}
             </Typography>
-            <Typography color="textSecondary" variant="body2">
+            <Typography color="textSecondary" variant="body2" noWrap>
               {answerInfo ? answerInfo.albumName : '\u00A0'}
             </Typography>
           </Box>
