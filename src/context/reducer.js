@@ -49,9 +49,11 @@ function reducer(state, action) {
     case 'SET_LOADED_ANSWERS': {
       const { loadedUserAnswers } = action.payload;
       Object.keys(loadedUserAnswers).forEach(quizId => {
-        const { finalScore, userAnswers } = loadedUserAnswers[quizId];
-        state.availableQuizzes[quizId].finalScore = finalScore;
-        state.availableQuizzes[quizId].userAnswers = userAnswers;
+        if (state.availableQuizzes[quizId]) {
+          const { finalScore, userAnswers } = loadedUserAnswers[quizId];
+          state.availableQuizzes[quizId].finalScore = finalScore;
+          state.availableQuizzes[quizId].userAnswers = userAnswers;
+        }
       })
       return { ...state };
     }
