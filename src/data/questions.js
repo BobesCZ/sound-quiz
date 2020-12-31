@@ -1,11 +1,192 @@
 const questions = {
+  kcca86d2: [
+    {
+      questionText: 'Choose the correct release year of the song:',
+      video: {
+        id: 'wMsazR6Tnf8',
+        startSeconds: 70,
+      },
+      sourceAnswers: {
+        correctAnswer: "'80s",
+        otherAnswerArray: ["'60s", "'70s", "'90s"],
+      },
+      answerInfo: {
+        imgUrl: "https://upload.wikimedia.org/wikipedia/en/d/da/I_love_rock_n%27_roll_-_joan_jett_%28album_cover%29.JPG",
+        songName: "Joan Jett - I Love Rock 'n Roll",
+        albumName: "I Love Rock 'n Roll (1981)",
+      },
+      answers: [],
+      correctAnswer: null,
+    },
+    {
+      questionText: 'Choose the correct release year of the song:',
+      video: {
+        id: 'xwtdhWltSIg',
+        startSeconds: 97,
+      },
+      sourceAnswers: {
+        correctAnswer: "'90s",
+        otherAnswerArray: ["'60s", "'70s", "'80s"],
+      },
+      answerInfo: {
+        imgUrl: "https://www.bontonland.cz/image.php?image=/fotky/354/p-140986-full.jpg&width=96&height=96",
+        songName: "R.E.M. - Losing My Religion",
+        albumName: "Out of Time (1991)",
+      },
+      answers: [],
+      correctAnswer: null,
+    },
+    {
+      questionText: 'Choose the correct release year of the song:',
+      video: {
+        id: '1lyu1KKwC74',
+        startSeconds: 81,
+      },
+      sourceAnswers: {
+        correctAnswer: "'90s",
+        otherAnswerArray: ["'60s", "'70s", "'80s"],
+      },
+      answerInfo: {
+        imgUrl: "https://www.bontonland.cz/image.php?image=/fotky/398/p-157572-full.jpg&width=96&height=96",
+        songName: "The Verve - Bitter Sweet Symphony",
+        albumName: "Urban Hymns (1997)",
+      },
+      answers: [],
+      correctAnswer: null,
+    },
+    {
+      questionText: 'Choose the correct release year of the song:',
+      video: {
+        id: 'l482T0yNkeo',
+        startSeconds: 17,
+      },
+      sourceAnswers: {
+        correctAnswer: "'70s",
+        otherAnswerArray: ["'60s", "'80s", "'90s"],
+      },
+      answerInfo: {
+        imgUrl: "https://www.bontonland.cz/image.php?image=/fotky/177/p-68486-full.jpg&width=96&height=96",
+        songName: "AC/DC - Highway to Hell",
+        albumName: "Highway to Hell (1979)",
+      },
+      answers: [],
+      correctAnswer: null,
+    },
+    {
+      questionText: 'Choose the correct release year of the song:',
+      video: {
+        id: '1w7OgIMMRc4',
+        startSeconds: 61,
+      },
+      sourceAnswers: {
+        correctAnswer: "'80s",
+        otherAnswerArray: ["'60s", "'70s", "'90s"],
+      },
+      answerInfo: {
+        imgUrl: "https://www.bontonland.cz/image.php?image=/fotky/449/p-175341-full.jpg&width=96&height=96",
+        songName: "Guns N' Roses - Sweet Child O' Mine",
+        albumName: "Appetite for Destruction (1987)",
+      },
+      answers: [],
+      correctAnswer: null,
+    },
+    {
+      questionText: 'Choose the correct release year of the song:',
+      video: {
+        id: '5IpYOF4Hi6Q',
+        startSeconds: 27,
+      },
+      sourceAnswers: {
+        correctAnswer: "'70s",
+        otherAnswerArray: ["'60s", "'80s", "'90s"],
+      },
+      answerInfo: {
+        imgUrl: "https://d25-a.sdn.cz/d_25/c_img_H_Fu/xi56Wh.jpeg?fl=res%2C350%2C350%2C1%7Cwebp%2C80",
+        songName: "Pink Floyd - Another Brick in the Wall Part 2“",
+        albumName: "The Wall (1979)",
+      },
+      answers: [],
+      correctAnswer: null,
+    },
+    {
+      questionText: 'Choose the correct release year of the song:',
+      video: {
+        id: 'ujNeHIo7oTE',
+        startSeconds: 177,
+      },
+      sourceAnswers: {
+        correctAnswer: "'80s",
+        otherAnswerArray: ["'60s", "'70s", "'90s"],
+      },
+      answerInfo: {
+        imgUrl: "https://www.bontonland.cz/image.php?image=/fotky/384/p-152292-full.jpg&width=96&height=96",
+        songName: "U2 - With or Without You",
+        albumName: "The Joshua Tree (1987)",
+      },
+      answers: [],
+      correctAnswer: null,
+    },
+    {
+      questionText: 'Choose the correct release year of the song:',
+      video: {
+        id: 'qoX6AKuYWL8',
+        startSeconds: 17,
+      },
+      sourceAnswers: {
+        correctAnswer: "'60s",
+        otherAnswerArray: ["'70s", "'80s", "'90s"],
+      },
+      answerInfo: {
+        imgUrl: "https://upload.wikimedia.org/wikipedia/en/9/98/TheDoorsTheDoorsalbumcover.jpg",
+        songName: "The Doors - Light My Fire",
+        albumName: "The Doors (1967)",
+      },
+      answers: [],
+      correctAnswer: null,
+    },
+    {
+      questionText: 'Choose the correct release year of the song:',
+      video: {
+        id: '811QZGDysx0',
+        startSeconds: 105,
+      },
+      sourceAnswers: {
+        correctAnswer: "'70s",
+        otherAnswerArray: ["'60s", "'80s", "'90s"],
+      },
+      answerInfo: {
+        imgUrl: "https://www.bontonland.cz/image.php?image=/fotky/413/p-162674-full.jpg&width=96&height=96",
+        songName: "Eagles - Hotel California",
+        albumName: "Hotel California (1976)",
+      },
+      answers: [],
+      correctAnswer: null,
+    },
+    {
+      questionText: 'Choose the correct release year of the song:',
+      video: {
+        id: 'qN5zw04WxCc',
+        startSeconds: 4,
+      },
+      sourceAnswers: {
+        correctAnswer: "'60s",
+        otherAnswerArray: ["'70s", "'80s", "'90s"],
+      },
+      answerInfo: {
+        imgUrl: "https://www.bontonland.cz/image.php?image=/fotky/240/p-98327-full.jpg&width=96&height=96",
+        songName: "The Who - My Generation",
+        albumName: "My Generation (1965)",
+      },
+      answers: [],
+      correctAnswer: null,
+    },
+  ],
   c4082e41: [
     {
       questionText: 'Choose the correct part of Requiem in D minor (W. A. Mozart):',
       video: {
         id: 'lmi42FCnYuM',
         startSeconds: 14,
-        endSeconds: 24,
       },
       sourceAnswers: {
         correctAnswer: "Lacrimosa",
@@ -24,7 +205,6 @@ const questions = {
       video: {
         id: '7TJdqKlMTEo',
         startSeconds: 15,
-        endSeconds: 25,
       },
       sourceAnswers: {
         correctAnswer: "Symphony No 9 (A. Dvořák)",
@@ -43,7 +223,6 @@ const questions = {
       video: {
         id: 'YzOF9w8kG-c',
         startSeconds: 183,
-        endSeconds: 193,
       },
       sourceAnswers: {
         correctAnswer: "Symphony No. 5 (L. V. Beethoven)",
@@ -62,7 +241,6 @@ const questions = {
       video: {
         id: 'omqJTXzHBVY',
         startSeconds: 40,
-        endSeconds: 50,
       },
       sourceAnswers: {
         correctAnswer: "Piano Sonata No. 14 (L. V. Beethoven)",
@@ -81,7 +259,6 @@ const questions = {
       video: {
         id: 'pnyfESsYbYc',
         startSeconds: 10,
-        endSeconds: 18,
       },
       sourceAnswers: {
         correctAnswer: "Summer",
@@ -100,7 +277,6 @@ const questions = {
       video: {
         id: 'JK9LZQycBBM',
         startSeconds: 71,
-        endSeconds: 81,
       },
       sourceAnswers: {
         correctAnswer: "Swan Lake (P. I. Tchaikovsky)",
@@ -119,7 +295,6 @@ const questions = {
       video: {
         id: 'RjW6sZuNuDs',
         startSeconds: 55,
-        endSeconds: 65,
       },
       sourceAnswers: {
         correctAnswer: "Symphony No. 40",
@@ -138,7 +313,6 @@ const questions = {
       video: {
         id: 'Oeyf2vlwPrk',
         startSeconds: 40,
-        endSeconds: 50,
       },
       sourceAnswers: {
         correctAnswer: "Bagatelle No. 25 (L. V. Beethoven)",
@@ -157,7 +331,6 @@ const questions = {
       video: {
         id: '-9577xg0BjU',
         startSeconds: 21,
-        endSeconds: 31,
       },
       sourceAnswers: {
         correctAnswer: "My Country (B. Smetana)",
@@ -176,7 +349,6 @@ const questions = {
       video: {
         id: 'yacHmBiLNZk',
         startSeconds: 61,
-        endSeconds: 71,
       },
       sourceAnswers: {
         correctAnswer: "In The Hall Of The Mountain King (E. Grieg)",
@@ -198,7 +370,6 @@ const questions = {
       video: {
         id: 'ga7hGR_74DQ',
         startSeconds: 51,
-        endSeconds: 61,
       },
       sourceAnswers: {
         correctAnswer: "Electro swing",
@@ -214,7 +385,6 @@ const questions = {
       video: {
         id: 'e7kJRGPgvRQ',
         startSeconds: 11,
-        endSeconds: 21,
       },
       sourceAnswers: {
         correctAnswer: "Folk metal",
@@ -233,7 +403,6 @@ const questions = {
       video: {
         id: 'reGlno9aUpw',
         startSeconds: 195,
-        endSeconds: 205,
       },
       sourceAnswers: {
         correctAnswer: "Symphonic metal",
@@ -252,7 +421,6 @@ const questions = {
       video: {
         id: 'ZVMIk3xYaYo',
         startSeconds: 889,
-        endSeconds: 899,
       },
       sourceAnswers: {
         correctAnswer: "Progressive metal",
@@ -271,7 +439,6 @@ const questions = {
       video: {
         id: '0jgrCKhxE1s',
         startSeconds: 100,
-        endSeconds: 110,
       },
       sourceAnswers: {
         correctAnswer: "Power metal",
@@ -290,7 +457,6 @@ const questions = {
       video: {
         id: 'woe_4gkS4XU',
         startSeconds: 196,
-        endSeconds: 206,
       },
       sourceAnswers: {
         correctAnswer: "Doom metal",
@@ -309,7 +475,6 @@ const questions = {
       video: {
         id: 'VTT6picaCoQ',
         startSeconds: 60,
-        endSeconds: 70,
       },
       sourceAnswers: {
         correctAnswer: "Gothic metal",
@@ -328,7 +493,6 @@ const questions = {
       video: {
         id: 'bePCRKGUwAY',
         startSeconds: 206,
-        endSeconds: 216,
       },
       sourceAnswers: {
         correctAnswer: "Heavy metal",
@@ -347,7 +511,6 @@ const questions = {
       video: {
         id: 'b1RKaRgVFKk',
         startSeconds: 11,
-        endSeconds: 21,
       },
       sourceAnswers: {
         correctAnswer: "Metalcore",
@@ -366,7 +529,6 @@ const questions = {
       video: {
         id: 'dkNfNR1WYMY',
         startSeconds: 433,
-        endSeconds: 443,
       },
       sourceAnswers: {
         correctAnswer: "Thrash metal",
@@ -385,7 +547,6 @@ const questions = {
       video: {
         id: 'pr3x7tS__dE',
         startSeconds: 60,
-        endSeconds: 70,
       },
       sourceAnswers: {
         correctAnswer: "Nu metal",

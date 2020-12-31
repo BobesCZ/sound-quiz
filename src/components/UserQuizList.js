@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import Button from '@material-ui/core/Button';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -14,6 +15,15 @@ const useStyles = makeStyles((theme) => ({
   scoreText: {
     textTransform: "none",
     padding: 0,
+  },
+  quizName: {
+    paddingRight: theme.spacing(0.75),
+  },
+  secondaryAction: {
+    paddingRight: theme.spacing(10),
+  },
+  incompleted: {
+    paddingRight: theme.spacing(13),
   }
 }));
 
@@ -29,11 +39,13 @@ function UserQuizList(props) {
     <>
       <List className={classes.list}>
         {quizzes.map((quiz, index) => (
-          <ListItem key={index}>
+          <ListItem key={index} className={clsx(classes.secondaryAction, quiz.finalScore === null ? classes.incompleted : null)}>
             <ListItemText
               primary={
                 <>
-                  {quiz.name}
+                  <Typography component="span" className={classes.quizName}>
+                    {quiz.name}
+                  </Typography>
                   <Typography component="span" color="textSecondary">
                     ({quiz.difficulty})
                   </Typography>

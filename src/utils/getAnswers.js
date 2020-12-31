@@ -7,7 +7,7 @@ function createAnswerObject(id, text) {
   return answerObj;
 }
 
-function randomizeAnswers(answersObj) {
+function getAnswers(answersObj, randomizeAnswers = true) {
   const correctAnswerText = answersObj.correctAnswer;
   const answersTextArray = [...answersObj.otherAnswerArray];
   const answersLimit = 4;
@@ -21,12 +21,26 @@ function randomizeAnswers(answersObj) {
       answersTextArray.splice(Math.floor(Math.random() * answersTextArray.length), 1);
     }
 
-    // Shuffle items 
-    shuffleArray(answersTextArray);
+    if (randomizeAnswers) {
+      // Shuffle items 
+      shuffleArray(answersTextArray);
 
-    // Push item with correct answer
-    finalCorrectAnswerIndex = Math.floor(Math.random() * answersLimit)
-    answersTextArray.splice(finalCorrectAnswerIndex, 0, correctAnswerText);
+      // Correct answer with random index
+      finalCorrectAnswerIndex = Math.floor(Math.random() * answersLimit);
+
+      // Push item with correct answer
+      answersTextArray.splice(finalCorrectAnswerIndex, 0, correctAnswerText);
+    }
+    else {
+      // Push item with correct answer
+      answersTextArray.push(correctAnswerText);
+
+      // Sort items
+      answersTextArray.sort();
+
+      // Correct answer
+      finalCorrectAnswerIndex = answersTextArray.indexOf(correctAnswerText);
+    }
 
     // Create answers object
     answersTextArray.forEach((item, index) => {
@@ -35,4 +49,4 @@ function randomizeAnswers(answersObj) {
   }
   return { finalAnswersArray, finalCorrectAnswerIndex };
 }
-export default randomizeAnswers
+export default getAnswers

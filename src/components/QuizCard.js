@@ -58,7 +58,7 @@ function QuizCard(props) {
           className={classes.infoButton}
           startIcon={<EqualizerIcon />}
         >
-          {quizObj.difficulty}
+          {quizObj.difficulty[0].toUpperCase() + quizObj.difficulty.slice(1)}
         </Button>
         {quizObj.finalScore !== null
           ? <Button

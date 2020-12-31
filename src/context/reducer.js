@@ -1,4 +1,5 @@
-import randomizeAnswers from '../utils/randomizeAnswers';
+import getAnswers from '../utils/getAnswers';
+import getVideoEndSeconds from '../utils/getVideoEndSeconds';
 import shuffleArray from '../utils/shuffleArray';
 import { clearStorage, saveToStorage } from '../utils/storage';
 
@@ -34,12 +35,15 @@ function reducer(state, action) {
     }
     case 'SET_QUESTIONS_TO_QUIZ': {
       const { quizId, questions } = action.payload;
+      const options = state.availableQuizzes[quizId].options || {};
       shuffleArray(questions);
 
       questions.forEach(questionObj => {
-        const { finalAnswersArray, finalCorrectAnswerIndex } = randomizeAnswers(questionObj.sourceAnswers);
+        const { finalAnswersArray, finalCorrectAnswerIndex } = getAnswers(questionObj.sourceAnswers, options.randomizeAnswers);
         questionObj.answers = finalAnswersArray;
         questionObj.correctAnswer = finalCorrectAnswerIndex;
+
+        questionObj.video.endSeconds = getVideoEndSeconds(questionObj.video.startSeconds, options.videoDuration)
         delete questionObj.sourceAnswers;
       })
 
