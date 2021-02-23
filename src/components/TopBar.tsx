@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function TopBar() {
+export default function TopBar() {
   const classes = useStyles();
 
   return (
@@ -54,5 +54,3 @@ function TopBar() {
     </AppBar>
   );
 }
-
-export default TopBar;

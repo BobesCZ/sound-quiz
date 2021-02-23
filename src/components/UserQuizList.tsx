@@ -7,6 +7,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import CheckIcon from '@material-ui/icons/Check';
+import { Quiz } from '../types/quiz';
 
 const useStyles = makeStyles((theme) => ({
   list: {
@@ -27,8 +28,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function UserQuizList(props) {
-  const quizzes = props.quizzes;
+export default function UserQuizList({ quizzes } : { quizzes: Quiz[]}) {
   const classes = useStyles();
 
   if (!quizzes.length) {
@@ -54,7 +54,6 @@ function UserQuizList(props) {
             />
             <ListItemSecondaryAction>
               <Button
-                edge="end"
                 variant="text"
                 className={classes.scoreText}
                 startIcon={quiz.finalScore !== null ? <CheckIcon /> : null}
@@ -68,5 +67,3 @@ function UserQuizList(props) {
     </>
   );
 }
-
-export default UserQuizList;

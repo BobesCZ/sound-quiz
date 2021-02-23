@@ -1,6 +1,7 @@
 import { green, grey, red } from '@material-ui/core/colors';
 import Radio from '@material-ui/core/Radio';
 import { withStyles } from '@material-ui/core/styles';
+import { QuestionRadioProps } from '../types/elements';
 
 const stylesCorrect = {
   "@keyframes pulseGreen": {
@@ -26,29 +27,23 @@ const stylesCorrect = {
     }
   },
   root: {
-    // color: grey[500],
-    color: (props) =>
+    color: (props: QuestionRadioProps) =>
       (!props.waitingAnimation && props.isCorrect)
-        // ? `${green[500]} !important`
         ? green[500]
         : grey[500]
   },
   checked: {
-    color: (props) =>
+    color: (props: QuestionRadioProps) =>
       props.waitingAnimation
         ? grey[500]
         : props.isCorrect
           ? green[500]
           : red[500],
     animation: "$pulseGreen ease-in",
-    // animationName: (props) =>
-    //   props.isCorrect
-    //     ? "$pulseGreen"
-    //     : "$pulseRed",
-    animationDuration: (props) =>
+    animationDuration: (props: QuestionRadioProps) =>
       props.waitingAnimation
         ? "1.5s"
-        : 0,
+        : "0",
   },
 };
 
@@ -79,27 +74,22 @@ const stylesWrong = {
     color: grey[500],
   },
   checked: {
-    color: (props) =>
+    color: (props: QuestionRadioProps) =>
       props.waitingAnimation
         ? grey[500]
         : props.isCorrect
           ? green[500]
           : red[500],
     animation: "$pulseRed ease-in",
-    // animationName: (props) =>
-    //   props.isCorrect
-    //     ? "$pulseGreen"
-    //     : "$pulseRed",
-    animationDuration: (props) =>
+    animationDuration: (props: QuestionRadioProps) =>
       props.waitingAnimation
         ? "1.5s"
-        : 0,
+        : "0",
   },
 };
 
-function QuestionRadio(props) {
+function QuestionRadio(props: QuestionRadioProps) {
   const { waitingAnimation, isCorrect, ...other } = props;
-  // console.log(`waitingAnimation: ${waitingAnimation}, isCorrect: ${isCorrect}`)
   return <Radio color="default" {...other} />
 }
 

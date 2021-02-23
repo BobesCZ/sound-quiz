@@ -12,6 +12,8 @@ import TimerIcon from '@material-ui/icons/Timer';
 import VolumeUpIcon from '@material-ui/icons/VolumeUp';
 import Alert from '@material-ui/lab/Alert';
 import AlertTitle from '@material-ui/lab/AlertTitle';
+import { AppState } from '../types/appState';
+import { Quiz } from '../types/quiz';
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -46,11 +48,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function QuizDetailPage(props) {
+export default function QuizDetailPage({appState}: {appState: AppState}) {
+  const { id: quizId } = useParams<{ id: string }>();
+  const { availableQuizzes } = appState;
+  const quizObj : Quiz | undefined = availableQuizzes?.[quizId];
   const classes = useStyles();
-
-  const { id: quizId } = useParams();
-  const quizObj = props.appState.availableQuizzes[quizId];
 
   if (quizObj === undefined) {
     return null;
@@ -162,5 +164,3 @@ function QuizDetailPage(props) {
     </Box >
   );
 }
-
-export default QuizDetailPage;

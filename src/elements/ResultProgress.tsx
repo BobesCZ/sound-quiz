@@ -1,8 +1,8 @@
-import CircularProgress from '@material-ui/core/CircularProgress';
+import CircularProgress, { CircularProgressProps } from '@material-ui/core/CircularProgress';
 import { grey } from '@material-ui/core/colors';
-import { withStyles } from '@material-ui/core/styles';
+import { StyleRules, withStyles } from '@material-ui/core/styles';
 
-const styles = {
+const styles: StyleRules = {
   static: {
     position: "absolute",
     zIndex: -1,
@@ -14,7 +14,7 @@ const styles = {
   }
 };
 
-function ClassNames(props) {
+function ClassNames(props: CircularProgressProps) {
   return (
     <CircularProgress size={150} {...props} />
   );

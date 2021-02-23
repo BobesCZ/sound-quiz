@@ -9,13 +9,14 @@ import QuizInfoPage from './components/QuizInfoPage';
 import QuizListPage from './components/QuizListPage';
 import TopBar from './components/TopBar';
 import UserPage from './components/UserPage';
-import AppDispatch from './context/AppDispatch';
+import { AppDispatchProvider } from './context/AppDispatchProvider';
 import initialState from './context/initialState';
 import reducer from './context/reducer';
 import quizzes from './data/quizzes';
 import { loadFromStorage } from './utils/storage';
+import { ActionType } from './types/action';
 
-function App() {
+export default function App() {
   const [appState, dispatch] = useReducer(reducer, initialState);
 
   const theme = createMuiTheme({
@@ -33,15 +34,15 @@ function App() {
   const availableQuizzes = appState.availableQuizzes;
 
   useEffect(() => {
-    if (!Object.keys(availableQuizzes).length) {
-      dispatch({ type: 'SET_AVAILABLE_QUIZZES', payload: { quizzes } });
+    if (!Object.keys(availableQuizzes || []).length) {
+      dispatch({ type: ActionType.SetAvailableQuizzes, payload: { quizzes } });
     }
   }, [availableQuizzes, dispatch])
 
   useEffect(() => {
     const loadedUserAnswers = loadFromStorage();
     if (loadedUserAnswers) {
-      dispatch({ type: 'SET_LOADED_ANSWERS', payload: { loadedUserAnswers } });
+      dispatch({ type: ActionType.SetLoadedAnswers, payload: { loadedUserAnswers } });
     }
   }, [])
 
@@ -49,7 +50,7 @@ function App() {
     <Router>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <AppDispatch.Provider value={dispatch}>
+        <AppDispatchProvider>
           <TopBar />
           <Container maxWidth="sm">
             <Switch>
@@ -67,10 +68,8 @@ function App() {
               </Route>
             </Switch>
           </Container>
-        </AppDispatch.Provider>
+        </AppDispatchProvider>
       </ThemeProvider>
     </Router>
   );
 }
-
-export default App;

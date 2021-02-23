@@ -12,6 +12,9 @@ import AppDispatch from '../context/AppDispatch';
 import questions from '../data/questions';
 import QuestionControl from './QuestionControl';
 import ResultControl from './ResultControl';
+import { ActionType } from '../types/action';
+import { AppState } from '../types/appState';
+import { Quiz } from '../types/quiz';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,48 +40,52 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function QuizDetailPage(props) {
-  const appState = props.appState;
-  const dispatch = useContext(AppDispatch);
-
+export default function QuizDetailPage({appState}: {appState: AppState}) {
+  const { availableQuizzes } = appState;
+  const { id: quizId } = useParams<{ id: string }>();
+  const quizObj : Quiz | undefined = availableQuizzes?.[quizId];
+  
   const [activeStep, setActiveStep] = useState(0);
+  const [redirectTo, setRedirectTo] = useState(false);
+  
+  const { dispatch } = useContext(AppDispatch);
   const classes = useStyles();
 
-  const { id: quizId } = useParams();
-  const quiz = appState.availableQuizzes[quizId];
-
   useEffect(() => {
-    if (!quiz) {
-      return <Redirect to={`/quiz/${quizId}`} />;
+    if (!quizObj) {
+      setRedirectTo(true);
     }
-
-    if (!quiz.questions.length) {
-      dispatch({ type: 'SET_QUESTIONS_TO_QUIZ', payload: { quizId, questions: questions[quizId] } });
+    if (!quizObj?.questions.length) {
+      dispatch({ type: ActionType.SetQuestionsToQuiz, payload: { quizId, questions: questions[quizId] } });
     }
-  }, [quizId, quiz, dispatch])
+  }, [quizId, quizObj, dispatch])
 
-  if (!quiz) {
+  if (!quizObj || redirectTo) {
     return <Redirect to={`/quiz/${quizId}`} />;
   }
 
-  const questionsArray = quiz.questions;
+  const questionsArray = quizObj.questions;
   if (!questionsArray || questionsArray.length === 0) {
     return null
   }
 
   const questionCount = questionsArray.length;
-  const showResultText = quiz.finalScore !== null && quiz.userAnswers[activeStep] && quiz.userAnswers[activeStep].isChecked ? true : false;
+  const showResultText = quizObj.finalScore !== null && quizObj.userAnswers[activeStep] && quizObj.userAnswers[activeStep].isChecked ? true : false;
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
-  const isQuestionChecked = appState.availableQuizzes[quizId].userAnswers.hasOwnProperty(activeStep) && appState.availableQuizzes[quizId].userAnswers[activeStep].isChecked;
+  if (!availableQuizzes) {
+    return <></>;
+  }
+
+  const isQuestionChecked = availableQuizzes[quizId].userAnswers.hasOwnProperty(activeStep) && availableQuizzes[quizId].userAnswers[activeStep].isChecked;
 
   return (
     <>
       {activeStep === questionCount
-        ? <ResultControl appState={appState} questionsArray={questionsArray} />
+        ? <ResultControl appState={appState} />
         : <>
 
           <QuestionControl appState={appState} questionsArray={questionsArray} questionId={activeStep} isQuestionChecked={isQuestionChecked} />
@@ -104,6 +111,8 @@ function QuizDetailPage(props) {
                 position="static"
                 activeStep={activeStep}
                 classes={{ root: classes.root, progress: classes.progress }}
+                backButton={null}
+                nextButton={null}
               />
             </Container>
           </AppBar>
@@ -113,5 +122,3 @@ function QuizDetailPage(props) {
     </>
   );
 }
-
-export default QuizDetailPage;

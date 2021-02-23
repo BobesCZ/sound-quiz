@@ -4,6 +4,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import loadYtScript from '../utils/loadYtScript';
 import PlayerPanel from './PlayerPanel';
 import QuestionForm from './QuestionForm';
+import { AppState } from '../types/appState';
+import { Question } from '../types/question';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -16,19 +18,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function QuestionControl(props) {
-  const questionsArray = props.questionsArray;
-  const questionId = props.questionId;
+export default function QuestionControl(
+  {appState, questionsArray, questionId, isQuestionChecked}: 
+  {appState: AppState, questionsArray: Question[], questionId: number, isQuestionChecked: boolean}
+  ) {
   const questionObject = questionsArray[questionId];
   const videoObject = questionObject.video;
-  const answerInfo = props.isQuestionChecked ? questionObject.answerInfo : null;
+  const answerInfo = isQuestionChecked ? questionObject.answerInfo : null;
 
   const [playerObject, setPlayerObject] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const playerCheckInterval = 250;
-  let player;
-  let videoEndTimer;
+  let player: any;
+  let videoEndTimer: ReturnType<typeof setInterval>;
 
   const [progress, setProgress] = useState(0);
   const classes = useStyles();
@@ -36,12 +39,12 @@ function QuestionControl(props) {
   useEffect(() => {
     // restart player
     if (playerObject !== null && typeof playerObject === "object") {
-      playerObject.pauseVideo();
-      playerObject.destroy();
+      (playerObject as any)?.pauseVideo();
+      (playerObject as any)?.destroy();
     }
 
-    if (!window.onYouTubeIframeAPIReady) {
-      window.onYouTubeIframeAPIReady = function () {
+    if (!(window as any)?.onYouTubeIframeAPIReady) {
+      (window as any).onYouTubeIframeAPIReady = function () {
         createPlayer();
       }
     }
@@ -59,6 +62,7 @@ function QuestionControl(props) {
   loadYtScript();
 
   function createPlayer() {
+    // @ts-ignore
     player = new YT.Player('player', { // eslint-disable-line
       width: '0',
       height: '0',
@@ -73,18 +77,19 @@ function QuestionControl(props) {
     });
   }
 
-  function onPlayerReady(event) {
-    // player.setVolume(20);
+  function onPlayerReady() {
     setPlayerObject(player);
   }
 
-  function onPlayerStateChange(event) {
+  function onPlayerStateChange() {
+    // @ts-ignore
     if (player.getPlayerState() === YT.PlayerState.BUFFERING) { // eslint-disable-line
       setIsLoading(true);
     } else {
       setIsLoading(false);
     }
 
+    // @ts-ignore
     if (player.getPlayerState() === YT.PlayerState.PLAYING) { // eslint-disable-line
       setIsPlaying(true);
 
@@ -93,11 +98,11 @@ function QuestionControl(props) {
           if (oldProgress >= 100) {
             return 100;
           }
-          const progress = (player.getCurrentTime() - videoObject.startSeconds) / (videoObject.endSeconds - videoObject.startSeconds) * 100;
+          const progress = (player.getCurrentTime() - videoObject.startSeconds) / ((videoObject.endSeconds ?? 0) - videoObject.startSeconds) * 100;
           return Math.min(progress, 100);
         });
 
-        if (player.getCurrentTime() >= videoObject.endSeconds) {
+        if (player.getCurrentTime() >= (videoObject.endSeconds ?? 0)) {
           player.pauseVideo();
           player.seekTo(videoObject.startSeconds);
           clearInterval(videoEndTimer);
@@ -122,11 +127,9 @@ function QuestionControl(props) {
         ? <CircularProgress className={classes.root} />
         : <>
           <PlayerPanel player={playerObject} isPlaying={isPlaying} isLoading={isLoading} videoObject={videoObject} progress={progress} answerInfo={answerInfo} />
-          <QuestionForm appState={props.appState} questionId={questionId} questionObject={questionObject} />
+          <QuestionForm appState={appState} questionId={questionId} questionObject={questionObject} />
         </>
       }
     </div>
   );
 }
-
-export default QuestionControl;

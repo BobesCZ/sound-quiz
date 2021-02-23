@@ -7,6 +7,9 @@ import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import Alert from '@material-ui/lab/Alert';
 import AppDispatch from '../context/AppDispatch';
 import UserQuizList from './UserQuizList';
+import { ActionType } from '../types/action';
+import { AppState } from '../types/appState';
+import { Quiz } from '../types/quiz';
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -18,14 +21,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function UserPage(props) {
-  const quizzes = props.appState.availableQuizzes;
-  const completedQuizzes = [];
-  const incompletedQuizzes = [];
+export default function UserPage({appState}: {appState: AppState}) {
+  const { availableQuizzes } = appState;
+  const completedQuizzes : Quiz[] = [];
+  const incompletedQuizzes : Quiz[] = [];
   const classes = useStyles();
+  const { dispatch } = useContext(AppDispatch);
 
-  Object.keys(quizzes).forEach(key => {
-    const quiz = quizzes[key];
+  if (!availableQuizzes) {
+    return <></>;
+  }
+
+  Object.keys(availableQuizzes).forEach(key => {
+    const quiz : Quiz = availableQuizzes[key];
     if (quiz.finalScore !== null) {
       completedQuizzes.push(quiz);
     }
@@ -33,10 +41,9 @@ function UserPage(props) {
       incompletedQuizzes.push(quiz);
     }
   })
-  const dispatch = useContext(AppDispatch);
 
   const handleDeleteClick = () => {
-    dispatch({ type: 'RESET_AVAILABLE_QUIZZES', payload: {} });
+    dispatch({ type: ActionType.ResetAvailableQuizzes, payload: {} });
   };
 
   return (
@@ -68,5 +75,3 @@ function UserPage(props) {
     </div>
   );
 }
-
-export default UserPage;

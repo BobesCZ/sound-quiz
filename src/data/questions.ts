@@ -1,4 +1,6 @@
-const questions = {
+import { Questions } from "../types/question";
+
+const questions: Record<string, Questions> = {
   kcca86d2: [
     {
       questionText: 'Choose the correct release year of the song:',
@@ -358,22 +360,6 @@ const questions = {
         imgUrl: "https://www.fext.cz/hudba/img/e-hgrieg.jpg",
         songName: "E. Grieg (1875)",
         albumName: "cover: Wolf Hoffmann (1997)",
-      },
-      answers: [],
-      correctAnswer: null,
-    },
-  ],
-  b0fe33b7: [
-    {
-      // Parov Stelar - Booty Swing
-      questionText: 'Choose the most suitable genre:',
-      video: {
-        id: 'ga7hGR_74DQ',
-        startSeconds: 51,
-      },
-      sourceAnswers: {
-        correctAnswer: "Electro swing",
-        otherAnswerArray: ["Jazz fusion", "Dixieland", "Free jazz"],
       },
       answers: [],
       correctAnswer: null,

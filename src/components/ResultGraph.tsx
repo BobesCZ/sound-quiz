@@ -3,9 +3,8 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import ResultProgress from '../elements/ResultProgress';
 
-function ResultGraph(props) {
+export default function ResultGraph( {score}: {score: number} ) {
   const [progress, setProgress] = useState(10);
-  const score = props.value;
 
   useEffect(() => {
     setProgress(score);
@@ -30,10 +29,9 @@ function ResultGraph(props) {
         justifyContent="center"
       >
         <Typography variant="h5" component="div" color="textSecondary">
-          {`${Math.round(props.value)}%`}
+          {`${Math.round(score)}%`}
         </Typography>
       </Box>
     </Box>
   );
 }
-export default ResultGraph;

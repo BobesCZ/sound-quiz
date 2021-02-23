@@ -12,6 +12,7 @@ import AlbumIcon from '@material-ui/icons/Album';
 import PauseIcon from '@material-ui/icons/Pause';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import ReplayIcon from '@material-ui/icons/Replay';
+import { AnswerInfo, Video } from '../types/question';
 
 const useStyles = makeStyles((theme) => ({
   playerArea: {
@@ -72,16 +73,15 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function PlayerPanel(props) {
-  const player = props.player;
-  const isPlaying = props.isPlaying;
-  const isLoading = props.isLoading;
-  const progress = props.progress;
-  const answerInfo = props.answerInfo;
-  const startSeconds = props.videoObject.startSeconds;
+export default function PlayerPanel(
+  {player, isPlaying, isLoading, videoObject, progress, answerInfo}:
+  {player: any, isPlaying: boolean, isLoading: boolean, videoObject: Video, progress: number, answerInfo: AnswerInfo | null}
+  ) {
+  const startSeconds = videoObject.startSeconds;
   const classes = useStyles();
 
-  function handleButtonPlayClick(event) {
+  function handleButtonPlayClick() {
+    // @ts-ignore
     if (player.getPlayerState() === YT.PlayerState.PLAYING) { // eslint-disable-line
       player.pauseVideo();
     } else {
@@ -89,13 +89,13 @@ function PlayerPanel(props) {
     }
   }
 
-  function handleButtonReplayClick(event) {
+  function handleButtonReplayClick() {
     player.seekTo(startSeconds);
     player.playVideo();
   }
 
   const [imageLoaded, setImageLoaded] = useState(false);
-  function handleImageLoad(event) {
+  function handleImageLoad() {
     setImageLoaded(true);
   }
 
@@ -156,5 +156,3 @@ function PlayerPanel(props) {
     </Box>
   );
 }
-
-export default PlayerPanel;

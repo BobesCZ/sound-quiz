@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import CheckIcon from '@material-ui/icons/Check';
 import EqualizerIcon from '@material-ui/icons/Equalizer';
 import TimerIcon from '@material-ui/icons/Timer';
+import { QuizId, Quiz } from '../types/quiz';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,9 +31,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function QuizCard(props) {
-  const quizId = props.quizId;
-  const quizObj = props.quizObj;
+export default function QuizCard({ quizId, quizObj } : {quizId: QuizId, quizObj: Quiz}) {
   const classes = useStyles();
 
   return (
@@ -84,5 +83,3 @@ function QuizCard(props) {
     </Card>
   );
 }
-
-export default QuizCard;

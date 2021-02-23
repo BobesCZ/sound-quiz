@@ -9,6 +9,10 @@ import AppDispatch from '../context/AppDispatch';
 import {
   QuestionRadioCorrect, QuestionRadioWrong,
 } from '../elements/QuestionRadio';
+import { ActionType } from '../types/action';
+import { AppState } from '../types/appState';
+import { Question } from '../types/question';
+import { AnswerObject } from '../types/answer';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -21,29 +25,35 @@ const useStyles = makeStyles((theme) => ({
   focused: {}
 }));
 
-function QuestionForm(props) {
-  const questionId = props.questionId;
-  const questionObject = props.questionObject;
-  const { id: quizId } = useParams();
-
-  const answer = props.appState.availableQuizzes[quizId].userAnswers[questionId] ? props.appState.availableQuizzes[quizId].userAnswers[questionId].answer : null;
-  const answerChecked = props.appState.availableQuizzes[quizId].userAnswers[questionId] ? props.appState.availableQuizzes[quizId].userAnswers[questionId].isChecked : null;
-  const dispatch = useContext(AppDispatch);
+export default function QuestionForm(
+  {appState, questionId, questionObject}: 
+  {appState: AppState, questionId: number, questionObject: Question}
+  ) {
+  const { availableQuizzes } = appState;
+  const { id: quizId } = useParams<{ id: string }>();
+  const { dispatch } = useContext(AppDispatch);
   const classes = useStyles();
+  
+  if (!availableQuizzes) {
+    return <></>;
+  }
 
-  function handleChange(event) {
+  const answer = availableQuizzes[quizId].userAnswers[questionId]?.answer || null;
+  const answerChecked = availableQuizzes[quizId].userAnswers[questionId]?.isChecked || null;
+
+  function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     if (answer === null) {
       const answer = { answer: parseInt(event.target.value), isChecked: false }
-      dispatch({ type: 'SET_USER_ANSWER', payload: { quizId, questionId, answer } });
+      dispatch({ type: ActionType.SetUserAnswer, payload: { quizId, questionId, answer } });
 
       setTimeout(() => {
         const answer = { answer: parseInt(event.target.value), isChecked: true }
-        dispatch({ type: 'SET_USER_ANSWER', payload: { quizId, questionId, answer } });
+        dispatch({ type: ActionType.SetUserAnswer, payload: { quizId, questionId, answer } });
       }, 1400)
     }
   }
 
-  function getControl(id) {
+  function getControl(id: number) {
     if (questionObject.correctAnswer === id) {
       return <QuestionRadioCorrect waitingAnimation={answerChecked ? false : true} isCorrect={questionObject.correctAnswer === id ? true : false} />;
     } else {
@@ -58,13 +68,12 @@ function QuestionForm(props) {
           {questionObject.questionText}
         </FormLabel>
         <RadioGroup aria-label="question" name="question1" value={answer} onChange={handleChange}>
-          {questionObject.answers.map((answerObject) => (
-            <FormControlLabel key={answerObject.id} value={answerObject.id} control={getControl(answerObject.id)} label={answerObject.answerText} />
-          ))}
+          {Object.keys(questionObject.answers).map((_, key) => {
+            const answerObject: AnswerObject = questionObject.answers?.[key];
+            return <FormControlLabel key={answerObject.id} value={answerObject.id} control={getControl(answerObject.id)} label={answerObject.answerText} />
+          })}
         </RadioGroup>
       </FormControl>
     </>
   );
 }
-
-export default QuestionForm;

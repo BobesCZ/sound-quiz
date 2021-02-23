@@ -1,19 +1,21 @@
+import { AnswerObject } from '../types/answer';
+import { SourceAnswers } from '../types/question';
 import shuffleArray from './shuffleArray';
 
-function createAnswerObject(id, text) {
-  const answerObj = {};
-  answerObj.id = id;
-  answerObj.answerText = text;
+function createAnswerObject(id: number, text: string) {
+  const answerObj: AnswerObject = {
+    id, answerText: text
+  };
   return answerObj;
 }
 
-function getAnswers(answersObj, randomizeAnswers = true) {
-  const correctAnswerText = answersObj.correctAnswer;
-  const answersTextArray = [...answersObj.otherAnswerArray];
+export default function getAnswers(sourceAnswers: SourceAnswers, randomizeAnswers = true) {
+  const correctAnswerText = sourceAnswers.correctAnswer;
+  const answersTextArray = [...sourceAnswers.otherAnswerArray];
   const answersLimit = 4;
 
-  const finalAnswersArray = [];
-  let finalCorrectAnswerIndex;
+  const finalAnswersArray: AnswerObject[] = [];
+  let finalCorrectAnswerIndex = null;
 
   if (correctAnswerText && answersTextArray.length) {
     // Pop random items from array until there are (answersLimit -1) items
@@ -49,4 +51,3 @@ function getAnswers(answersObj, randomizeAnswers = true) {
   }
   return { finalAnswersArray, finalCorrectAnswerIndex };
 }
-export default getAnswers

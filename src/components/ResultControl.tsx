@@ -4,6 +4,7 @@ import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import ResultGraph from './ResultGraph';
+import { AppState } from '../types/appState';
 
 const useStyles = makeStyles((theme) => ({
   text: {
@@ -11,9 +12,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function ResultControl(props) {
-  const { id: quizId } = useParams();
-  const score = props.appState.availableQuizzes[quizId].finalScore;
+export default function ResultControl({appState}: {appState: AppState}) {
+  const { id: quizId } = useParams<{ id: string }>();
+  const { availableQuizzes } = appState;
+
+  const score = availableQuizzes?.[quizId].finalScore ?? 0;
   const scoreLevel = score >= 90 ? "excellent" : score >= 60 ? "good" : "nevermind";
   const classes = useStyles();
 
@@ -36,7 +39,7 @@ function ResultControl(props) {
       alignItems="center"
       justifyContent="center"
     >
-      <ResultGraph value={score} />
+      <ResultGraph score={score || 0} />
 
       <Typography variant="h6" className={classes.text} gutterBottom>
         {titleTextObj[scoreLevel]}
@@ -60,5 +63,3 @@ function ResultControl(props) {
     </Box>
   );
 }
-
-export default ResultControl;
