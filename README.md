@@ -1,6 +1,6 @@
 # Sound Quiz
 
-This simple app contains multiple quizzes on different categories. Your task in each quiz is listen to short snippet of a song and choose the most suitable answer. To succeed in quizzes, you have to demonstrate your musical overview and/or knowledge of music history. 
+This simple app contains multiple quizzes on different topics. Your task in each quiz is to listen to a short snippet of a song and choose the most suitable answer. To succeed in the quizzes, you have to demonstrate your musical overview and/or knowledge of music history. 
 
 You need to use your headphones (or audio speakers) to complete the quizzes!
 
@@ -34,7 +34,7 @@ npm run start
 
 ## License
 
-Standard copyright, NOT OPEN-SOURCE. Author of this repository retain all rights to source code and no one may reproduce, distribute, or create derivative works.
+Standard copyright, NOT OPEN-SOURCE. The author of this repository retains all rights to source code and no one may reproduce, distribute, or create derivative works.
 
 ## Acknowledgments
 
