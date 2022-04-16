@@ -33,5 +33,5 @@ export interface Quiz {
 }
 
 export interface Quizzes {
-  [key: string]: Quiz;
+  [key: QuizId]: Quiz;
 }

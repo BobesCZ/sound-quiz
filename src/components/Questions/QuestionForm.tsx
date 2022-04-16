@@ -1,19 +1,19 @@
 import { useContext } from "react";
-import { useParams } from "react-router-dom";
 import FormControl from "@material-ui/core/FormControl";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormLabel from "@material-ui/core/FormLabel";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import { makeStyles } from "@material-ui/core/styles";
-import AppDispatch from "../context/AppDispatch";
+import AppDispatch from "../../context/AppDispatch";
 import {
   QuestionRadioCorrect,
   QuestionRadioWrong,
 } from "../elements/QuestionRadio";
-import { ActionType } from "../types/action";
-import { AppState } from "../types/appState";
-import { Question } from "../types/question";
-import { AnswerObject } from "../types/answer";
+import { ActionType } from "../../types/action";
+import { AppState } from "../../types/appState";
+import { Question } from "../../types/question";
+import { AnswerObject } from "../../types/answer";
+import useCurrentQuiz from "../../hooks/useCurrentQuiz";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,29 +26,23 @@ const useStyles = makeStyles((theme) => ({
   focused: {},
 }));
 
+interface QuestionFormProps {
+  appState: AppState;
+  questionId: number;
+  questionObject: Question;
+}
+
 const QuestionForm = ({
   appState,
   questionId,
   questionObject,
-}: {
-  appState: AppState;
-  questionId: number;
-  questionObject: Question;
-}) => {
-  const { availableQuizzes } = appState;
-  const params = useParams<{ id: string }>();
-  const quizId = params.id || "";
-  const { dispatch } = useContext(AppDispatch);
+}: QuestionFormProps) => {
   const classes = useStyles();
+  const { dispatch } = useContext(AppDispatch);
+  const { quizId, quizObj } = useCurrentQuiz(appState);
 
-  if (!availableQuizzes) {
-    return <></>;
-  }
-
-  const answer =
-    availableQuizzes[quizId].userAnswers[questionId]?.answer || null;
-  const answerChecked =
-    availableQuizzes[quizId].userAnswers[questionId]?.isChecked || null;
+  const answer = quizObj?.userAnswers[questionId]?.answer || null;
+  const answerChecked = quizObj?.userAnswers[questionId]?.isChecked || null;
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (answer === null) {

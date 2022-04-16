@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { Link as RouterLink, useParams } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
@@ -12,8 +12,9 @@ import TimerIcon from "@material-ui/icons/Timer";
 import VolumeUpIcon from "@material-ui/icons/VolumeUp";
 import Alert from "@material-ui/lab/Alert";
 import AlertTitle from "@material-ui/lab/AlertTitle";
-import { AppState } from "../types/appState";
-import { Quiz } from "../types/quiz";
+import { AppState } from "../../types/appState";
+import useCurrentQuiz from "../../hooks/useCurrentQuiz";
+import { useEffect } from "react";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -48,21 +49,38 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const QuizDetailPage = ({ appState }: { appState: AppState }) => {
-  const params = useParams<{ id: string }>();
-  const quizId = params.id || "";
-  const { availableQuizzes } = appState;
-  const quizObj: Quiz | undefined = availableQuizzes?.[quizId];
+interface QuizDetailPageProps {
+  appState: AppState;
+}
+
+const QuizDetailPage = ({ appState }: QuizDetailPageProps) => {
   const classes = useStyles();
+  const navigate = useNavigate();
+  const { quizId, quizObj } = useCurrentQuiz(appState);
+
+  useEffect(() => {
+    if (!quizObj) {
+      navigate("/");
+    }
+  }, [quizObj, navigate]);
 
   if (quizObj === undefined) {
     return null;
   }
 
+  const {
+    name,
+    questionsCount,
+    estimatedMinutes,
+    difficulty,
+    description,
+    finalScore,
+  } = quizObj;
+
   return (
     <Box my={2}>
       <Typography variant="h5" component="h2" className={classes.title}>
-        {quizObj.name}
+        {name}
       </Typography>
 
       <Box my={1} className={classes.infoRow}>
@@ -72,7 +90,7 @@ const QuizDetailPage = ({ appState }: { appState: AppState }) => {
           Number of questions:
         </Typography>
 
-        {quizObj.questionsCount}
+        {questionsCount}
       </Box>
 
       <Box my={1} className={classes.infoRow}>
@@ -80,7 +98,7 @@ const QuizDetailPage = ({ appState }: { appState: AppState }) => {
         <Typography className={classes.infoText} color="textSecondary">
           Estimated time:
         </Typography>
-        {quizObj.estimatedMinutes} min
+        {estimatedMinutes} min
       </Box>
 
       <Box my={1} className={classes.infoRow}>
@@ -90,14 +108,14 @@ const QuizDetailPage = ({ appState }: { appState: AppState }) => {
           Difficulty:
         </Typography>
 
-        {quizObj.difficulty}
+        {difficulty}
       </Box>
 
       <Box mt={3} mb={1}>
-        <Typography>{quizObj.description}</Typography>
+        <Typography>{description}</Typography>
       </Box>
 
-      {quizObj.finalScore !== null && (
+      {finalScore !== null && (
         <Box my={1} className={clsx(classes.infoRow, classes.scoreTextColor)}>
           <EqualizerIcon
             className={clsx(classes.infoIcon, classes.scoreTextColor)}
@@ -108,13 +126,13 @@ const QuizDetailPage = ({ appState }: { appState: AppState }) => {
           >
             Your result:
           </Typography>
-          {quizObj.finalScore}%
+          {finalScore}%
         </Box>
       )}
 
       <Divider className={classes.divider} />
 
-      {quizObj.finalScore !== null ? (
+      {finalScore !== null ? (
         <Box my={3}>
           <Alert
             icon={<CheckIcon fontSize="inherit" />}
@@ -122,9 +140,11 @@ const QuizDetailPage = ({ appState }: { appState: AppState }) => {
             severity="success"
           >
             <AlertTitle>Quiz completed</AlertTitle>
-            You have already taken this quiz with{" "}
-            <strong>{quizObj.finalScore}%</strong> success. Unfortunately it's
-            not possible to repeat the quiz at the moment.
+            You have already taken this quiz with <strong>
+              {finalScore}%
+            </strong>{" "}
+            success. Unfortunately it's not possible to repeat the quiz at the
+            moment.
           </Alert>
         </Box>
       ) : (
@@ -169,7 +189,7 @@ const QuizDetailPage = ({ appState }: { appState: AppState }) => {
           component={RouterLink}
           to={`/quiz/${quizId}/questions`}
         >
-          {quizObj.finalScore !== null ? "View your answers" : "Start a quiz"}
+          {finalScore !== null ? "View your answers" : "Start a quiz"}
         </Button>
       </Box>
     </Box>

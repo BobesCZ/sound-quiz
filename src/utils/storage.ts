@@ -6,7 +6,7 @@ const saveToStorage = (quizId: QuizId, quiz: Quiz) => {
   if (window.localStorage) {
     const { userAnswers, finalScore } = quiz;
     const allUserAnswers =
-      JSON.parse(localStorage.getItem(STORAGE_KEY_USER_ANSWERS) ?? "") || {};
+      JSON.parse(localStorage.getItem(STORAGE_KEY_USER_ANSWERS) ?? "{}") || {};
     allUserAnswers[quizId] = { userAnswers, finalScore };
     localStorage.setItem(
       STORAGE_KEY_USER_ANSWERS,

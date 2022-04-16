@@ -1,10 +1,11 @@
-import { Link as RouterLink, useParams } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import ResultGraph from "./ResultGraph";
-import { AppState } from "../types/appState";
+import { AppState } from "../../types/appState";
+import useCurrentQuiz from "../../hooks/useCurrentQuiz";
 
 const useStyles = makeStyles((theme) => ({
   text: {
@@ -12,15 +13,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ResultControl = ({ appState }: { appState: AppState }) => {
-  const params = useParams<{ id: string }>();
-  const quizId = params.id || "";
-  const { availableQuizzes } = appState;
+interface ResultControlProps {
+  appState: AppState;
+}
 
-  const score = availableQuizzes?.[quizId].finalScore ?? 0;
+const ResultControl = ({ appState }: ResultControlProps) => {
+  const classes = useStyles();
+  const { quizObj } = useCurrentQuiz(appState);
+
+  const score = quizObj?.finalScore ?? 0;
   const scoreLevel =
     score >= 90 ? "excellent" : score >= 60 ? "good" : "nevermind";
-  const classes = useStyles();
 
   const titleTextObj = {
     excellent: "Excellent result",
@@ -41,7 +44,7 @@ const ResultControl = ({ appState }: { appState: AppState }) => {
       alignItems="center"
       justifyContent="center"
     >
-      <ResultGraph score={score || 0} />
+      <ResultGraph score={score} />
 
       <Typography variant="h6" className={classes.text} gutterBottom>
         {titleTextObj[scoreLevel]}

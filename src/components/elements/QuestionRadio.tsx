@@ -1,7 +1,7 @@
 import { green, grey, red } from "@material-ui/core/colors";
 import Radio from "@material-ui/core/Radio";
 import { withStyles } from "@material-ui/core/styles";
-import { QuestionRadioProps } from "../types/elements";
+import { QuestionRadioProps } from "../../types/elements";
 
 const stylesCorrect = {
   "@keyframes pulseGreen": {

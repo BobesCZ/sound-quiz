@@ -12,7 +12,7 @@ import AlbumIcon from "@material-ui/icons/Album";
 import PauseIcon from "@material-ui/icons/Pause";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import ReplayIcon from "@material-ui/icons/Replay";
-import { AnswerInfo, Video } from "../types/question";
+import { AnswerInfo, Video } from "../../types/question";
 
 const useStyles = makeStyles((theme) => ({
   playerArea: {
@@ -73,22 +73,23 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+interface PlayerPanelProps {
+  player: any;
+  isPlaying: boolean;
+  isLoading: boolean;
+  startSeconds: Video["startSeconds"];
+  progress: number;
+  answerInfo: AnswerInfo | null;
+}
+
 const PlayerPanel = ({
   player,
   isPlaying,
   isLoading,
-  videoObject,
+  startSeconds,
   progress,
   answerInfo,
-}: {
-  player: any;
-  isPlaying: boolean;
-  isLoading: boolean;
-  videoObject: Video;
-  progress: number;
-  answerInfo: AnswerInfo | null;
-}) => {
-  const startSeconds = videoObject.startSeconds;
+}: PlayerPanelProps) => {
   const classes = useStyles();
 
   const handleButtonPlayClick = () => {

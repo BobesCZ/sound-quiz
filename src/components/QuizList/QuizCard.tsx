@@ -10,7 +10,7 @@ import Typography from "@material-ui/core/Typography";
 import CheckIcon from "@material-ui/icons/Check";
 import EqualizerIcon from "@material-ui/icons/Equalizer";
 import TimerIcon from "@material-ui/icons/Timer";
-import { QuizId, Quiz } from "../types/quiz";
+import { QuizId, Quiz } from "../../types/quiz";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,22 +31,30 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const QuizCard = ({ quizId, quizObj }: { quizId: QuizId; quizObj: Quiz }) => {
+interface QuizCardProps {
+  quizId: QuizId;
+  quizObj: Quiz;
+}
+
+const QuizCard = ({
+  quizId,
+  quizObj: { finalScore, name, description, estimatedMinutes, difficulty },
+}: QuizCardProps) => {
   const classes = useStyles();
 
   return (
     <Card
       className={clsx(
         classes.root,
-        quizObj.finalScore !== null ? classes.rootCompleted : null
+        finalScore !== null && classes.rootCompleted
       )}
     >
       <CardContent>
         <Typography variant="h5" component="h2" gutterBottom>
-          {quizObj.name}
+          {name}
         </Typography>
         <Typography className={classes.title} color="textSecondary">
-          {quizObj.description}
+          {description}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
@@ -55,16 +63,16 @@ const QuizCard = ({ quizId, quizObj }: { quizId: QuizId; quizObj: Quiz }) => {
           className={classes.infoButton}
           startIcon={<TimerIcon />}
         >
-          {quizObj.estimatedMinutes} min
+          {estimatedMinutes} min
         </Button>
         <Button
           variant="text"
           className={classes.infoButton}
           startIcon={<EqualizerIcon />}
         >
-          {quizObj.difficulty[0].toUpperCase() + quizObj.difficulty.slice(1)}
+          {difficulty[0].toUpperCase() + difficulty.slice(1)}
         </Button>
-        {quizObj.finalScore !== null ? (
+        {finalScore !== null ? (
           <Button
             variant="text"
             className={clsx(classes.infoButton, classes.conversionButton)}
@@ -72,7 +80,7 @@ const QuizCard = ({ quizId, quizObj }: { quizId: QuizId; quizObj: Quiz }) => {
             component={RouterLink}
             to={`/quiz/${quizId}`}
           >
-            Your score: {quizObj.finalScore}%
+            Your score: {finalScore}%
           </Button>
         ) : (
           <Button

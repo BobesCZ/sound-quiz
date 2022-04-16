@@ -5,11 +5,11 @@ import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 import Alert from "@material-ui/lab/Alert";
-import AppDispatch from "../context/AppDispatch";
+import AppDispatch from "../../context/AppDispatch";
 import UserQuizList from "./UserQuizList";
-import { ActionType } from "../types/action";
-import { AppState } from "../types/appState";
-import { Quiz } from "../types/quiz";
+import { ActionType } from "../../types/action";
+import { AppState } from "../../types/appState";
+import { Quiz } from "../../types/quiz";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -21,12 +21,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const UserPage = ({ appState }: { appState: AppState }) => {
-  const { availableQuizzes } = appState;
-  const completedQuizzes: Quiz[] = [];
-  const incompletedQuizzes: Quiz[] = [];
+interface UserPageProps {
+  appState: AppState;
+}
+
+const UserPage = ({ appState: { availableQuizzes } }: UserPageProps) => {
   const classes = useStyles();
   const { dispatch } = useContext(AppDispatch);
+
+  const completedQuizzes: Quiz[] = [];
+  const incompletedQuizzes: Quiz[] = [];
 
   if (!availableQuizzes) {
     return <></>;

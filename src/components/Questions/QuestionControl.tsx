@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { makeStyles } from "@material-ui/core/styles";
-import loadYtScript from "../utils/loadYtScript";
+import loadYtScript from "../../utils/loadYtScript";
 import PlayerPanel from "./PlayerPanel";
 import QuestionForm from "./QuestionForm";
-import { AppState } from "../types/appState";
-import { Question } from "../types/question";
+import { AppState } from "../../types/appState";
+import { Question } from "../../types/question";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,18 +18,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const QuestionControl = ({
-  appState,
-  questionsArray,
-  questionId,
-  isQuestionChecked,
-}: {
+interface QuestionControlProps {
   appState: AppState;
-  questionsArray: Question[];
+  questionObject: Question;
   questionId: number;
   isQuestionChecked: boolean;
-}) => {
-  const questionObject = questionsArray[questionId];
+}
+
+const QuestionControl = ({
+  appState,
+  questionObject,
+  questionId,
+  isQuestionChecked,
+}: QuestionControlProps) => {
+  const classes = useStyles();
+
   const videoObject = questionObject.video;
   const answerInfo = isQuestionChecked ? questionObject.answerInfo : null;
 
@@ -41,7 +44,6 @@ const QuestionControl = ({
   let videoEndTimer: ReturnType<typeof setInterval>;
 
   const [progress, setProgress] = useState(0);
-  const classes = useStyles();
 
   useEffect(() => {
     // restart player
@@ -143,7 +145,7 @@ const QuestionControl = ({
             player={playerObject}
             isPlaying={isPlaying}
             isLoading={isLoading}
-            videoObject={videoObject}
+            startSeconds={videoObject.startSeconds}
             progress={progress}
             answerInfo={answerInfo}
           />
