@@ -1,13 +1,13 @@
-import clsx from 'clsx';
-import Button from '@material-ui/core/Button';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import ListItemText from '@material-ui/core/ListItemText';
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import CheckIcon from '@material-ui/icons/Check';
-import { Quiz } from '../types/quiz';
+import clsx from "clsx";
+import Button from "@material-ui/core/Button";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
+import ListItemText from "@material-ui/core/ListItemText";
+import { makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import CheckIcon from "@material-ui/icons/Check";
+import { Quiz } from "../types/quiz";
 
 const useStyles = makeStyles((theme) => ({
   list: {
@@ -25,10 +25,10 @@ const useStyles = makeStyles((theme) => ({
   },
   incompleted: {
     paddingRight: theme.spacing(13),
-  }
+  },
 }));
 
-export default function UserQuizList({ quizzes } : { quizzes: Quiz[]}) {
+export default function UserQuizList({ quizzes }: { quizzes: Quiz[] }) {
   const classes = useStyles();
 
   if (!quizzes.length) {
@@ -39,7 +39,13 @@ export default function UserQuizList({ quizzes } : { quizzes: Quiz[]}) {
     <>
       <List className={classes.list}>
         {quizzes.map((quiz, index) => (
-          <ListItem key={index} className={clsx(classes.secondaryAction, quiz.finalScore === null ? classes.incompleted : null)}>
+          <ListItem
+            key={index}
+            className={clsx(
+              classes.secondaryAction,
+              quiz.finalScore === null ? classes.incompleted : null
+            )}
+          >
             <ListItemText
               primary={
                 <>
@@ -58,7 +64,9 @@ export default function UserQuizList({ quizzes } : { quizzes: Quiz[]}) {
                 className={classes.scoreText}
                 startIcon={quiz.finalScore !== null ? <CheckIcon /> : null}
               >
-                {quiz.finalScore !== null ? `${quiz.finalScore}%` : "Incompleted"}
+                {quiz.finalScore !== null
+                  ? `${quiz.finalScore}%`
+                  : "Incompleted"}
               </Button>
             </ListItemSecondaryAction>
           </ListItem>

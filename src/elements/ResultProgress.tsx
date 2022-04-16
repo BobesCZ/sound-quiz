@@ -1,6 +1,8 @@
-import CircularProgress, { CircularProgressProps } from '@material-ui/core/CircularProgress';
-import { grey } from '@material-ui/core/colors';
-import { StyleRules, withStyles } from '@material-ui/core/styles';
+import CircularProgress, {
+  CircularProgressProps,
+} from "@material-ui/core/CircularProgress";
+import { grey } from "@material-ui/core/colors";
+import { StyleRules, withStyles } from "@material-ui/core/styles";
 
 const styles: StyleRules = {
   static: {
@@ -10,14 +12,12 @@ const styles: StyleRules = {
     opacity: 0.3,
   },
   circle: {
-    transitionDuration: '1s',
-  }
+    transitionDuration: "1s",
+  },
 };
 
 function ClassNames(props: CircularProgressProps) {
-  return (
-    <CircularProgress size={150} {...props} />
-  );
+  return <CircularProgress size={150} {...props} />;
 }
 
 export default withStyles(styles)(ClassNames);

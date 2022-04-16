@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import { makeStyles } from '@material-ui/core/styles';
-import loadYtScript from '../utils/loadYtScript';
-import PlayerPanel from './PlayerPanel';
-import QuestionForm from './QuestionForm';
-import { AppState } from '../types/appState';
-import { Question } from '../types/question';
+import { useEffect, useState } from "react";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import { makeStyles } from "@material-ui/core/styles";
+import loadYtScript from "../utils/loadYtScript";
+import PlayerPanel from "./PlayerPanel";
+import QuestionForm from "./QuestionForm";
+import { AppState } from "../types/appState";
+import { Question } from "../types/question";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,10 +18,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function QuestionControl(
-  {appState, questionsArray, questionId, isQuestionChecked}: 
-  {appState: AppState, questionsArray: Question[], questionId: number, isQuestionChecked: boolean}
-  ) {
+export default function QuestionControl({
+  appState,
+  questionsArray,
+  questionId,
+  isQuestionChecked,
+}: {
+  appState: AppState;
+  questionsArray: Question[];
+  questionId: number;
+  isQuestionChecked: boolean;
+}) {
   const questionObject = questionsArray[questionId];
   const videoObject = questionObject.video;
   const answerInfo = isQuestionChecked ? questionObject.answerInfo : null;
@@ -46,9 +53,8 @@ export default function QuestionControl(
     if (!(window as any)?.onYouTubeIframeAPIReady) {
       (window as any).onYouTubeIframeAPIReady = function () {
         createPlayer();
-      }
-    }
-    else {
+      };
+    } else {
       createPlayer();
     }
 
@@ -57,23 +63,24 @@ export default function QuestionControl(
       setProgress(0);
       setIsPlaying(false);
     };
-  }, [questionId]); // eslint-disable-line 
+  }, [questionId]); // eslint-disable-line
 
   loadYtScript();
 
   function createPlayer() {
     // @ts-ignore
-    player = new YT.Player('player', { // eslint-disable-line
-      width: '0',
-      height: '0',
+    player = new YT.Player("player", {
+      // eslint-disable-line
+      width: "0",
+      height: "0",
       videoId: videoObject.id,
       playerVars: {
         start: videoObject.startSeconds,
       },
       events: {
-        'onReady': onPlayerReady,
-        'onStateChange': onPlayerStateChange,
-      }
+        onReady: onPlayerReady,
+        onStateChange: onPlayerStateChange,
+      },
     });
   }
 
@@ -83,14 +90,16 @@ export default function QuestionControl(
 
   function onPlayerStateChange() {
     // @ts-ignore
-    if (player.getPlayerState() === YT.PlayerState.BUFFERING) { // eslint-disable-line
+    if (player.getPlayerState() === YT.PlayerState.BUFFERING) {
+      // eslint-disable-line
       setIsLoading(true);
     } else {
       setIsLoading(false);
     }
 
     // @ts-ignore
-    if (player.getPlayerState() === YT.PlayerState.PLAYING) { // eslint-disable-line
+    if (player.getPlayerState() === YT.PlayerState.PLAYING) {
+      // eslint-disable-line
       setIsPlaying(true);
 
       videoEndTimer = setInterval(() => {
@@ -98,7 +107,10 @@ export default function QuestionControl(
           if (oldProgress >= 100) {
             return 100;
           }
-          const progress = (player.getCurrentTime() - videoObject.startSeconds) / ((videoObject.endSeconds ?? 0) - videoObject.startSeconds) * 100;
+          const progress =
+            ((player.getCurrentTime() - videoObject.startSeconds) /
+              ((videoObject.endSeconds ?? 0) - videoObject.startSeconds)) *
+            100;
           return Math.min(progress, 100);
         });
 
@@ -108,7 +120,7 @@ export default function QuestionControl(
           clearInterval(videoEndTimer);
           setProgress(0);
         }
-      }, playerCheckInterval)
+      }, playerCheckInterval);
     } else {
       setIsPlaying(false);
       clearInterval(videoEndTimer);
@@ -123,13 +135,25 @@ export default function QuestionControl(
     <div>
       <div id="player"></div>
 
-      {!playerObject
-        ? <CircularProgress className={classes.root} />
-        : <>
-          <PlayerPanel player={playerObject} isPlaying={isPlaying} isLoading={isLoading} videoObject={videoObject} progress={progress} answerInfo={answerInfo} />
-          <QuestionForm appState={appState} questionId={questionId} questionObject={questionObject} />
+      {!playerObject ? (
+        <CircularProgress className={classes.root} />
+      ) : (
+        <>
+          <PlayerPanel
+            player={playerObject}
+            isPlaying={isPlaying}
+            isLoading={isLoading}
+            videoObject={videoObject}
+            progress={progress}
+            answerInfo={answerInfo}
+          />
+          <QuestionForm
+            appState={appState}
+            questionId={questionId}
+            questionObject={questionObject}
+          />
         </>
-      }
+      )}
     </div>
   );
 }

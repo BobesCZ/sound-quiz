@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
-import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
-import ResultProgress from '../elements/ResultProgress';
+import { useEffect, useState } from "react";
+import Box from "@material-ui/core/Box";
+import Typography from "@material-ui/core/Typography";
+import ResultProgress from "../elements/ResultProgress";
 
-export default function ResultGraph( {score}: {score: number} ) {
+export default function ResultGraph({ score }: { score: number }) {
   const [progress, setProgress] = useState(10);
 
   useEffect(() => {

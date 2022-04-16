@@ -1,16 +1,16 @@
-import clsx from 'clsx';
-import { Link as RouterLink } from 'react-router-dom';
-import Button from '@material-ui/core/Button';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import { green } from '@material-ui/core/colors';
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import CheckIcon from '@material-ui/icons/Check';
-import EqualizerIcon from '@material-ui/icons/Equalizer';
-import TimerIcon from '@material-ui/icons/Timer';
-import { QuizId, Quiz } from '../types/quiz';
+import clsx from "clsx";
+import { Link as RouterLink } from "react-router-dom";
+import Button from "@material-ui/core/Button";
+import Card from "@material-ui/core/Card";
+import CardActions from "@material-ui/core/CardActions";
+import CardContent from "@material-ui/core/CardContent";
+import { green } from "@material-ui/core/colors";
+import { makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import CheckIcon from "@material-ui/icons/Check";
+import EqualizerIcon from "@material-ui/icons/Equalizer";
+import TimerIcon from "@material-ui/icons/Timer";
+import { QuizId, Quiz } from "../types/quiz";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,11 +31,22 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function QuizCard({ quizId, quizObj } : {quizId: QuizId, quizObj: Quiz}) {
+export default function QuizCard({
+  quizId,
+  quizObj,
+}: {
+  quizId: QuizId;
+  quizObj: Quiz;
+}) {
   const classes = useStyles();
 
   return (
-    <Card className={clsx(classes.root, quizObj.finalScore !== null ? classes.rootCompleted : null)}>
+    <Card
+      className={clsx(
+        classes.root,
+        quizObj.finalScore !== null ? classes.rootCompleted : null
+      )}
+    >
       <CardContent>
         <Typography variant="h5" component="h2" gutterBottom>
           {quizObj.name}
@@ -59,8 +70,8 @@ export default function QuizCard({ quizId, quizObj } : {quizId: QuizId, quizObj:
         >
           {quizObj.difficulty[0].toUpperCase() + quizObj.difficulty.slice(1)}
         </Button>
-        {quizObj.finalScore !== null
-          ? <Button
+        {quizObj.finalScore !== null ? (
+          <Button
             variant="text"
             className={clsx(classes.infoButton, classes.conversionButton)}
             startIcon={<CheckIcon />}
@@ -69,7 +80,8 @@ export default function QuizCard({ quizId, quizObj } : {quizId: QuizId, quizObj:
           >
             Your score: {quizObj.finalScore}%
           </Button>
-          : <Button
+        ) : (
+          <Button
             variant="contained"
             color="primary"
             className={classes.conversionButton}
@@ -78,7 +90,7 @@ export default function QuizCard({ quizId, quizObj } : {quizId: QuizId, quizObj:
           >
             Take a quiz
           </Button>
-        }
+        )}
       </CardActions>
     </Card>
   );

@@ -1,7 +1,7 @@
-import { useReducer } from 'react';
-import AppDispatch from './AppDispatch';
-import initialState from './initialState';
-import reducer from './reducer';
+import { useReducer } from "react";
+import AppDispatch from "./AppDispatch";
+import initialState from "./initialState";
+import reducer from "./reducer";
 
 export function AppDispatchProvider({
   children,
@@ -12,9 +12,5 @@ export function AppDispatchProvider({
 
   const value = { appState, dispatch };
 
-  return (
-    <AppDispatch.Provider value={value}>
-      {children}
-    </AppDispatch.Provider>
-  );
+  return <AppDispatch.Provider value={value}>{children}</AppDispatch.Provider>;
 }

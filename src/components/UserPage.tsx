@@ -1,15 +1,15 @@
-import { useContext } from 'react';
-import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
-import Alert from '@material-ui/lab/Alert';
-import AppDispatch from '../context/AppDispatch';
-import UserQuizList from './UserQuizList';
-import { ActionType } from '../types/action';
-import { AppState } from '../types/appState';
-import { Quiz } from '../types/quiz';
+import { useContext } from "react";
+import Box from "@material-ui/core/Box";
+import Button from "@material-ui/core/Button";
+import { makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
+import Alert from "@material-ui/lab/Alert";
+import AppDispatch from "../context/AppDispatch";
+import UserQuizList from "./UserQuizList";
+import { ActionType } from "../types/action";
+import { AppState } from "../types/appState";
+import { Quiz } from "../types/quiz";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -21,10 +21,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function UserPage({appState}: {appState: AppState}) {
+export default function UserPage({ appState }: { appState: AppState }) {
   const { availableQuizzes } = appState;
-  const completedQuizzes : Quiz[] = [];
-  const incompletedQuizzes : Quiz[] = [];
+  const completedQuizzes: Quiz[] = [];
+  const incompletedQuizzes: Quiz[] = [];
   const classes = useStyles();
   const { dispatch } = useContext(AppDispatch);
 
@@ -32,15 +32,14 @@ export default function UserPage({appState}: {appState: AppState}) {
     return <></>;
   }
 
-  Object.keys(availableQuizzes).forEach(key => {
-    const quiz : Quiz = availableQuizzes[key];
+  Object.keys(availableQuizzes).forEach((key) => {
+    const quiz: Quiz = availableQuizzes[key];
     if (quiz.finalScore !== null) {
       completedQuizzes.push(quiz);
-    }
-    else if (quiz.userAnswers.length) {
+    } else if (quiz.userAnswers.length) {
       incompletedQuizzes.push(quiz);
     }
-  })
+  });
 
   const handleDeleteClick = () => {
     dispatch({ type: ActionType.ResetAvailableQuizzes, payload: {} });
@@ -52,8 +51,8 @@ export default function UserPage({appState}: {appState: AppState}) {
         Your quizzes
       </Typography>
 
-      {(completedQuizzes.length || incompletedQuizzes.length)
-        ? <>
+      {completedQuizzes.length || incompletedQuizzes.length ? (
+        <>
           <UserQuizList quizzes={completedQuizzes} />
           <UserQuizList quizzes={incompletedQuizzes} />
 
@@ -68,10 +67,12 @@ export default function UserPage({appState}: {appState: AppState}) {
             </Button>
           </Box>
         </>
-        : <Alert variant="outlined" severity="info">
-          There you would see your results of completed quizzes... if you had any!
+      ) : (
+        <Alert variant="outlined" severity="info">
+          There you would see your results of completed quizzes... if you had
+          any!
         </Alert>
-      }
+      )}
     </div>
   );
 }

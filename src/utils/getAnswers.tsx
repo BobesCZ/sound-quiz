@@ -1,15 +1,19 @@
-import { AnswerObject } from '../types/answer';
-import { SourceAnswers } from '../types/question';
-import shuffleArray from './shuffleArray';
+import { AnswerObject } from "../types/answer";
+import { SourceAnswers } from "../types/question";
+import shuffleArray from "./shuffleArray";
 
 function createAnswerObject(id: number, text: string) {
   const answerObj: AnswerObject = {
-    id, answerText: text
+    id,
+    answerText: text,
   };
   return answerObj;
 }
 
-export default function getAnswers(sourceAnswers: SourceAnswers, randomizeAnswers = true) {
+export default function getAnswers(
+  sourceAnswers: SourceAnswers,
+  randomizeAnswers = true
+) {
   const correctAnswerText = sourceAnswers.correctAnswer;
   const answersTextArray = [...sourceAnswers.otherAnswerArray];
   const answersLimit = 4;
@@ -20,11 +24,14 @@ export default function getAnswers(sourceAnswers: SourceAnswers, randomizeAnswer
   if (correctAnswerText && answersTextArray.length) {
     // Pop random items from array until there are (answersLimit -1) items
     for (let i = answersTextArray.length - 1; i >= answersLimit - 1; i--) {
-      answersTextArray.splice(Math.floor(Math.random() * answersTextArray.length), 1);
+      answersTextArray.splice(
+        Math.floor(Math.random() * answersTextArray.length),
+        1
+      );
     }
 
     if (randomizeAnswers) {
-      // Shuffle items 
+      // Shuffle items
       shuffleArray(answersTextArray);
 
       // Correct answer with random index
@@ -32,8 +39,7 @@ export default function getAnswers(sourceAnswers: SourceAnswers, randomizeAnswer
 
       // Push item with correct answer
       answersTextArray.splice(finalCorrectAnswerIndex, 0, correctAnswerText);
-    }
-    else {
+    } else {
       // Push item with correct answer
       answersTextArray.push(correctAnswerText);
 
@@ -47,7 +53,7 @@ export default function getAnswers(sourceAnswers: SourceAnswers, randomizeAnswer
     // Create answers object
     answersTextArray.forEach((item, index) => {
       finalAnswersArray.push(createAnswerObject(index, item));
-    })
+    });
   }
   return { finalAnswersArray, finalCorrectAnswerIndex };
 }

@@ -1,4 +1,4 @@
-import { AppState } from '../types/appState';
+import { AppState } from "../types/appState";
 
 const initialState: AppState = {};
 

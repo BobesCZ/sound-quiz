@@ -1,4 +1,4 @@
 export interface AnswerObject {
-  id: number,
-  answerText: string,
+  id: number;
+  answerText: string;
 }
