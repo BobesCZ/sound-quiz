@@ -1,11 +1,11 @@
-import { Link as RouterLink } from "react-router-dom";
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
-import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import ResultGraph from "./ResultGraph";
-import { AppState } from "../../types/context";
+import { makeStyles } from "@material-ui/core/styles";
+import { Link as RouterLink } from "react-router-dom";
 import useCurrentQuiz from "../../hooks/useCurrentQuiz";
+import { AppState } from "../../types/context";
+import ResultGraph from "./ResultGraph";
 
 const useStyles = makeStyles((theme) => ({
   text: {

@@ -1,17 +1,17 @@
-import { useState } from "react";
-import clsx from "clsx";
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import { grey } from "@material-ui/core/colors";
 import LinearProgress from "@material-ui/core/LinearProgress";
-import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
+import { grey } from "@material-ui/core/colors";
+import { makeStyles } from "@material-ui/core/styles";
 import AlbumIcon from "@material-ui/icons/Album";
 import PauseIcon from "@material-ui/icons/Pause";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import ReplayIcon from "@material-ui/icons/Replay";
+import clsx from "clsx";
+import { useState } from "react";
 import { AnswerInfo, Video } from "../../types/types";
 
 const useStyles = makeStyles((theme) => ({

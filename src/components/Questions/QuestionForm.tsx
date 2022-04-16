@@ -1,18 +1,17 @@
-import { useContext } from "react";
 import FormControl from "@material-ui/core/FormControl";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormLabel from "@material-ui/core/FormLabel";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import { makeStyles } from "@material-ui/core/styles";
+import { useContext } from "react";
 import AppDispatch from "../../context/AppDispatch";
+import useCurrentQuiz from "../../hooks/useCurrentQuiz";
+import { ActionType, AppState } from "../../types/context";
+import { AnswerObject, Question } from "../../types/types";
 import {
   QuestionRadioCorrect,
   QuestionRadioWrong,
 } from "../elements/QuestionRadio";
-import { ActionType } from "../../types/context";
-import { AppState } from "../../types/context";
-import useCurrentQuiz from "../../hooks/useCurrentQuiz";
-import { Question, AnswerObject } from "../../types/types";
 
 const useStyles = makeStyles((theme) => ({
   root: {

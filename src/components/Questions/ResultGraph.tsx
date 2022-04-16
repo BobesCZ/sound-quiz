@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
+import { useEffect, useState } from "react";
 import ResultProgress from "../elements/ResultProgress";
 
 interface ResultGraphProps {

@@ -33,13 +33,21 @@
     ],
     "plugins": [
       "prefer-arrow-functions",
-      "modules-newline"
+      "import"
     ],
     "rules": {
       "prefer-arrow-functions/prefer-arrow-functions": [
         "error",
         {
           "returnStyle": "implicit"
+        }
+      ],
+      "import/order": [
+        "error",
+        {
+          "alphabetize": {
+            "order": "asc"
+          }
         }
       ]
     }

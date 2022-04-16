@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { makeStyles } from "@material-ui/core/styles";
+import { useEffect, useState } from "react";
+import { AppState } from "../../types/context";
+import { Question } from "../../types/types";
 import loadYtScript from "../../utils/loadScript";
 import PlayerPanel from "./PlayerPanel";
 import QuestionForm from "./QuestionForm";
-import { AppState } from "../../types/context";
-import { Question } from "../../types/types";
 
 const useStyles = makeStyles((theme) => ({
   root: {

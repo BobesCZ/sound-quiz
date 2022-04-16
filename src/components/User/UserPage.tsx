@@ -1,15 +1,14 @@
-import { useContext } from "react";
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
-import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 import Alert from "@material-ui/lab/Alert";
+import { useContext } from "react";
 import AppDispatch from "../../context/AppDispatch";
-import UserQuizList from "./UserQuizList";
-import { ActionType } from "../../types/context";
-import { AppState } from "../../types/context";
+import { ActionType, AppState } from "../../types/context";
 import { filterUserQuizzes } from "../../utils/utils";
+import UserQuizList from "./UserQuizList";
 
 const useStyles = makeStyles((theme) => ({
   title: {

@@ -1,5 +1,5 @@
-import { green, grey, red } from "@material-ui/core/colors";
 import Radio from "@material-ui/core/Radio";
+import { green, grey, red } from "@material-ui/core/colors";
 import { withStyles } from "@material-ui/core/styles";
 import { QuestionRadioProps } from "../../types/elements";
 

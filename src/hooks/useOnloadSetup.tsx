@@ -1,8 +1,7 @@
 import { useEffect } from "react";
 import quizzes from "../data/quizzes";
+import { Action, ActionType, AppState } from "../types/context";
 import { loadFromStorage } from "../utils/storage";
-import { Action, ActionType } from "../types/context";
-import { AppState } from "../types/context";
 
 /**
  * Setup data on app load

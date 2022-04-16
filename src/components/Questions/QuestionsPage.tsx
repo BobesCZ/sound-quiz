@@ -1,20 +1,19 @@
-import { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import AppBar from "@material-ui/core/AppBar";
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import Container from "@material-ui/core/Container";
 import MobileStepper from "@material-ui/core/MobileStepper";
-import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
+import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import AppDispatch from "../../context/AppDispatch";
 import questions from "../../data/questions";
+import useCurrentQuiz from "../../hooks/useCurrentQuiz";
+import { ActionType, AppState } from "../../types/context";
 import QuestionControl from "./QuestionControl";
 import ResultControl from "./ResultControl";
-import { ActionType } from "../../types/context";
-import { AppState } from "../../types/context";
-import useCurrentQuiz from "../../hooks/useCurrentQuiz";
 
 const useStyles = makeStyles((theme) => ({
   root: {

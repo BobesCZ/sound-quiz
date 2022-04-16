@@ -1,10 +1,8 @@
-import clsx from "clsx";
-import { Link as RouterLink, useNavigate } from "react-router-dom";
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
-import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
 import CheckIcon from "@material-ui/icons/Check";
 import EqualizerIcon from "@material-ui/icons/Equalizer";
 import FormatListBulletedIcon from "@material-ui/icons/FormatListBulleted";
@@ -12,9 +10,11 @@ import TimerIcon from "@material-ui/icons/Timer";
 import VolumeUpIcon from "@material-ui/icons/VolumeUp";
 import Alert from "@material-ui/lab/Alert";
 import AlertTitle from "@material-ui/lab/AlertTitle";
-import { AppState } from "../../types/context";
-import useCurrentQuiz from "../../hooks/useCurrentQuiz";
+import clsx from "clsx";
 import { useEffect } from "react";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
+import useCurrentQuiz from "../../hooks/useCurrentQuiz";
+import { AppState } from "../../types/context";
 
 const useStyles = makeStyles((theme) => ({
   title: {

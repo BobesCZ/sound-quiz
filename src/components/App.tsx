@@ -1,18 +1,18 @@
+import { createMuiTheme, CssBaseline } from "@material-ui/core";
+import Container from "@material-ui/core/Container";
+import { deepPurple, orange } from "@material-ui/core/colors";
+import { ThemeProvider } from "@material-ui/styles";
 import { useReducer } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { createMuiTheme, CssBaseline } from "@material-ui/core";
-import { deepPurple, orange } from "@material-ui/core/colors";
-import Container from "@material-ui/core/Container";
-import { ThemeProvider } from "@material-ui/styles";
+import { AppDispatchProvider } from "../context/AppDispatchProvider";
+import initialState from "../context/initialState";
+import reducer from "../context/reducer";
+import useOnloadSetup from "../hooks/useOnloadSetup";
 import QuestionsPage from "./Questions/QuestionsPage";
 import QuizInfoPage from "./QuizDetail/QuizDetailPage";
 import QuizListPage from "./QuizList/QuizListPage";
 import TopBar from "./TopBar";
 import UserPage from "./User/UserPage";
-import { AppDispatchProvider } from "../context/AppDispatchProvider";
-import initialState from "../context/initialState";
-import reducer from "../context/reducer";
-import useOnloadSetup from "../hooks/useOnloadSetup";
 
 const App = () => {
   const [appState, dispatch] = useReducer(reducer, initialState);
