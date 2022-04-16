@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ResultControl({ appState }: { appState: AppState }) {
+const ResultControl = ({ appState }: { appState: AppState }) => {
   const params = useParams<{ id: string }>();
   const quizId = params.id || "";
   const { availableQuizzes } = appState;
@@ -64,4 +64,6 @@ export default function ResultControl({ appState }: { appState: AppState }) {
       </Box>
     </Box>
   );
-}
+};
+
+export default ResultControl;

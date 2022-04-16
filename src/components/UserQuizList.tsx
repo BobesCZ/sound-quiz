@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function UserQuizList({ quizzes }: { quizzes: Quiz[] }) {
+const UserQuizList = ({ quizzes }: { quizzes: Quiz[] }) => {
   const classes = useStyles();
 
   if (!quizzes.length) {
@@ -74,4 +74,6 @@ export default function UserQuizList({ quizzes }: { quizzes: Quiz[] }) {
       </List>
     </>
   );
-}
+};
+
+export default UserQuizList;

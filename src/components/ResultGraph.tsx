@@ -3,7 +3,7 @@ import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import ResultProgress from "../elements/ResultProgress";
 
-export default function ResultGraph({ score }: { score: number }) {
+const ResultGraph = ({ score }: { score: number }) => {
   const [progress, setProgress] = useState(10);
 
   useEffect(() => {
@@ -34,4 +34,6 @@ export default function ResultGraph({ score }: { score: number }) {
       </Box>
     </Box>
   );
-}
+};
+
+export default ResultGraph;

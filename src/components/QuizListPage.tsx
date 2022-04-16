@@ -2,7 +2,7 @@ import QuizCard from "./QuizCard";
 import { AppState } from "../types/appState";
 import { QuizId } from "../types/quiz";
 
-export default function QuizListPage({ appState }: { appState: AppState }) {
+const QuizListPage = ({ appState }: { appState: AppState }) => {
   const { availableQuizzes } = appState;
 
   if (!availableQuizzes) {
@@ -20,4 +20,6 @@ export default function QuizListPage({ appState }: { appState: AppState }) {
       ))}
     </>
   );
-}
+};
+
+export default QuizListPage;

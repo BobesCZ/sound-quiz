@@ -82,10 +82,10 @@ const stylesWrong = {
   },
 };
 
-function QuestionRadio(props: QuestionRadioProps) {
+const QuestionRadio = (props: QuestionRadioProps) => {
   const { waitingAnimation, isCorrect, ...other } = props;
   return <Radio color="default" {...other} />;
-}
+};
 
 const QuestionRadioCorrect = withStyles(stylesCorrect)(QuestionRadio);
 const QuestionRadioWrong = withStyles(stylesWrong)(QuestionRadio);

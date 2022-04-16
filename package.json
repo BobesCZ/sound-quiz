@@ -24,12 +24,25 @@
     "eslint:fix": "npm run eslint -- --fix",
     "prettier": "prettier src --check",
     "prettier:fix": "npm run prettier -- --write",
+    "lint": "npm run eslint && npm run prettier",
     "lint:fix": "npm run eslint:fix && npm run prettier:fix"
   },
   "eslintConfig": {
     "extends": [
       "react-app"
-    ]
+    ],
+    "plugins": [
+      "prefer-arrow-functions",
+      "modules-newline"
+    ],
+    "rules": {
+      "prefer-arrow-functions/prefer-arrow-functions": [
+        "error",
+        {
+          "returnStyle": "implicit"
+        }
+      ]
+    }
   },
   "browserslist": {
     "production": [
@@ -49,6 +62,7 @@
     "eslint-plugin-flowtype": "^8.0.3",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-prefer-arrow-functions": "^3.1.4",
     "eslint-plugin-react": "^7.29.4",
     "eslint-plugin-react-hooks": "^4.4.0"
   },

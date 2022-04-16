@@ -16,8 +16,6 @@ const styles: StyleRules = {
   },
 };
 
-function ClassNames(props: CircularProgressProps) {
-  return <CircularProgress size={150} {...props} />;
-}
+const ClassNames = (props: CircularProgressProps) => <CircularProgress size={150} {...props} />;
 
 export default withStyles(styles)(ClassNames);

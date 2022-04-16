@@ -7,7 +7,7 @@ import getVideoEndSeconds from "../utils/getVideoEndSeconds";
 import shuffleArray from "../utils/shuffleArray";
 import { clearStorage, saveToStorage } from "../utils/storage";
 
-export default function reducer(state: AppState, action: Action) {
+const reducer = (state: AppState, action: Action) => {
   const { type, payload } = action;
 
   switch (type) {
@@ -116,4 +116,6 @@ export default function reducer(state: AppState, action: Action) {
     default:
       throw new Error();
   }
-}
+};
+
+export default reducer;

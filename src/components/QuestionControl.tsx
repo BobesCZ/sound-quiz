@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function QuestionControl({
+const QuestionControl = ({
   appState,
   questionsArray,
   questionId,
@@ -28,7 +28,7 @@ export default function QuestionControl({
   questionsArray: Question[];
   questionId: number;
   isQuestionChecked: boolean;
-}) {
+}) => {
   const questionObject = questionsArray[questionId];
   const videoObject = questionObject.video;
   const answerInfo = isQuestionChecked ? questionObject.answerInfo : null;
@@ -51,7 +51,7 @@ export default function QuestionControl({
     }
 
     if (!(window as any)?.onYouTubeIframeAPIReady) {
-      (window as any).onYouTubeIframeAPIReady = function () {
+      (window as any).onYouTubeIframeAPIReady = () => {
         createPlayer();
       };
     } else {
@@ -67,7 +67,7 @@ export default function QuestionControl({
 
   loadYtScript();
 
-  function createPlayer() {
+  const createPlayer = () => {
     // @ts-ignore
     player = new YT.Player("player", {
       // eslint-disable-line
@@ -82,13 +82,13 @@ export default function QuestionControl({
         onStateChange: onPlayerStateChange,
       },
     });
-  }
+  };
 
-  function onPlayerReady() {
+  const onPlayerReady = () => {
     setPlayerObject(player);
-  }
+  };
 
-  function onPlayerStateChange() {
+  const onPlayerStateChange = () => {
     // @ts-ignore
     if (player.getPlayerState() === YT.PlayerState.BUFFERING) {
       // eslint-disable-line
@@ -129,7 +129,7 @@ export default function QuestionControl({
         setProgress(0);
       }
     }
-  }
+  };
 
   return (
     <div>
@@ -156,4 +156,6 @@ export default function QuestionControl({
       )}
     </div>
   );
-}
+};
+
+export default QuestionControl;

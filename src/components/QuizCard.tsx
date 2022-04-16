@@ -31,13 +31,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function QuizCard({
-  quizId,
-  quizObj,
-}: {
-  quizId: QuizId;
-  quizObj: Quiz;
-}) {
+const QuizCard = ({ quizId, quizObj }: { quizId: QuizId; quizObj: Quiz }) => {
   const classes = useStyles();
 
   return (
@@ -94,4 +88,6 @@ export default function QuizCard({
       </CardActions>
     </Card>
   );
-}
+};
+
+export default QuizCard;

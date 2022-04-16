@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function UserPage({ appState }: { appState: AppState }) {
+const UserPage = ({ appState }: { appState: AppState }) => {
   const { availableQuizzes } = appState;
   const completedQuizzes: Quiz[] = [];
   const incompletedQuizzes: Quiz[] = [];
@@ -75,4 +75,6 @@ export default function UserPage({ appState }: { appState: AppState }) {
       )}
     </div>
   );
-}
+};
+
+export default UserPage;

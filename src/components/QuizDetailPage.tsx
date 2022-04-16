@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function QuizDetailPage({ appState }: { appState: AppState }) {
+const QuizDetailPage = ({ appState }: { appState: AppState }) => {
   const { availableQuizzes } = appState;
   const params = useParams<{ id: string }>();
   const quizId = params.id || "";
@@ -148,4 +148,6 @@ export default function QuizDetailPage({ appState }: { appState: AppState }) {
       )}
     </>
   );
-}
+};
+
+export default QuizDetailPage;

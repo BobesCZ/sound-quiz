@@ -1,4 +1,4 @@
-export default function loadScript() {
+const loadScript = () => {
   const scriptUrl = "//www.youtube.com/iframe_api";
   const globalName = "YT";
 
@@ -17,4 +17,6 @@ export default function loadScript() {
     scr.onerror = () =>
       reject(Error("Error loading " + globalName || scriptUrl));
   });
-}
+};
+
+export default loadScript;

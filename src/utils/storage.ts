@@ -2,7 +2,7 @@ import { Quiz, QuizId } from "../types/quiz";
 
 const STORAGE_KEY_USER_ANSWERS = "allUserAnswers";
 
-function saveToStorage(quizId: QuizId, quiz: Quiz) {
+const saveToStorage = (quizId: QuizId, quiz: Quiz) => {
   if (window.localStorage) {
     const { userAnswers, finalScore } = quiz;
     const allUserAnswers =
@@ -13,19 +13,19 @@ function saveToStorage(quizId: QuizId, quiz: Quiz) {
       JSON.stringify(allUserAnswers)
     );
   }
-}
+};
 
-function loadFromStorage() {
+const loadFromStorage = () => {
   if (window.localStorage) {
     return JSON.parse(localStorage.getItem(STORAGE_KEY_USER_ANSWERS) ?? "{}");
   }
   return null;
-}
+};
 
-function clearStorage() {
+const clearStorage = () => {
   if (window.localStorage) {
     localStorage.removeItem(STORAGE_KEY_USER_ANSWERS);
   }
-}
+};
 
 export { clearStorage, loadFromStorage, saveToStorage };

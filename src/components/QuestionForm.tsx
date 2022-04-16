@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
   focused: {},
 }));
 
-export default function QuestionForm({
+const QuestionForm = ({
   appState,
   questionId,
   questionObject,
@@ -34,7 +34,7 @@ export default function QuestionForm({
   appState: AppState;
   questionId: number;
   questionObject: Question;
-}) {
+}) => {
   const { availableQuizzes } = appState;
   const params = useParams<{ id: string }>();
   const quizId = params.id || "";
@@ -50,7 +50,7 @@ export default function QuestionForm({
   const answerChecked =
     availableQuizzes[quizId].userAnswers[questionId]?.isChecked || null;
 
-  function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (answer === null) {
       const answer = { answer: parseInt(event.target.value), isChecked: false };
       dispatch({
@@ -69,9 +69,9 @@ export default function QuestionForm({
         });
       }, 1400);
     }
-  }
+  };
 
-  function getControl(id: number) {
+  const getControl = (id: number) => {
     if (questionObject.correctAnswer === id) {
       return (
         <QuestionRadioCorrect
@@ -87,7 +87,7 @@ export default function QuestionForm({
         />
       );
     }
-  }
+  };
 
   return (
     <>
@@ -119,4 +119,6 @@ export default function QuestionForm({
       </FormControl>
     </>
   );
-}
+};
+
+export default QuestionForm;

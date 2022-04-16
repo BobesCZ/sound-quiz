@@ -73,7 +73,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function PlayerPanel({
+const PlayerPanel = ({
   player,
   isPlaying,
   isLoading,
@@ -87,11 +87,11 @@ export default function PlayerPanel({
   videoObject: Video;
   progress: number;
   answerInfo: AnswerInfo | null;
-}) {
+}) => {
   const startSeconds = videoObject.startSeconds;
   const classes = useStyles();
 
-  function handleButtonPlayClick() {
+  const handleButtonPlayClick = () => {
     // @ts-ignore
     if (player.getPlayerState() === YT.PlayerState.PLAYING) {
       // eslint-disable-line
@@ -99,17 +99,17 @@ export default function PlayerPanel({
     } else {
       player.playVideo();
     }
-  }
+  };
 
-  function handleButtonReplayClick() {
+  const handleButtonReplayClick = () => {
     player.seekTo(startSeconds);
     player.playVideo();
-  }
+  };
 
   const [imageLoaded, setImageLoaded] = useState(false);
-  function handleImageLoad() {
+  const handleImageLoad = () => {
     setImageLoaded(true);
-  }
+  };
 
   return (
     <Box p={1} className={classes.playerArea}>
@@ -177,4 +177,6 @@ export default function PlayerPanel({
       </Box>
     </Box>
   );
-}
+};
+
+export default PlayerPanel;

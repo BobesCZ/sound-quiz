@@ -16,7 +16,7 @@ import quizzes from "./data/quizzes";
 import { loadFromStorage } from "./utils/storage";
 import { ActionType } from "./types/action";
 
-export default function App() {
+const App = () => {
   const [appState, dispatch] = useReducer(reducer, initialState);
 
   const theme = createMuiTheme({
@@ -73,4 +73,6 @@ export default function App() {
       </ThemeProvider>
     </BrowserRouter>
   );
-}
+};
+
+export default App;
