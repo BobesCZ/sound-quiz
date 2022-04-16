@@ -10,7 +10,7 @@ import Typography from "@material-ui/core/Typography";
 import CheckIcon from "@material-ui/icons/Check";
 import EqualizerIcon from "@material-ui/icons/Equalizer";
 import TimerIcon from "@material-ui/icons/Timer";
-import { QuizId, Quiz } from "../../types/quiz";
+import { QuizId, Quiz } from "../../types/types";
 
 const useStyles = makeStyles((theme) => ({
   root: {

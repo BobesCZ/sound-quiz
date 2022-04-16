@@ -12,8 +12,8 @@ import AppDispatch from "../../context/AppDispatch";
 import questions from "../../data/questions";
 import QuestionControl from "./QuestionControl";
 import ResultControl from "./ResultControl";
-import { ActionType } from "../../types/action";
-import { AppState } from "../../types/appState";
+import { ActionType } from "../../types/context";
+import { AppState } from "../../types/context";
 import useCurrentQuiz from "../../hooks/useCurrentQuiz";
 
 const useStyles = makeStyles((theme) => ({

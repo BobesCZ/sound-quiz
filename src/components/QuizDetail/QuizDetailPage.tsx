@@ -12,7 +12,7 @@ import TimerIcon from "@material-ui/icons/Timer";
 import VolumeUpIcon from "@material-ui/icons/VolumeUp";
 import Alert from "@material-ui/lab/Alert";
 import AlertTitle from "@material-ui/lab/AlertTitle";
-import { AppState } from "../../types/appState";
+import { AppState } from "../../types/context";
 import useCurrentQuiz from "../../hooks/useCurrentQuiz";
 import { useEffect } from "react";
 

@@ -1,10 +1,9 @@
-import { Action, ActionType } from "../types/action";
-import { AppState } from "../types/appState";
-import { Questions } from "../types/question";
-import { Answer, Quizzes } from "../types/quiz";
+import { Action, ActionType } from "../types/context";
+import { AppState } from "../types/context";
 import { getAnswers, getVideoEndSeconds } from "../utils/utils";
 import { shuffleArray } from "../utils/common";
 import { clearStorage, saveToStorage } from "../utils/storage";
+import { Answer, Quizzes, Questions } from "../types/types";
 
 const reducer = (state: AppState, action: Action) => {
   const { type, payload } = action;

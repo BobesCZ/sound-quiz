@@ -1,4 +1,4 @@
-import { Difficulty, Quizzes } from "../types/quiz";
+import { Difficulty, Quizzes } from "../types/types";
 import { setQuestionsCount } from "../utils/utils";
 import questions from "./questions";
 

@@ -9,11 +9,10 @@ import {
   QuestionRadioCorrect,
   QuestionRadioWrong,
 } from "../elements/QuestionRadio";
-import { ActionType } from "../../types/action";
-import { AppState } from "../../types/appState";
-import { Question } from "../../types/question";
-import { AnswerObject } from "../../types/answer";
+import { ActionType } from "../../types/context";
+import { AppState } from "../../types/context";
 import useCurrentQuiz from "../../hooks/useCurrentQuiz";
+import { Question, AnswerObject } from "../../types/types";
 
 const useStyles = makeStyles((theme) => ({
   root: {

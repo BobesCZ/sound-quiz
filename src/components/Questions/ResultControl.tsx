@@ -4,7 +4,7 @@ import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import ResultGraph from "./ResultGraph";
-import { AppState } from "../../types/appState";
+import { AppState } from "../../types/context";
 import useCurrentQuiz from "../../hooks/useCurrentQuiz";
 
 const useStyles = makeStyles((theme) => ({

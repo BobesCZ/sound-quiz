@@ -4,8 +4,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import loadYtScript from "../../utils/loadScript";
 import PlayerPanel from "./PlayerPanel";
 import QuestionForm from "./QuestionForm";
-import { AppState } from "../../types/appState";
-import { Question } from "../../types/question";
+import { AppState } from "../../types/context";
+import { Question } from "../../types/types";
 
 const useStyles = makeStyles((theme) => ({
   root: {

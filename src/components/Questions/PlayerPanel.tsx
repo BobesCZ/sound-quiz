@@ -12,7 +12,7 @@ import AlbumIcon from "@material-ui/icons/Album";
 import PauseIcon from "@material-ui/icons/Pause";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import ReplayIcon from "@material-ui/icons/Replay";
-import { AnswerInfo, Video } from "../../types/question";
+import { AnswerInfo, Video } from "../../types/types";
 
 const useStyles = makeStyles((theme) => ({
   playerArea: {

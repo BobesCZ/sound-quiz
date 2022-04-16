@@ -1,4 +1,4 @@
-import { Questions } from "../types/question";
+import { Questions } from "../types/types";
 
 const questions: Record<string, Questions> = {
   kcca86d2: [

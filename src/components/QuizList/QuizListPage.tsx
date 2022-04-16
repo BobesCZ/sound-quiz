@@ -1,5 +1,5 @@
 import QuizCard from "./QuizCard";
-import { AppState } from "../../types/appState";
+import { AppState } from "../../types/context";
 
 interface QuizListPageProps {
   appState: AppState;

@@ -7,8 +7,8 @@ import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 import Alert from "@material-ui/lab/Alert";
 import AppDispatch from "../../context/AppDispatch";
 import UserQuizList from "./UserQuizList";
-import { ActionType } from "../../types/action";
-import { AppState } from "../../types/appState";
+import { ActionType } from "../../types/context";
+import { AppState } from "../../types/context";
 import { filterUserQuizzes } from "../../utils/utils";
 
 const useStyles = makeStyles((theme) => ({

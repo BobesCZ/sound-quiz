@@ -1,8 +1,11 @@
-import { AnswerObject } from "../types/answer";
-import { SourceAnswers } from "../types/question";
+import {
+  Questions,
+  Quizzes,
+  AnswerObject,
+  SourceAnswers,
+  FilterUserQuizzesResult,
+} from "../types/types";
 import { shuffleArray } from "./common";
-import { Questions } from "../types/question";
-import { Quiz, Quizzes } from "../types/quiz";
 
 const getVideoEndSeconds = (startSeconds: number, videoDuration = 10) =>
   startSeconds + videoDuration;
@@ -72,11 +75,6 @@ const getAnswers = (sourceAnswers: SourceAnswers, randomizeAnswers = true) => {
   }
   return { finalAnswersArray, finalCorrectAnswerIndex };
 };
-
-interface FilterUserQuizzesResult {
-  completedQuizzes: Quiz[];
-  incompletedQuizzes: Quiz[];
-}
 
 const filterUserQuizzes = (
   availableQuizzes?: Quizzes

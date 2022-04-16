@@ -1,4 +1,4 @@
-import { Quiz, QuizId } from "../types/quiz";
+import { Quiz, QuizId } from "../types/types";
 
 const STORAGE_KEY_USER_ANSWERS = "allUserAnswers";
 

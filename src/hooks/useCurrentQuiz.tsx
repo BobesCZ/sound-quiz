@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
-import { AppState } from "../types/appState";
-import { Quiz } from "../types/quiz";
+import { AppState } from "../types/context";
+import { Quiz } from "../types/types";
 
 interface HookReturn {
   quizId?: string;

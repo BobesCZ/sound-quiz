@@ -7,7 +7,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import CheckIcon from "@material-ui/icons/Check";
-import { Quiz } from "../../types/quiz";
+import { Quiz } from "../../types/types";
 
 const useStyles = makeStyles((theme) => ({
   list: {
