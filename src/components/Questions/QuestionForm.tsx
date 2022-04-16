@@ -40,8 +40,8 @@ const QuestionForm = ({
   const { dispatch } = useContext(AppDispatch);
   const { quizId, quizObj } = useCurrentQuiz(appState);
 
-  const answer = quizObj?.userAnswers[questionId]?.answer || null;
-  const answerChecked = quizObj?.userAnswers[questionId]?.isChecked || null;
+  const answer = quizObj?.userAnswers[questionId]?.answer ?? null;
+  const isAnswerChecked = !!quizObj?.userAnswers[questionId]?.isChecked;
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (answer === null) {
@@ -68,15 +68,15 @@ const QuestionForm = ({
     if (questionObject.correctAnswer === id) {
       return (
         <QuestionRadioCorrect
-          waitingAnimation={answerChecked ? false : true}
-          isCorrect={questionObject.correctAnswer === id ? true : false}
+          waitingAnimation={!isAnswerChecked}
+          isCorrect={questionObject.correctAnswer === id}
         />
       );
     } else {
       return (
         <QuestionRadioWrong
-          waitingAnimation={answerChecked ? false : true}
-          isCorrect={questionObject.correctAnswer === id ? true : false}
+          waitingAnimation={!isAnswerChecked}
+          isCorrect={questionObject.correctAnswer === id}
         />
       );
     }

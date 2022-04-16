@@ -83,13 +83,14 @@ const reducer = (state: AppState, action: Action) => {
     }
     case ActionType.SetLoadedAnswers: {
       const { loadedUserAnswers }: { loadedUserAnswers: Quizzes } = payload;
-      Object.keys(loadedUserAnswers).forEach((quizId) => {
+      Object.entries(loadedUserAnswers).forEach(([quizId, quizObjValue]) => {
         const quizObj = state.availableQuizzes?.[quizId];
 
         if (quizObj) {
-          const { finalScore, userAnswers } = loadedUserAnswers[quizId];
+          const { finalScore, userAnswers, questions } = quizObjValue;
           quizObj.finalScore = finalScore;
           quizObj.userAnswers = userAnswers;
+          quizObj.questions = questions;
         }
       });
       return { ...state };
