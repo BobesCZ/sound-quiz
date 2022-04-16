@@ -5,4 +5,4 @@ const shuffleArray = (array: any[]) => {
   }
 };
 
-export default shuffleArray;
+export { shuffleArray };

@@ -1,19 +1,6 @@
-import { Questions } from "../types/question";
 import { Difficulty, Quizzes } from "../types/quiz";
+import { setQuestionsCount } from "../utils/utils";
 import questions from "./questions";
-
-const setQuestionsCount = (
-  questionsObj: Record<string, Questions>,
-  quizzesObj: Quizzes
-) => {
-  Object.keys(quizzesObj).map(
-    (key) =>
-      (quizzesObj[key].questionsCount = questionsObj[key]
-        ? questionsObj[key].length
-        : 0)
-  );
-  return quizzesObj;
-};
 
 const quizzes: Quizzes = {
   f8b5b078: {

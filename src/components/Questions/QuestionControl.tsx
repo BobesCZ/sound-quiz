@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { makeStyles } from "@material-ui/core/styles";
-import loadYtScript from "../../utils/loadYtScript";
+import loadYtScript from "../../utils/loadScript";
 import PlayerPanel from "./PlayerPanel";
 import QuestionForm from "./QuestionForm";
 import { AppState } from "../../types/appState";

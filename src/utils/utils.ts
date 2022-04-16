@@ -1,6 +1,24 @@
 import { AnswerObject } from "../types/answer";
 import { SourceAnswers } from "../types/question";
-import shuffleArray from "./shuffleArray";
+import { shuffleArray } from "./common";
+import { Questions } from "../types/question";
+import { Quiz, Quizzes } from "../types/quiz";
+
+const getVideoEndSeconds = (startSeconds: number, videoDuration = 10) =>
+  startSeconds + videoDuration;
+
+const setQuestionsCount = (
+  questionsObj: Record<string, Questions>,
+  quizzesObj: Quizzes
+) => {
+  Object.keys(quizzesObj).map(
+    (key) =>
+      (quizzesObj[key].questionsCount = questionsObj[key]
+        ? questionsObj[key].length
+        : 0)
+  );
+  return quizzesObj;
+};
 
 const createAnswerObject = (id: number, text: string) => {
   const answerObj: AnswerObject = {
@@ -55,4 +73,33 @@ const getAnswers = (sourceAnswers: SourceAnswers, randomizeAnswers = true) => {
   return { finalAnswersArray, finalCorrectAnswerIndex };
 };
 
-export default getAnswers;
+interface FilterUserQuizzesResult {
+  completedQuizzes: Quiz[];
+  incompletedQuizzes: Quiz[];
+}
+
+const filterUserQuizzes = (
+  availableQuizzes?: Quizzes
+): FilterUserQuizzesResult =>
+  Object.values(availableQuizzes || {}).reduce(
+    (result: FilterUserQuizzesResult, quiz) => {
+      if (quiz.finalScore !== null) {
+        return {
+          ...result,
+          completedQuizzes: [...result.completedQuizzes, quiz],
+        };
+      } else if (quiz.userAnswers.length) {
+        return {
+          ...result,
+          incompletedQuizzes: [...result.incompletedQuizzes, quiz],
+        };
+      }
+      return { ...result };
+    },
+    {
+      completedQuizzes: [],
+      incompletedQuizzes: [],
+    }
+  );
+
+export { getVideoEndSeconds, setQuestionsCount, getAnswers, filterUserQuizzes };

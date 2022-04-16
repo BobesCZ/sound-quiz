@@ -2,9 +2,8 @@ import { Action, ActionType } from "../types/action";
 import { AppState } from "../types/appState";
 import { Questions } from "../types/question";
 import { Answer, Quizzes } from "../types/quiz";
-import getAnswers from "../utils/getAnswers";
-import getVideoEndSeconds from "../utils/getVideoEndSeconds";
-import shuffleArray from "../utils/shuffleArray";
+import { getAnswers, getVideoEndSeconds } from "../utils/utils";
+import { shuffleArray } from "../utils/common";
 import { clearStorage, saveToStorage } from "../utils/storage";
 
 const reducer = (state: AppState, action: Action) => {
