@@ -13,7 +13,7 @@ function saveToStorage(quizId: QuizId, quiz: Quiz) {
 
 function loadFromStorage() {
   if (window.localStorage) {
-    return JSON.parse(localStorage.getItem(STORAGE_KEY_USER_ANSWERS) ?? '');
+    return JSON.parse(localStorage.getItem(STORAGE_KEY_USER_ANSWERS) ?? "{}");
   }
   return null;
 }

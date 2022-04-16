@@ -1,20 +1,20 @@
-import { useEffect, useReducer } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { createMuiTheme, CssBaseline } from '@material-ui/core';
-import { deepPurple, orange } from '@material-ui/core/colors';
-import Container from '@material-ui/core/Container';
-import { ThemeProvider } from '@material-ui/styles';
-import QuizDetailPage from './components/QuizDetailPage';
-import QuizInfoPage from './components/QuizInfoPage';
-import QuizListPage from './components/QuizListPage';
-import TopBar from './components/TopBar';
-import UserPage from './components/UserPage';
-import { AppDispatchProvider } from './context/AppDispatchProvider';
-import initialState from './context/initialState';
-import reducer from './context/reducer';
-import quizzes from './data/quizzes';
-import { loadFromStorage } from './utils/storage';
-import { ActionType } from './types/action';
+import { useEffect, useReducer } from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { createMuiTheme, CssBaseline } from "@material-ui/core";
+import { deepPurple, orange } from "@material-ui/core/colors";
+import Container from "@material-ui/core/Container";
+import { ThemeProvider } from "@material-ui/styles";
+import QuizDetailPage from "./components/QuizDetailPage";
+import QuizInfoPage from "./components/QuizInfoPage";
+import QuizListPage from "./components/QuizListPage";
+import TopBar from "./components/TopBar";
+import UserPage from "./components/UserPage";
+import { AppDispatchProvider } from "./context/AppDispatchProvider";
+import initialState from "./context/initialState";
+import reducer from "./context/reducer";
+import quizzes from "./data/quizzes";
+import { loadFromStorage } from "./utils/storage";
+import { ActionType } from "./types/action";
 
 export default function App() {
   const [appState, dispatch] = useReducer(reducer, initialState);
@@ -28,7 +28,7 @@ export default function App() {
       secondary: {
         main: deepPurple[500],
       },
-    }
+    },
   });
 
   const availableQuizzes = appState.availableQuizzes;
@@ -37,39 +37,40 @@ export default function App() {
     if (!Object.keys(availableQuizzes || []).length) {
       dispatch({ type: ActionType.SetAvailableQuizzes, payload: { quizzes } });
     }
-  }, [availableQuizzes, dispatch])
+  }, [availableQuizzes, dispatch]);
 
   useEffect(() => {
     const loadedUserAnswers = loadFromStorage();
     if (loadedUserAnswers) {
-      dispatch({ type: ActionType.SetLoadedAnswers, payload: { loadedUserAnswers } });
+      dispatch({
+        type: ActionType.SetLoadedAnswers,
+        payload: { loadedUserAnswers },
+      });
     }
-  }, [])
+  }, []);
 
   return (
-    <Router>
+    <BrowserRouter>
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <AppDispatchProvider>
           <TopBar />
           <Container maxWidth="sm">
-            <Switch>
-              <Route path="/quiz/:id/questions">
-                <QuizDetailPage appState={appState} />
-              </Route>
-              <Route path="/quiz/:id">
-                <QuizInfoPage appState={appState} />
-              </Route>
-              <Route path="/user">
-                <UserPage appState={appState} />
-              </Route>
-              <Route path="/">
-                <QuizListPage appState={appState} />
-              </Route>
-            </Switch>
+            <Routes>
+              <Route
+                path="/quiz/:id/questions"
+                element={<QuizDetailPage appState={appState} />}
+              />
+              <Route
+                path="/quiz/:id"
+                element={<QuizInfoPage appState={appState} />}
+              />
+              <Route path="/user" element={<UserPage appState={appState} />} />
+              <Route path="/" element={<QuizListPage appState={appState} />} />
+            </Routes>
           </Container>
         </AppDispatchProvider>
       </ThemeProvider>
-    </Router>
+    </BrowserRouter>
   );
 }

@@ -1,10 +1,10 @@
-import { Link as RouterLink, useParams } from 'react-router-dom';
-import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import ResultGraph from './ResultGraph';
-import { AppState } from '../types/appState';
+import { Link as RouterLink, useParams } from "react-router-dom";
+import Box from "@material-ui/core/Box";
+import Button from "@material-ui/core/Button";
+import { makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import ResultGraph from "./ResultGraph";
+import { AppState } from "../types/appState";
 
 const useStyles = makeStyles((theme) => ({
   text: {
@@ -12,24 +12,26 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ResultControl({appState}: {appState: AppState}) {
-  const { id: quizId } = useParams<{ id: string }>();
+export default function ResultControl({ appState }: { appState: AppState }) {
+  const params = useParams<{ id: string }>();
+  const quizId = params.id || "";
   const { availableQuizzes } = appState;
 
   const score = availableQuizzes?.[quizId].finalScore ?? 0;
-  const scoreLevel = score >= 90 ? "excellent" : score >= 60 ? "good" : "nevermind";
+  const scoreLevel =
+    score >= 90 ? "excellent" : score >= 60 ? "good" : "nevermind";
   const classes = useStyles();
 
   const titleTextObj = {
-    "excellent": "Excellent result",
-    "good": "Good job",
-    "nevermind": "Nevermind",
-  }
+    excellent: "Excellent result",
+    good: "Good job",
+    nevermind: "Nevermind",
+  };
   const paragraphTextObj = {
-    "excellent": "Wow, you have to be a real expert in this genre!",
-    "good": "It seems that you feel comfortable with this kind of music!",
-    "nevermind": "This isn't your favourite cup of music anyway, right?",
-  }
+    excellent: "Wow, you have to be a real expert in this genre!",
+    good: "It seems that you feel comfortable with this kind of music!",
+    nevermind: "This isn't your favourite cup of music anyway, right?",
+  };
 
   return (
     <Box

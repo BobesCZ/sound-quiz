@@ -1,20 +1,20 @@
-import { useContext, useEffect, useState } from 'react';
-import { Redirect, useParams } from 'react-router-dom';
-import AppBar from '@material-ui/core/AppBar';
-import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
-import Container from '@material-ui/core/Container';
-import MobileStepper from '@material-ui/core/MobileStepper';
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
-import AppDispatch from '../context/AppDispatch';
-import questions from '../data/questions';
-import QuestionControl from './QuestionControl';
-import ResultControl from './ResultControl';
-import { ActionType } from '../types/action';
-import { AppState } from '../types/appState';
-import { Quiz } from '../types/quiz';
+import { useContext, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import AppBar from "@material-ui/core/AppBar";
+import Box from "@material-ui/core/Box";
+import Button from "@material-ui/core/Button";
+import Container from "@material-ui/core/Container";
+import MobileStepper from "@material-ui/core/MobileStepper";
+import { makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
+import AppDispatch from "../context/AppDispatch";
+import questions from "../data/questions";
+import QuestionControl from "./QuestionControl";
+import ResultControl from "./ResultControl";
+import { ActionType } from "../types/action";
+import { AppState } from "../types/appState";
+import { Quiz } from "../types/quiz";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,37 +40,49 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function QuizDetailPage({appState}: {appState: AppState}) {
+export default function QuizDetailPage({ appState }: { appState: AppState }) {
   const { availableQuizzes } = appState;
-  const { id: quizId } = useParams<{ id: string }>();
-  const quizObj : Quiz | undefined = availableQuizzes?.[quizId];
-  
+  const params = useParams<{ id: string }>();
+  const quizId = params.id || "";
+  const quizObj: Quiz | undefined = availableQuizzes?.[quizId];
+
   const [activeStep, setActiveStep] = useState(0);
   const [redirectTo, setRedirectTo] = useState(false);
-  
+
   const { dispatch } = useContext(AppDispatch);
   const classes = useStyles();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!quizObj) {
       setRedirectTo(true);
     }
     if (!quizObj?.questions.length) {
-      dispatch({ type: ActionType.SetQuestionsToQuiz, payload: { quizId, questions: questions[quizId] } });
+      dispatch({
+        type: ActionType.SetQuestionsToQuiz,
+        payload: { quizId, questions: questions[quizId] },
+      });
     }
-  }, [quizId, quizObj, dispatch])
+  }, [quizId, quizObj, dispatch]);
 
-  if (!quizObj || redirectTo) {
-    return <Redirect to={`/quiz/${quizId}`} />;
-  }
+  useEffect(() => {
+    if (!quizObj || redirectTo) {
+      navigate(`/quiz/${quizId}`);
+    }
+  }, [quizObj, redirectTo, navigate, quizId]);
 
-  const questionsArray = quizObj.questions;
+  const questionsArray = quizObj?.questions;
   if (!questionsArray || questionsArray.length === 0) {
-    return null
+    return null;
   }
 
   const questionCount = questionsArray.length;
-  const showResultText = quizObj.finalScore !== null && quizObj.userAnswers[activeStep] && quizObj.userAnswers[activeStep].isChecked ? true : false;
+  const showResultText =
+    quizObj.finalScore !== null &&
+    quizObj.userAnswers[activeStep] &&
+    quizObj.userAnswers[activeStep].isChecked
+      ? true
+      : false;
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -80,28 +92,44 @@ export default function QuizDetailPage({appState}: {appState: AppState}) {
     return <></>;
   }
 
-  const isQuestionChecked = availableQuizzes[quizId].userAnswers.hasOwnProperty(activeStep) && availableQuizzes[quizId].userAnswers[activeStep].isChecked;
+  const isQuestionChecked =
+    availableQuizzes[quizId].userAnswers.hasOwnProperty(activeStep) &&
+    availableQuizzes[quizId].userAnswers[activeStep].isChecked;
 
   return (
     <>
-      {activeStep === questionCount
-        ? <ResultControl appState={appState} />
-        : <>
-
-          <QuestionControl appState={appState} questionsArray={questionsArray} questionId={activeStep} isQuestionChecked={isQuestionChecked} />
+      {activeStep === questionCount ? (
+        <ResultControl appState={appState} />
+      ) : (
+        <>
+          <QuestionControl
+            appState={appState}
+            questionsArray={questionsArray}
+            questionId={activeStep}
+            isQuestionChecked={isQuestionChecked}
+          />
 
           <Box my={3} className={classes.nextButtonWrap}>
-            <Button size="large" variant="contained" color="primary" onClick={handleNext} disabled={!isQuestionChecked} endIcon={<KeyboardArrowRight />}>
-              {showResultText
-                ? "View your results"
-                : "Next question"
-              }
+            <Button
+              size="large"
+              variant="contained"
+              color="primary"
+              onClick={handleNext}
+              disabled={!isQuestionChecked}
+              endIcon={<KeyboardArrowRight />}
+            >
+              {showResultText ? "View your results" : "Next question"}
             </Button>
           </Box>
 
           <AppBar position="fixed" className={classes.bottomBar}>
             <Container maxWidth="sm">
-              <Typography variant="subtitle2" color="textSecondary" className={classes.title} gutterBottom>
+              <Typography
+                variant="subtitle2"
+                color="textSecondary"
+                className={classes.title}
+                gutterBottom
+              >
                 Question {activeStep + 1}/{questionsArray.length}
               </Typography>
 
@@ -116,9 +144,8 @@ export default function QuizDetailPage({appState}: {appState: AppState}) {
               />
             </Container>
           </AppBar>
-
         </>
-      }
+      )}
     </>
   );
 }
