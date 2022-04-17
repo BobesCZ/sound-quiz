@@ -1,5 +1,5 @@
-import { createContext } from 'react';
-import { ContextProps } from '../types/contextProps';
+import { createContext } from "react";
+import { ContextProps } from "../types/context";
 
 const AppDispatch = createContext<ContextProps>(undefined as any);
 

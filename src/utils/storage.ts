@@ -1,27 +1,31 @@
-import { Quiz, QuizId } from "../types/quiz";
+import { Quiz, QuizId } from "../types/types";
 
-const STORAGE_KEY_USER_ANSWERS = 'allUserAnswers';
+const STORAGE_KEY_USER_ANSWERS = "userQuizzesData";
 
-function saveToStorage(quizId: QuizId, quiz: Quiz) {
+const saveToStorage = (quizId: QuizId, quiz: Quiz) => {
   if (window.localStorage) {
-    const { userAnswers, finalScore } = quiz;
-    const allUserAnswers = JSON.parse(localStorage.getItem(STORAGE_KEY_USER_ANSWERS) ?? '') || {};
-    allUserAnswers[quizId] = { userAnswers, finalScore };
-    localStorage.setItem(STORAGE_KEY_USER_ANSWERS, JSON.stringify(allUserAnswers));
+    const { userAnswers, finalScore, questions } = quiz;
+    const userQuizzesData =
+      JSON.parse(localStorage.getItem(STORAGE_KEY_USER_ANSWERS) ?? "{}") || {};
+    userQuizzesData[quizId] = { userAnswers, finalScore, questions };
+    localStorage.setItem(
+      STORAGE_KEY_USER_ANSWERS,
+      JSON.stringify(userQuizzesData)
+    );
   }
-}
+};
 
-function loadFromStorage() {
+const loadFromStorage = () => {
   if (window.localStorage) {
-    return JSON.parse(localStorage.getItem(STORAGE_KEY_USER_ANSWERS) ?? '');
+    return JSON.parse(localStorage.getItem(STORAGE_KEY_USER_ANSWERS) ?? "{}");
   }
   return null;
-}
+};
 
-function clearStorage() {
+const clearStorage = () => {
   if (window.localStorage) {
     localStorage.removeItem(STORAGE_KEY_USER_ANSWERS);
   }
-}
+};
 
 export { clearStorage, loadFromStorage, saveToStorage };

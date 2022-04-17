@@ -1,18 +1,18 @@
-import { useState } from 'react';
-import clsx from 'clsx';
-import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
-import ButtonGroup from '@material-ui/core/ButtonGroup';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import { grey } from '@material-ui/core/colors';
-import LinearProgress from '@material-ui/core/LinearProgress';
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import AlbumIcon from '@material-ui/icons/Album';
-import PauseIcon from '@material-ui/icons/Pause';
-import PlayArrowIcon from '@material-ui/icons/PlayArrow';
-import ReplayIcon from '@material-ui/icons/Replay';
-import { AnswerInfo, Video } from '../types/question';
+import Box from "@material-ui/core/Box";
+import Button from "@material-ui/core/Button";
+import ButtonGroup from "@material-ui/core/ButtonGroup";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import LinearProgress from "@material-ui/core/LinearProgress";
+import Typography from "@material-ui/core/Typography";
+import { grey } from "@material-ui/core/colors";
+import { makeStyles } from "@material-ui/core/styles";
+import AlbumIcon from "@material-ui/icons/Album";
+import PauseIcon from "@material-ui/icons/Pause";
+import PlayArrowIcon from "@material-ui/icons/PlayArrow";
+import ReplayIcon from "@material-ui/icons/Replay";
+import clsx from "clsx";
+import { useState } from "react";
+import { AnswerInfo, Video } from "../../types/types";
 
 const useStyles = makeStyles((theme) => ({
   playerArea: {
@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 80,
     opacity: 0.3,
     color: grey[200],
-    margin: theme.spacing(1)
+    margin: theme.spacing(1),
   },
   imageTag: {
     maxWidth: 80 + 2 * theme.spacing(1),
@@ -70,65 +70,88 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     width: "100%",
     flexGrow: 1,
-  }
+  },
 }));
 
-export default function PlayerPanel(
-  {player, isPlaying, isLoading, videoObject, progress, answerInfo}:
-  {player: any, isPlaying: boolean, isLoading: boolean, videoObject: Video, progress: number, answerInfo: AnswerInfo | null}
-  ) {
-  const startSeconds = videoObject.startSeconds;
+interface PlayerPanelProps {
+  player: any;
+  isPlaying: boolean;
+  isLoading: boolean;
+  startSeconds: Video["startSeconds"];
+  progress: number;
+  answerInfo: AnswerInfo | null;
+}
+
+const PlayerPanel = ({
+  player,
+  isPlaying,
+  isLoading,
+  startSeconds,
+  progress,
+  answerInfo,
+}: PlayerPanelProps) => {
   const classes = useStyles();
 
-  function handleButtonPlayClick() {
+  const handleButtonPlayClick = () => {
     // @ts-ignore
-    if (player.getPlayerState() === YT.PlayerState.PLAYING) { // eslint-disable-line
+    if (player.getPlayerState() === YT.PlayerState.PLAYING) {
+      // eslint-disable-line
       player.pauseVideo();
     } else {
       player.playVideo();
     }
-  }
+  };
 
-  function handleButtonReplayClick() {
+  const handleButtonReplayClick = () => {
     player.seekTo(startSeconds);
     player.playVideo();
-  }
+  };
 
   const [imageLoaded, setImageLoaded] = useState(false);
-  function handleImageLoad() {
+  const handleImageLoad = () => {
     setImageLoaded(true);
-  }
+  };
 
   return (
     <Box p={1} className={classes.playerArea}>
       <Box mb={2} className={classes.controlsBox}>
         <Box className={classes.imageIconWrap}>
-          {answerInfo
-            ? <img src={answerInfo.imgUrl} alt="album cover" className={clsx(classes.imageTag, imageLoaded ? classes.imageTagLoaded : null)} onLoad={handleImageLoad} />
-            : <AlbumIcon className={classes.imageIcon} />
-          }
+          {answerInfo ? (
+            <img
+              src={answerInfo.imgUrl}
+              alt="album cover"
+              className={clsx(
+                classes.imageTag,
+                imageLoaded ? classes.imageTagLoaded : null
+              )}
+              onLoad={handleImageLoad}
+            />
+          ) : (
+            <AlbumIcon className={classes.imageIcon} />
+          )}
         </Box>
 
         <Box className={classes.rightColumn}>
           <Box ml={1} mb={2}>
             <Typography color="textSecondary" variant="body1" noWrap>
-              {answerInfo ? answerInfo.songName : '\u00A0'}
+              {answerInfo ? answerInfo.songName : "\u00A0"}
             </Typography>
             <Typography color="textSecondary" variant="body2" noWrap>
-              {answerInfo ? answerInfo.albumName : '\u00A0'}
+              {answerInfo ? answerInfo.albumName : "\u00A0"}
             </Typography>
           </Box>
           <Box className={classes.buttonsWrap}>
             <ButtonGroup color="primary" aria-label="player buttons">
-              {isLoading
-                ? <Button
+              {isLoading ? (
+                <Button
                   variant="outlined"
                   color="primary"
                   startIcon={<CircularProgress size={24} />}
                 >
                   Play
-              </Button>
-                : <Button
+                </Button>
+              ) : (
+                <Button
                   variant="outlined"
                   color="primary"
                   onClick={handleButtonPlayClick}
@@ -136,7 +159,7 @@ export default function PlayerPanel(
                 >
                   {isPlaying ? "Pause" : "Play"}
                 </Button>
-              }
+              )}
               <Button
                 variant="outlined"
                 color="primary"
@@ -144,7 +167,7 @@ export default function PlayerPanel(
                 startIcon={<ReplayIcon />}
               >
                 Replay
-            </Button>
+              </Button>
             </ButtonGroup>
           </Box>
         </Box>
@@ -155,4 +178,6 @@ export default function PlayerPanel(
       </Box>
     </Box>
   );
-}
+};
+
+export default PlayerPanel;

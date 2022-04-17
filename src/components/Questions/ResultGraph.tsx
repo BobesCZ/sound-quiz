@@ -1,9 +1,13 @@
-import { useEffect, useState } from 'react';
-import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
-import ResultProgress from '../elements/ResultProgress';
+import Box from "@material-ui/core/Box";
+import Typography from "@material-ui/core/Typography";
+import { useEffect, useState } from "react";
+import ResultProgress from "../elements/ResultProgress";
 
-export default function ResultGraph( {score}: {score: number} ) {
+interface ResultGraphProps {
+  score: number;
+}
+
+const ResultGraph = ({ score }: ResultGraphProps) => {
   const [progress, setProgress] = useState(10);
 
   useEffect(() => {
@@ -34,4 +38,6 @@ export default function ResultGraph( {score}: {score: number} ) {
       </Box>
     </Box>
   );
-}
+};
+
+export default ResultGraph;
