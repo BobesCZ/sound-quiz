@@ -10,7 +10,7 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import questions from "../../data/questions";
 import useCurrentQuiz from "../../hooks/useCurrentQuiz";
-import AppContext from "../../store/AppContext";
+import AppContext from "../../store/context";
 import { ActionType } from "../../types/context";
 import QuestionControl from "./QuestionControl";
 import ResultControl from "./ResultControl";

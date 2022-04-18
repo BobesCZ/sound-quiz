@@ -5,7 +5,7 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import { makeStyles } from "@material-ui/core/styles";
 import { useContext } from "react";
 import useCurrentQuiz from "../../hooks/useCurrentQuiz";
-import AppContext from "../../store/AppContext";
+import AppContext from "../../store/context";
 import { ActionType } from "../../types/context";
 import { Question } from "../../types/types";
 import {

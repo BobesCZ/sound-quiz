@@ -5,7 +5,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 import Alert from "@material-ui/lab/Alert";
 import { useContext } from "react";
-import AppContext from "../../store/AppContext";
+import AppContext from "../../store/context";
 import { ActionType } from "../../types/context";
 import { filterUserQuizzes } from "../../utils/utils";
 import UserQuizList from "./UserQuizList";

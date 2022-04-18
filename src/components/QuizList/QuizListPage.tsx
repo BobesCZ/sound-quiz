@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import AppContext from "../../store/AppContext";
+import AppContext from "../../store/context";
 import QuizCard from "./QuizCard";
 
 const QuizListPage = () => {

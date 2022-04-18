@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { useParams } from "react-router-dom";
-import AppContext from "../store/AppContext";
+import AppContext from "../store/context";
 import { Quiz } from "../types/types";
 
 interface HookReturn {

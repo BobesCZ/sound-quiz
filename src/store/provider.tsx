@@ -1,8 +1,10 @@
 import { useReducer } from "react";
 import useOnloadSetup from "../hooks/useOnloadSetup";
-import AppContext from "./AppContext";
-import initialState from "./initialState";
+import { AppState } from "../types/context";
+import AppContext from "./context";
 import reducer from "./reducer";
+
+const initialState: AppState = {};
 
 const AppContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [appState, dispatch] = useReducer(reducer, initialState);
@@ -15,4 +17,5 @@ const AppContextProvider = ({ children }: { children: React.ReactNode }) => {
     </AppContext.Provider>
   );
 };
+
 export default AppContextProvider;
