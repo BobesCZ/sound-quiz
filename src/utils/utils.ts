@@ -1,5 +1,4 @@
 import {
-  Questions,
   Quizzes,
   AnswerObject,
   SourceAnswers,
@@ -9,19 +8,6 @@ import { shuffleArray } from "./common";
 
 const getVideoEndSeconds = (startSeconds: number, videoDuration = 10) =>
   startSeconds + videoDuration;
-
-const setQuestionsCount = (
-  questionsObj: Record<string, Questions>,
-  quizzesObj: Quizzes
-) => {
-  Object.keys(quizzesObj).map(
-    (key) =>
-      (quizzesObj[key].questionsCount = questionsObj[key]
-        ? questionsObj[key].length
-        : 0)
-  );
-  return quizzesObj;
-};
 
 const createAnswerObject = (id: number, text: string) => {
   const answerObj: AnswerObject = {
@@ -100,4 +86,4 @@ const filterUserQuizzes = (
     }
   );
 
-export { getVideoEndSeconds, setQuestionsCount, getAnswers, filterUserQuizzes };
+export { getVideoEndSeconds, getAnswers, filterUserQuizzes };

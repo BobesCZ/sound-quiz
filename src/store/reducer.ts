@@ -4,10 +4,16 @@ import { shuffleArray } from "../utils/common";
 import { clearStorage, saveToStorage } from "../utils/storage";
 import { getAnswers, getVideoEndSeconds } from "../utils/utils";
 
-const reducer = (state: AppState, action: Action) => {
-  const { type, payload } = action;
-
+const reducer = (state: AppState, { type, payload }: Action) => {
   switch (type) {
+    /**
+     * Set available quizzes (read-only data)
+     */
+    case ActionType.SetAvailableQuizzes: {
+      const { availableQuizzesSource } = payload;
+      return { ...state, availableQuizzes: availableQuizzesSource };
+    }
+
     case ActionType.SetUserAnswer: {
       const {
         quizId,
@@ -26,11 +32,9 @@ const reducer = (state: AppState, action: Action) => {
       if (answersCount === quiz.questions.length) {
         let correctAnswersCount = 0;
 
-        Object.keys(quiz.userAnswers).forEach((item: any) => {
+        Object.values(quiz.userAnswers).forEach((answer, index) => {
           const isCorrect =
-            quiz.userAnswers[item].answer === quiz.questions[item].correctAnswer
-              ? 1
-              : 0;
+            answer.answer === quiz.questions[index].correctAnswer ? 1 : 0;
           correctAnswersCount += isCorrect;
         });
 
@@ -43,11 +47,7 @@ const reducer = (state: AppState, action: Action) => {
 
       return { ...state };
     }
-    case ActionType.SetAvailableQuizzes: {
-      const { quizzes }: { quizzes: Quizzes } = payload;
-      state.availableQuizzes = quizzes;
-      return { ...state };
-    }
+
     case ActionType.SetQuestionsToQuiz: {
       const { quizId, questions }: { quizId: string; questions: Questions } =
         payload;

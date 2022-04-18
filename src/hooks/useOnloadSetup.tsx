@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import quizzes from "../data/quizzes";
+import { availableQuizzesSource } from "../data/quizzes";
 import { Action, ActionType, AppState } from "../types/context";
 import { loadFromStorage } from "../utils/storage";
 
@@ -15,7 +15,10 @@ const useOnloadSetup = (
    */
   useEffect(() => {
     if (!Object.keys(availableQuizzes || []).length) {
-      dispatch({ type: ActionType.SetAvailableQuizzes, payload: { quizzes } });
+      dispatch({
+        type: ActionType.SetAvailableQuizzes,
+        payload: { availableQuizzesSource },
+      });
     }
   }, [availableQuizzes, dispatch]);
 
