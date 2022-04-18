@@ -1,11 +1,12 @@
 import { useContext } from "react";
 import { useParams } from "react-router-dom";
 import AppContext from "../store/context";
-import { Quiz } from "../types/types";
+import { Question, Quiz } from "../types/types";
 
 interface HookReturn {
   quizId?: string;
   quizObj?: Quiz;
+  questionsArray?: Question[];
 }
 
 /**
@@ -13,16 +14,20 @@ interface HookReturn {
  */
 const useCurrentQuiz = (): HookReturn => {
   const {
-    appState: { availableQuizzes },
+    appState: { availableQuizzes, userQuestions },
   } = useContext(AppContext);
 
   const { id: quizId } = useParams<{ id: string }>();
 
   if (!quizId) {
-    return { quizId: undefined, quizObj: undefined };
+    return { quizId: undefined, quizObj: undefined, questionsArray: undefined };
   }
 
-  return { quizId, quizObj: availableQuizzes?.[quizId] };
+  return {
+    quizId,
+    quizObj: availableQuizzes?.[quizId],
+    questionsArray: userQuestions?.[quizId],
+  };
 };
 
 export default useCurrentQuiz;

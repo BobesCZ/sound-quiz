@@ -3,6 +3,7 @@ import {
   AnswerObject,
   SourceAnswers,
   FilterUserQuizzesResult,
+  Question,
 } from "../types/types";
 import { shuffleArray } from "./common";
 
@@ -62,6 +63,37 @@ const getAnswers = (sourceAnswers: SourceAnswers, randomizeAnswers = true) => {
   return { finalAnswersArray, finalCorrectAnswerIndex };
 };
 
+const getQuestions = (
+  questions: Question[],
+  randomizeAnswers?: boolean
+): Question[] => {
+  shuffleArray(questions);
+
+  return questions
+    .map(({ questionText, video, sourceAnswers, answerInfo }) => {
+      if (!sourceAnswers) {
+        return undefined;
+      }
+
+      const { finalAnswersArray, finalCorrectAnswerIndex } = getAnswers(
+        sourceAnswers,
+        randomizeAnswers
+      );
+
+      return {
+        questionText,
+        video: {
+          ...video,
+          endSeconds: getVideoEndSeconds(video.startSeconds),
+        },
+        answerInfo,
+        answers: finalAnswersArray,
+        correctAnswer: finalCorrectAnswerIndex,
+      };
+    })
+    .filter((item): item is Question => !!item);
+};
+
 const filterUserQuizzes = (
   availableQuizzes?: Quizzes
 ): FilterUserQuizzesResult =>
@@ -86,4 +118,4 @@ const filterUserQuizzes = (
     }
   );
 
-export { getVideoEndSeconds, getAnswers, filterUserQuizzes };
+export { getVideoEndSeconds, getAnswers, getQuestions, filterUserQuizzes };

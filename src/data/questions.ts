@@ -1,6 +1,6 @@
-import { Questions } from "../types/types";
+import { QuizId } from "../types/types";
 
-const questions: Record<string, Questions> = {
+export const questionsSource: Record<QuizId, unknown[]> = {
   "rock-history-kcca86d2": [
     {
       questionText: "Choose the correct release year of the song:",
@@ -662,5 +662,3 @@ const questions: Record<string, Questions> = {
     },
   ],
 };
-
-export default questions;

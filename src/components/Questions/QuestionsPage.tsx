@@ -8,7 +8,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import questions from "../../data/questions";
+import { questionsSource } from "../../data/questions";
 import useCurrentQuiz from "../../hooks/useCurrentQuiz";
 import AppContext from "../../store/context";
 import { ActionType } from "../../types/context";
@@ -43,18 +43,18 @@ const QuestionsPage = () => {
   const classes = useStyles();
   const navigate = useNavigate();
   const { dispatch } = useContext(AppContext);
-  const { quizId, quizObj } = useCurrentQuiz();
+  const { quizId, quizObj, questionsArray } = useCurrentQuiz();
 
   useEffect(() => {
     if (!quizObj) {
       navigate(`/quiz/${quizId}`);
-    } else if (quizId && !quizObj?.questions.length) {
+    } else if (quizId && !questionsArray?.length) {
       dispatch({
         type: ActionType.SetQuestionsToQuiz,
-        payload: { quizId, questions: questions[quizId] },
+        payload: { quizId, questions: questionsSource[quizId] },
       });
     }
-  }, [quizId, quizObj, dispatch, navigate]);
+  }, [quizId, quizObj, dispatch, navigate, questionsArray?.length]);
 
   const [activeStep, setActiveStep] = useState(0);
 
@@ -62,8 +62,7 @@ const QuestionsPage = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
-  const questionsArray = quizObj?.questions;
-  if (!questionsArray || questionsArray.length === 0) {
+  if (!quizObj || !questionsArray?.length) {
     return null;
   }
 

@@ -1,13 +1,27 @@
-import { Quiz, QuizId } from "../types/types";
+import { Question, Quiz, QuizId } from "../types/types";
 
 const STORAGE_KEY_USER_ANSWERS = "userQuizzesData";
 
+const saveQuestionsToStorage = (quizId: QuizId, questionsArray: Question[]) => {
+  if (window.localStorage) {
+    const data =
+      JSON.parse(localStorage.getItem(STORAGE_KEY_USER_ANSWERS) ?? "{}") || {};
+
+    data.userQuestions = {
+      ...data.userQuestions,
+      [quizId]: questionsArray,
+    };
+
+    localStorage.setItem(STORAGE_KEY_USER_ANSWERS, JSON.stringify(data));
+  }
+};
+
 const saveToStorage = (quizId: QuizId, quiz: Quiz) => {
   if (window.localStorage) {
-    const { userAnswers, finalScore, questions } = quiz;
+    const { userAnswers, finalScore } = quiz;
     const userQuizzesData =
       JSON.parse(localStorage.getItem(STORAGE_KEY_USER_ANSWERS) ?? "{}") || {};
-    userQuizzesData[quizId] = { userAnswers, finalScore, questions };
+    userQuizzesData[quizId] = { userAnswers, finalScore };
     localStorage.setItem(
       STORAGE_KEY_USER_ANSWERS,
       JSON.stringify(userQuizzesData)
@@ -28,4 +42,4 @@ const clearStorage = () => {
   }
 };
 
-export { clearStorage, loadFromStorage, saveToStorage };
+export { clearStorage, loadFromStorage, saveQuestionsToStorage, saveToStorage };

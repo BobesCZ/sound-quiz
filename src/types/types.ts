@@ -23,7 +23,6 @@ export interface Quiz {
   difficulty: Difficulty;
   options: Options;
   questionsCount: number;
-  questions: Question[];
   userAnswers: {
     [key: string]: Answer;
   };
@@ -42,7 +41,7 @@ export interface FilterUserQuizzesResult {
 export interface Video {
   id: string;
   startSeconds: number;
-  endSeconds?: number;
+  endSeconds: number;
 }
 
 export interface SourceAnswers {
@@ -65,7 +64,9 @@ export interface Question {
   correctAnswer: number | null;
 }
 
-export type Questions = Question[];
+export interface Questions {
+  [key: QuizId]: Question[];
+}
 
 export interface AnswerObject {
   id: number;

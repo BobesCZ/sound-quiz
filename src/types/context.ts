@@ -1,7 +1,8 @@
-import { Quizzes } from "./types";
+import { Questions, Quizzes } from "./types";
 
 export interface AppState {
   availableQuizzes?: Quizzes;
+  userQuestions?: Questions;
 }
 
 export interface ContextProps {

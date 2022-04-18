@@ -1,8 +1,7 @@
 import { Action, ActionType, AppState } from "../types/context";
-import { Answer, Questions, Quizzes } from "../types/types";
-import { shuffleArray } from "../utils/common";
-import { clearStorage, saveToStorage } from "../utils/storage";
-import { getAnswers, getVideoEndSeconds } from "../utils/utils";
+import { Answer, Question, QuizId, Quizzes } from "../types/types";
+import { clearStorage, saveQuestionsToStorage } from "../utils/storage";
+import { getQuestions } from "../utils/utils";
 
 const reducer = (state: AppState, { type, payload }: Action) => {
   switch (type) {
@@ -10,8 +9,33 @@ const reducer = (state: AppState, { type, payload }: Action) => {
      * Set available quizzes (read-only data)
      */
     case ActionType.SetAvailableQuizzes: {
-      const { availableQuizzesSource } = payload;
+      const { availableQuizzesSource }: { availableQuizzesSource: Quizzes } =
+        payload;
       return { ...state, availableQuizzes: availableQuizzesSource };
+    }
+
+    /**
+     * Resolve Question objects, shuffle questions and answers (user data)
+     */
+    case ActionType.SetQuestionsToQuiz: {
+      const { quizId, questions }: { quizId: QuizId; questions: Question[] } =
+        payload;
+
+      const quizObj = state?.availableQuizzes?.[quizId];
+
+      if (!quizObj) {
+        return { ...state };
+      }
+
+      const { randomizeAnswers } = quizObj.options || {};
+      const questionsArray = getQuestions(questions, randomizeAnswers);
+
+      saveQuestionsToStorage(quizId, questionsArray);
+
+      return {
+        ...state,
+        userQuestions: { ...state.userQuestions, [quizId]: questionsArray },
+      };
     }
 
     case ActionType.SetUserAnswer: {
@@ -19,77 +43,49 @@ const reducer = (state: AppState, { type, payload }: Action) => {
         quizId,
         questionId,
         answer,
-      }: { quizId: string; questionId: string; answer: Answer } = payload;
-      const quiz = state.availableQuizzes?.[quizId];
+      }: { quizId: QuizId; questionId: string; answer: Answer } = payload;
 
-      if (!quiz) {
+      const quiz = state.availableQuizzes?.[quizId];
+      const questionsArray = state.userQuestions?.[quizId];
+
+      if (!quiz || !questionsArray?.length) {
         return { ...state };
       }
 
       quiz.userAnswers[questionId] = answer;
 
       let answersCount = Object.keys(quiz.userAnswers).length;
-      if (answersCount === quiz.questions.length) {
+      if (answersCount === questionsArray.length) {
         let correctAnswersCount = 0;
 
         Object.values(quiz.userAnswers).forEach((answer, index) => {
           const isCorrect =
-            answer.answer === quiz.questions[index].correctAnswer ? 1 : 0;
+            answer.answer === questionsArray[index].correctAnswer ? 1 : 0;
           correctAnswersCount += isCorrect;
         });
 
-        quiz.finalScore = (correctAnswersCount / quiz.questions.length) * 100;
+        quiz.finalScore = (correctAnswersCount / questionsArray.length) * 100;
       }
 
       if (answer.isChecked) {
-        saveToStorage(quizId, quiz);
+        // TODO
+        // saveToStorage(quizId, quiz);
       }
 
       return { ...state };
     }
 
-    case ActionType.SetQuestionsToQuiz: {
-      const { quizId, questions }: { quizId: string; questions: Questions } =
-        payload;
-
-      if (!state.availableQuizzes) {
-        return { ...state };
-      }
-
-      const options = state.availableQuizzes[quizId].options || {};
-      shuffleArray(questions);
-
-      questions.forEach((questionObj) => {
-        if (!questionObj.sourceAnswers) {
-          return;
-        }
-        const { finalAnswersArray, finalCorrectAnswerIndex } = getAnswers(
-          questionObj?.sourceAnswers,
-          options.randomizeAnswers
-        );
-        questionObj.answers = finalAnswersArray;
-        questionObj.correctAnswer = finalCorrectAnswerIndex;
-
-        questionObj.video.endSeconds = getVideoEndSeconds(
-          questionObj.video.startSeconds,
-          options.videoDuration
-        );
-        delete questionObj.sourceAnswers;
-      });
-
-      state.availableQuizzes[quizId].questions = questions;
-      return { ...state };
-    }
     case ActionType.SetLoadedAnswers: {
       const { loadedUserAnswers }: { loadedUserAnswers: Quizzes } = payload;
       Object.entries(loadedUserAnswers).forEach(([quizId, quizObjValue]) => {
         const quizObj = state.availableQuizzes?.[quizId];
 
         if (quizObj) {
-          const { finalScore, userAnswers, questions } = quizObjValue;
+          const { finalScore, userAnswers } = quizObjValue;
           quizObj.finalScore = finalScore;
           quizObj.userAnswers = userAnswers;
-          quizObj.questions = questions;
+          // TODO
+          // quizObj.questions = questions;
         }
       });
       return { ...state };
