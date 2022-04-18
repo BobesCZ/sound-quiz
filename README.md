@@ -1,20 +1,20 @@
 # Sound Quiz
 
-This simple app contains multiple quizzes on different topics. Your task in each quiz is to listen to a short snippet of a song and choose the most suitable answer. To succeed in the quizzes, you have to demonstrate your musical overview and/or knowledge of music history. 
+This simple app contains multiple quizzes on different topics. Your task in each quiz is to listen to a short snippet of a song and choose the most suitable answer. To succeed in the quizzes, you have to demonstrate your musical overview and/or knowledge of music history.
 
 You need to use your headphones (or audio speakers) to complete the quizzes!
 
-You can use it online at [music.g6.cz](http://music.g6.cz/).
+You can use it online at [SoundQuiz](https://sound-quiz-a2b00.web.app/) (hosted by Firebase).
 
 ## Built With
 
-* [React](https://reactjs.org/) + [Typescript](https://www.typescriptlang.org/)
-* [Material-UI](https://material-ui.com/)
+- [React](https://reactjs.org/) + [Typescript](https://www.typescriptlang.org/)
+- [Material-UI](https://material-ui.com/)
 
 ## Features
 
-* Uses YouTube Player API under the hood
-* Saves your answers continuously in localStorage
+- Uses YouTube Player API under the hood
+- Saves your answers continuously in localStorage
 
 ## Installing
 
@@ -36,6 +36,16 @@ npm run start
 
 Standard copyright, NOT OPEN-SOURCE. The author of this repository retains all rights to source code and no one may reproduce, distribute, or create derivative works.
 
+## Known issues
+
+### React 18 upgrade
+
+See console.
+
+### YouTube Player crash rendering
+
+When you go through completed quiz and click too fast on 'Next question' button, YouTube Player (probably) interrupt the rendering process and the page crashes.
+
 ## Acknowledgments
 
-* [Create React App](https://create-react-app.dev/)
+- [Create React App](https://create-react-app.dev/)
