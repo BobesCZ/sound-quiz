@@ -8,7 +8,7 @@ const quizzes: Quizzes = {
     description:
       "Can you guess music genre only by listening a short demonstration?",
     estimatedMinutes: 3,
-    difficulty: Difficulty.medium,
+    difficulty: Difficulty.Medium,
     options: {},
     questionsCount: 0,
     questions: [],
@@ -20,7 +20,7 @@ const quizzes: Quizzes = {
     description:
       "Can you guess author or song name of famous classical music works of art? And can you handle with demonstrations played by modern rock/metal bands?",
     estimatedMinutes: 3,
-    difficulty: Difficulty.hard,
+    difficulty: Difficulty.Hard,
     options: {},
     questionsCount: 0,
     questions: [],
@@ -32,7 +32,7 @@ const quizzes: Quizzes = {
     description:
       "Can you guess, which decade of 19th centrury the song belongs to?",
     estimatedMinutes: 3,
-    difficulty: Difficulty.easy,
+    difficulty: Difficulty.Easy,
     options: {
       randomizeAnswers: false,
     },

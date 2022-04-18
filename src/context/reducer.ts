@@ -99,13 +99,9 @@ const reducer = (state: AppState, action: Action) => {
         return { ...state };
       }
 
-      Object.keys(state.availableQuizzes).forEach((quizId) => {
-        const quizObj = state.availableQuizzes?.[quizId];
-
-        if (quizObj) {
-          quizObj.finalScore = null;
-          quizObj.userAnswers = {};
-        }
+      Object.values(state.availableQuizzes).forEach((quizObj) => {
+        quizObj.finalScore = null;
+        quizObj.userAnswers = {};
       });
 
       clearStorage();
