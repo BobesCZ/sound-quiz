@@ -10,6 +10,7 @@
     "@types/react": "^18.0.5",
     "@types/react-dom": "^18.0.1",
     "@types/react-router-dom": "^5.3.3",
+    "firebase": "^9.6.11",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-router-dom": "^6.3.0",
@@ -25,7 +26,8 @@
     "prettier": "prettier src --check",
     "prettier:fix": "npm run prettier -- --write",
     "lint": "npm run eslint && npm run prettier",
-    "lint:fix": "npm run eslint:fix && npm run prettier:fix"
+    "lint:fix": "npm run eslint:fix && npm run prettier:fix",
+    "deploy": "npx firebase deploy"
   },
   "eslintConfig": {
     "extends": [
@@ -72,7 +74,8 @@
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-prefer-arrow-functions": "^3.1.4",
     "eslint-plugin-react": "^7.29.4",
-    "eslint-plugin-react-hooks": "^4.4.0"
+    "eslint-plugin-react-hooks": "^4.4.0",
+    "firebase-tools": "^10.6.0"
   },
   "engines": {
     "npm": ">=8.7.0",
