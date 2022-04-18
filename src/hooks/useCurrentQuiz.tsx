@@ -1,5 +1,6 @@
+import { useContext } from "react";
 import { useParams } from "react-router-dom";
-import { AppState } from "../types/context";
+import AppContext from "../store/AppContext";
 import { Quiz } from "../types/types";
 
 interface HookReturn {
@@ -10,7 +11,11 @@ interface HookReturn {
 /**
  * Get `quizId` from URL and find corrensponding `quizObj`
  */
-const useCurrentQuiz = ({ availableQuizzes }: AppState): HookReturn => {
+const useCurrentQuiz = (): HookReturn => {
+  const {
+    appState: { availableQuizzes },
+  } = useContext(AppContext);
+
   const { id: quizId } = useParams<{ id: string }>();
 
   if (!quizId) {

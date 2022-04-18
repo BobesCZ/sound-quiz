@@ -1,7 +1,6 @@
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { makeStyles } from "@material-ui/core/styles";
 import { useEffect, useState } from "react";
-import { AppState } from "../../types/context";
 import { Question } from "../../types/types";
 import loadYtScript from "../../utils/loadScript";
 import PlayerPanel from "./PlayerPanel";
@@ -19,14 +18,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface QuestionControlProps {
-  appState: AppState;
   questionObject: Question;
   questionId: number;
   isQuestionChecked: boolean;
 }
 
 const QuestionControl = ({
-  appState,
   questionObject,
   questionId,
   isQuestionChecked,
@@ -150,7 +147,6 @@ const QuestionControl = ({
             answerInfo={answerInfo}
           />
           <QuestionForm
-            appState={appState}
             questionId={questionId}
             questionObject={questionObject}
           />

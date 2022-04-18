@@ -4,7 +4,6 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import { Link as RouterLink } from "react-router-dom";
 import useCurrentQuiz from "../../hooks/useCurrentQuiz";
-import { AppState } from "../../types/context";
 import ResultGraph from "./ResultGraph";
 
 const useStyles = makeStyles((theme) => ({
@@ -13,13 +12,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-interface ResultControlProps {
-  appState: AppState;
-}
-
-const ResultControl = ({ appState }: ResultControlProps) => {
+const ResultControl = () => {
   const classes = useStyles();
-  const { quizObj } = useCurrentQuiz(appState);
+  const { quizObj } = useCurrentQuiz();
 
   const score = quizObj?.finalScore ?? 0;
   const scoreLevel =

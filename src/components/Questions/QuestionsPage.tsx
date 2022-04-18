@@ -8,10 +8,10 @@ import { makeStyles } from "@material-ui/core/styles";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import AppDispatch from "../../context/AppDispatch";
 import questions from "../../data/questions";
 import useCurrentQuiz from "../../hooks/useCurrentQuiz";
-import { ActionType, AppState } from "../../types/context";
+import AppContext from "../../store/AppContext";
+import { ActionType } from "../../types/context";
 import QuestionControl from "./QuestionControl";
 import ResultControl from "./ResultControl";
 
@@ -39,15 +39,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-interface QuestionsPageProps {
-  appState: AppState;
-}
-
-const QuestionsPage = ({ appState }: QuestionsPageProps) => {
+const QuestionsPage = () => {
   const classes = useStyles();
   const navigate = useNavigate();
-  const { dispatch } = useContext(AppDispatch);
-  const { quizId, quizObj } = useCurrentQuiz(appState);
+  const { dispatch } = useContext(AppContext);
+  const { quizId, quizObj } = useCurrentQuiz();
 
   useEffect(() => {
     if (!quizObj) {
@@ -82,11 +78,10 @@ const QuestionsPage = ({ appState }: QuestionsPageProps) => {
     quizObj.userAnswers[activeStep].isChecked;
 
   return activeStep === questionCount ? (
-    <ResultControl appState={appState} />
+    <ResultControl />
   ) : (
     <>
       <QuestionControl
-        appState={appState}
         questionObject={questionsArray[activeStep]}
         questionId={activeStep}
         isQuestionChecked={isQuestionChecked}

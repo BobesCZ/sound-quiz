@@ -5,8 +5,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 import Alert from "@material-ui/lab/Alert";
 import { useContext } from "react";
-import AppDispatch from "../../context/AppDispatch";
-import { ActionType, AppState } from "../../types/context";
+import AppContext from "../../store/AppContext";
+import { ActionType } from "../../types/context";
 import { filterUserQuizzes } from "../../utils/utils";
 import UserQuizList from "./UserQuizList";
 
@@ -20,13 +20,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-interface UserPageProps {
-  appState: AppState;
-}
-
-const UserPage = ({ appState: { availableQuizzes } }: UserPageProps) => {
+const UserPage = () => {
   const classes = useStyles();
-  const { dispatch } = useContext(AppDispatch);
+  const {
+    appState: { availableQuizzes },
+    dispatch,
+  } = useContext(AppContext);
 
   const { completedQuizzes, incompletedQuizzes } =
     filterUserQuizzes(availableQuizzes);

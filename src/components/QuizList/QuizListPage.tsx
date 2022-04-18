@@ -1,12 +1,11 @@
-import { AppState } from "../../types/context";
+import { useContext } from "react";
+import AppContext from "../../store/AppContext";
 import QuizCard from "./QuizCard";
 
-interface QuizListPageProps {
-  appState: AppState;
-}
-
-const QuizListPage = ({ appState }: QuizListPageProps) => {
-  const { availableQuizzes } = appState;
+const QuizListPage = () => {
+  const {
+    appState: { availableQuizzes },
+  } = useContext(AppContext);
 
   return availableQuizzes ? (
     <>

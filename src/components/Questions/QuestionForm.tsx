@@ -4,9 +4,9 @@ import FormLabel from "@material-ui/core/FormLabel";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import { makeStyles } from "@material-ui/core/styles";
 import { useContext } from "react";
-import AppDispatch from "../../context/AppDispatch";
 import useCurrentQuiz from "../../hooks/useCurrentQuiz";
-import { ActionType, AppState } from "../../types/context";
+import AppContext from "../../store/AppContext";
+import { ActionType } from "../../types/context";
 import { Question } from "../../types/types";
 import {
   QuestionRadioCorrect,
@@ -25,19 +25,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface QuestionFormProps {
-  appState: AppState;
   questionId: number;
   questionObject: Question;
 }
 
-const QuestionForm = ({
-  appState,
-  questionId,
-  questionObject,
-}: QuestionFormProps) => {
+const QuestionForm = ({ questionId, questionObject }: QuestionFormProps) => {
   const classes = useStyles();
-  const { dispatch } = useContext(AppDispatch);
-  const { quizId, quizObj } = useCurrentQuiz(appState);
+  const { dispatch } = useContext(AppContext);
+  const { quizId, quizObj } = useCurrentQuiz();
 
   const answer = quizObj?.userAnswers[questionId]?.answer ?? null;
   const isAnswerChecked = !!quizObj?.userAnswers[questionId]?.isChecked;
