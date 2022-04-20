@@ -38,10 +38,6 @@ Standard copyright, NOT OPEN-SOURCE. The author of this repository retains all r
 
 ## Known issues
 
-### React 18 upgrade
-
-See console.
-
 ### YouTube Player crash rendering
 
 When you go through completed quiz and click too fast on 'Next question' button, YouTube Player (probably) interrupt the rendering process and the page crashes.
