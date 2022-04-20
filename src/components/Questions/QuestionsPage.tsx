@@ -43,7 +43,7 @@ const QuestionsPage = () => {
   const classes = useStyles();
   const navigate = useNavigate();
   const { dispatch } = useContext(AppContext);
-  const { quizId, quizObj, questionsArray } = useCurrentQuiz();
+  const { quizId, quizObj, questionsArray, answerObj } = useCurrentQuiz();
 
   useEffect(() => {
     if (!quizObj) {
@@ -68,13 +68,13 @@ const QuestionsPage = () => {
 
   const questionCount = questionsArray.length;
   const showResultText =
-    quizObj.finalScore !== null &&
-    quizObj.userAnswers[activeStep] &&
-    quizObj.userAnswers[activeStep].isChecked;
+    answerObj?.finalScore !== null &&
+    answerObj?.answerList[activeStep] &&
+    answerObj?.answerList[activeStep].isChecked;
 
   const isQuestionChecked =
-    quizObj.userAnswers.hasOwnProperty(activeStep) &&
-    quizObj.userAnswers[activeStep].isChecked;
+    !!answerObj?.answerList.hasOwnProperty(activeStep) &&
+    !!answerObj?.answerList[activeStep].isChecked;
 
   return activeStep === questionCount ? (
     <ResultControl />

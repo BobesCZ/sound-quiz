@@ -10,7 +10,7 @@ import EqualizerIcon from "@material-ui/icons/Equalizer";
 import TimerIcon from "@material-ui/icons/Timer";
 import clsx from "clsx";
 import { Link as RouterLink } from "react-router-dom";
-import { Quiz, QuizId } from "../../types/types";
+import { Answer, Quiz, QuizId } from "../../types/types";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,11 +34,13 @@ const useStyles = makeStyles((theme) => ({
 interface QuizCardProps {
   quizId: QuizId;
   quizObj: Quiz;
+  finalScore: Answer["finalScore"];
 }
 
 const QuizCard = ({
   quizId,
-  quizObj: { finalScore, name, description, estimatedMinutes, difficulty },
+  quizObj: { name, description, estimatedMinutes, difficulty },
+  finalScore,
 }: QuizCardProps) => {
   const classes = useStyles();
 

@@ -1,7 +1,17 @@
 import { Action, ActionType, AppState } from "../types/context";
-import { Answer, Question, QuizId, Quizzes } from "../types/types";
-import { clearStorage, saveQuestionsToStorage } from "../utils/storage";
-import { getQuestions } from "../utils/utils";
+import {
+  AnswerDetail,
+  AnswerList,
+  Question,
+  QuizId,
+  Quizzes,
+} from "../types/types";
+import {
+  clearStorage,
+  saveAnswersToStorage,
+  saveQuestionsToStorage,
+} from "../utils/storage";
+import { getFinalScore, getQuestions } from "../utils/utils";
 
 const reducer = (state: AppState, { type, payload }: Action) => {
   switch (type) {
@@ -38,12 +48,15 @@ const reducer = (state: AppState, { type, payload }: Action) => {
       };
     }
 
+    /**
+     * Process user answer
+     */
     case ActionType.SetUserAnswer: {
       const {
         quizId,
         questionId,
         answer,
-      }: { quizId: QuizId; questionId: string; answer: Answer } = payload;
+      }: { quizId: QuizId; questionId: string; answer: AnswerDetail } = payload;
 
       const quiz = state.availableQuizzes?.[quizId];
       const questionsArray = state.userQuestions?.[quizId];
@@ -52,56 +65,45 @@ const reducer = (state: AppState, { type, payload }: Action) => {
         return { ...state };
       }
 
-      quiz.userAnswers[questionId] = answer;
+      const answerList: AnswerList = {
+        ...state?.userAnswers?.[quizId]?.answerList,
+        [questionId]: answer,
+      };
 
-      let answersCount = Object.keys(quiz.userAnswers).length;
-      if (answersCount === questionsArray.length) {
-        let correctAnswersCount = 0;
+      const answersCount = Object.keys(answerList).length;
 
-        Object.values(quiz.userAnswers).forEach((answer, index) => {
-          const isCorrect =
-            answer.answer === questionsArray[index].correctAnswer ? 1 : 0;
-          correctAnswersCount += isCorrect;
-        });
-
-        quiz.finalScore = (correctAnswersCount / questionsArray.length) * 100;
-      }
+      let finalScore =
+        answersCount === questionsArray.length
+          ? getFinalScore(answerList, questionsArray)
+          : null;
 
       if (answer.isChecked) {
-        // TODO
-        // saveToStorage(quizId, quiz);
+        saveAnswersToStorage(quizId, { answerList, finalScore });
       }
 
-      return { ...state };
+      return {
+        ...state,
+        userAnswers: {
+          ...state.userAnswers,
+          [quizId]: { answerList, finalScore },
+        },
+      };
     }
 
-    case ActionType.SetLoadedAnswers: {
-      const { loadedUserAnswers }: { loadedUserAnswers: Quizzes } = payload;
-      Object.entries(loadedUserAnswers).forEach(([quizId, quizObjValue]) => {
-        const quizObj = state.availableQuizzes?.[quizId];
-
-        if (quizObj) {
-          const { finalScore, userAnswers } = quizObjValue;
-          quizObj.finalScore = finalScore;
-          quizObj.userAnswers = userAnswers;
-          // TODO
-          // quizObj.questions = questions;
-        }
-      });
-      return { ...state };
+    /**
+     * Set user data from external source to state
+     */
+    case ActionType.SetUserData: {
+      const { userQuestions, userAnswers }: AppState = payload;
+      return { ...state, userQuestions, userAnswers };
     }
-    case ActionType.ResetAvailableQuizzes: {
-      if (!state.availableQuizzes) {
-        return { ...state };
-      }
 
-      Object.values(state.availableQuizzes).forEach((quizObj) => {
-        quizObj.finalScore = null;
-        quizObj.userAnswers = {};
-      });
-
+    /**
+     * Delete all user quiz data from external source and state
+     */
+    case ActionType.DeleteUserData: {
       clearStorage();
-      return { ...state };
+      return { ...state, userQuestions: undefined, userAnswers: undefined };
     }
     default:
       throw new Error();

@@ -4,13 +4,18 @@ import QuizCard from "./QuizCard";
 
 const QuizListPage = () => {
   const {
-    appState: { availableQuizzes },
+    appState: { availableQuizzes, userAnswers },
   } = useContext(AppContext);
 
   return availableQuizzes ? (
     <>
       {Object.entries(availableQuizzes).map(([quizId, quizObj]) => (
-        <QuizCard key={quizId} quizId={quizId} quizObj={quizObj} />
+        <QuizCard
+          key={quizId}
+          quizId={quizId}
+          quizObj={quizObj}
+          finalScore={userAnswers?.[quizId]?.finalScore ?? null}
+        />
       ))}
     </>
   ) : null;

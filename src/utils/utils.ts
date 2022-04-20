@@ -1,9 +1,8 @@
 import {
-  Quizzes,
   AnswerObject,
   SourceAnswers,
-  FilterUserQuizzesResult,
   Question,
+  AnswerList,
 } from "../types/types";
 import { shuffleArray } from "./common";
 
@@ -94,28 +93,17 @@ const getQuestions = (
     .filter((item): item is Question => !!item);
 };
 
-const filterUserQuizzes = (
-  availableQuizzes?: Quizzes
-): FilterUserQuizzesResult =>
-  Object.values(availableQuizzes || {}).reduce(
-    (result: FilterUserQuizzesResult, quiz) => {
-      if (quiz.finalScore !== null) {
-        return {
-          ...result,
-          completedQuizzes: [...result.completedQuizzes, quiz],
-        };
-      } else if (quiz.userAnswers.length) {
-        return {
-          ...result,
-          incompletedQuizzes: [...result.incompletedQuizzes, quiz],
-        };
-      }
-      return { ...result };
+const getFinalScore = (answerList: AnswerList, questionsArray: Question[]) => {
+  const correctAnswersCount = Object.entries(answerList).reduce(
+    (sum, [index, answer]) => {
+      const isCorrect =
+        answer.answer === questionsArray[parseInt(index)].correctAnswer ? 1 : 0;
+      return (sum += isCorrect);
     },
-    {
-      completedQuizzes: [],
-      incompletedQuizzes: [],
-    }
+    0
   );
 
-export { getVideoEndSeconds, getAnswers, getQuestions, filterUserQuizzes };
+  return (correctAnswersCount / questionsArray.length) * 100;
+};
+
+export { getVideoEndSeconds, getAnswers, getQuestions, getFinalScore };

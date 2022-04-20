@@ -32,10 +32,10 @@ interface QuestionFormProps {
 const QuestionForm = ({ questionId, questionObject }: QuestionFormProps) => {
   const classes = useStyles();
   const { dispatch } = useContext(AppContext);
-  const { quizId, quizObj } = useCurrentQuiz();
+  const { quizId, answerObj } = useCurrentQuiz();
 
-  const answer = quizObj?.userAnswers[questionId]?.answer ?? null;
-  const isAnswerChecked = !!quizObj?.userAnswers[questionId]?.isChecked;
+  const answer = answerObj?.answerList?.[questionId]?.answer ?? null;
+  const isAnswerChecked = !!answerObj?.answerList?.[questionId]?.isChecked;
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (answer === null) {

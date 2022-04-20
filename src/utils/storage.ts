@@ -1,45 +1,51 @@
-import { Question, Quiz, QuizId } from "../types/types";
+import { Answer, Question, QuizId } from "../types/types";
 
-const STORAGE_KEY_USER_ANSWERS = "userQuizzesData";
+const STORAGE_KEY_USER_DATA = "userQuizzesData";
 
 const saveQuestionsToStorage = (quizId: QuizId, questionsArray: Question[]) => {
   if (window.localStorage) {
     const data =
-      JSON.parse(localStorage.getItem(STORAGE_KEY_USER_ANSWERS) ?? "{}") || {};
+      JSON.parse(localStorage.getItem(STORAGE_KEY_USER_DATA) ?? "{}") || {};
 
     data.userQuestions = {
       ...data.userQuestions,
       [quizId]: questionsArray,
     };
 
-    localStorage.setItem(STORAGE_KEY_USER_ANSWERS, JSON.stringify(data));
+    localStorage.setItem(STORAGE_KEY_USER_DATA, JSON.stringify(data));
   }
 };
 
-const saveToStorage = (quizId: QuizId, quiz: Quiz) => {
+const saveAnswersToStorage = (quizId: QuizId, answers: Answer) => {
   if (window.localStorage) {
-    const { userAnswers, finalScore } = quiz;
-    const userQuizzesData =
-      JSON.parse(localStorage.getItem(STORAGE_KEY_USER_ANSWERS) ?? "{}") || {};
-    userQuizzesData[quizId] = { userAnswers, finalScore };
-    localStorage.setItem(
-      STORAGE_KEY_USER_ANSWERS,
-      JSON.stringify(userQuizzesData)
-    );
+    const data =
+      JSON.parse(localStorage.getItem(STORAGE_KEY_USER_DATA) ?? "{}") || {};
+
+    data.userAnswers = {
+      ...data.userAnswers,
+      [quizId]: answers,
+    };
+
+    localStorage.setItem(STORAGE_KEY_USER_DATA, JSON.stringify(data));
   }
 };
 
 const loadFromStorage = () => {
   if (window.localStorage) {
-    return JSON.parse(localStorage.getItem(STORAGE_KEY_USER_ANSWERS) ?? "{}");
+    return JSON.parse(localStorage.getItem(STORAGE_KEY_USER_DATA) ?? "{}");
   }
   return null;
 };
 
 const clearStorage = () => {
   if (window.localStorage) {
-    localStorage.removeItem(STORAGE_KEY_USER_ANSWERS);
+    localStorage.removeItem(STORAGE_KEY_USER_DATA);
   }
 };
 
-export { clearStorage, loadFromStorage, saveQuestionsToStorage, saveToStorage };
+export {
+  clearStorage,
+  loadFromStorage,
+  saveQuestionsToStorage,
+  saveAnswersToStorage,
+};

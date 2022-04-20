@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
 const QuizDetailPage = () => {
   const classes = useStyles();
   const navigate = useNavigate();
-  const { quizId, quizObj } = useCurrentQuiz();
+  const { quizId, quizObj, answerObj } = useCurrentQuiz();
 
   useEffect(() => {
     if (!quizObj) {
@@ -63,14 +63,10 @@ const QuizDetailPage = () => {
     return null;
   }
 
-  const {
-    name,
-    questionsCount,
-    estimatedMinutes,
-    difficulty,
-    description,
-    finalScore,
-  } = quizObj;
+  const { name, questionsCount, estimatedMinutes, difficulty, description } =
+    quizObj;
+
+  const finalScore = answerObj?.finalScore ?? null;
 
   return (
     <Box my={2}>

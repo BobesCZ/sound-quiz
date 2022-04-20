@@ -14,9 +14,9 @@ const useStyles = makeStyles((theme) => ({
 
 const ResultControl = () => {
   const classes = useStyles();
-  const { quizObj } = useCurrentQuiz();
+  const { answerObj } = useCurrentQuiz();
 
-  const score = quizObj?.finalScore ?? 0;
+  const score = answerObj?.finalScore ?? 0;
   const scoreLevel =
     score >= 90 ? "excellent" : score >= 60 ? "good" : "nevermind";
 

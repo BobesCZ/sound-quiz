@@ -26,11 +26,11 @@ const useOnloadSetup = (
    * Load answers from localStorage
    */
   useEffect(() => {
-    const loadedUserAnswers = loadFromStorage();
-    if (loadedUserAnswers) {
+    const { userQuestions, userAnswers } = loadFromStorage();
+    if (!!userQuestions || !!userAnswers) {
       dispatch({
-        type: ActionType.SetLoadedAnswers,
-        payload: { loadedUserAnswers },
+        type: ActionType.SetUserData,
+        payload: { userQuestions, userAnswers },
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -9,8 +9,6 @@ export const availableQuizzesSource: Quizzes = {
     difficulty: Difficulty.Medium,
     options: {},
     questionsCount: 10,
-    userAnswers: {},
-    finalScore: null,
   },
   "classical-music-c4082e41": {
     name: "Classical music (rock version)",
@@ -20,8 +18,6 @@ export const availableQuizzesSource: Quizzes = {
     difficulty: Difficulty.Hard,
     options: {},
     questionsCount: 10,
-    userAnswers: {},
-    finalScore: null,
   },
   "rock-history-kcca86d2": {
     name: "Rock history ('60s - '90s)",
@@ -33,7 +29,5 @@ export const availableQuizzesSource: Quizzes = {
       randomizeAnswers: false,
     },
     questionsCount: 10,
-    userAnswers: {},
-    finalScore: null,
   },
 };
