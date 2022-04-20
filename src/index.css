@@ -11,8 +11,3 @@ body {
   height: 0;
   width: 0;
 }
-
-/* Remove ad banner (project is deployed to freehosting) */
-body > div:not(#root) {
-  display: none;
-}

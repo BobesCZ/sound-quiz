@@ -1,27 +1,13 @@
 import {
-  Questions,
-  Quizzes,
   AnswerObject,
   SourceAnswers,
-  FilterUserQuizzesResult,
+  Question,
+  AnswerList,
 } from "../types/types";
 import { shuffleArray } from "./common";
 
 const getVideoEndSeconds = (startSeconds: number, videoDuration = 10) =>
   startSeconds + videoDuration;
-
-const setQuestionsCount = (
-  questionsObj: Record<string, Questions>,
-  quizzesObj: Quizzes
-) => {
-  Object.keys(quizzesObj).map(
-    (key) =>
-      (quizzesObj[key].questionsCount = questionsObj[key]
-        ? questionsObj[key].length
-        : 0)
-  );
-  return quizzesObj;
-};
 
 const createAnswerObject = (id: number, text: string) => {
   const answerObj: AnswerObject = {
@@ -76,28 +62,48 @@ const getAnswers = (sourceAnswers: SourceAnswers, randomizeAnswers = true) => {
   return { finalAnswersArray, finalCorrectAnswerIndex };
 };
 
-const filterUserQuizzes = (
-  availableQuizzes?: Quizzes
-): FilterUserQuizzesResult =>
-  Object.values(availableQuizzes || {}).reduce(
-    (result: FilterUserQuizzesResult, quiz) => {
-      if (quiz.finalScore !== null) {
-        return {
-          ...result,
-          completedQuizzes: [...result.completedQuizzes, quiz],
-        };
-      } else if (quiz.userAnswers.length) {
-        return {
-          ...result,
-          incompletedQuizzes: [...result.incompletedQuizzes, quiz],
-        };
+const getQuestions = (
+  questions: Question[],
+  randomizeAnswers?: boolean
+): Question[] => {
+  shuffleArray(questions);
+
+  return questions
+    .map(({ questionText, video, sourceAnswers, answerInfo }) => {
+      if (!sourceAnswers) {
+        return undefined;
       }
-      return { ...result };
+
+      const { finalAnswersArray, finalCorrectAnswerIndex } = getAnswers(
+        sourceAnswers,
+        randomizeAnswers
+      );
+
+      return {
+        questionText,
+        video: {
+          ...video,
+          endSeconds: getVideoEndSeconds(video.startSeconds),
+        },
+        answerInfo,
+        answers: finalAnswersArray,
+        correctAnswer: finalCorrectAnswerIndex,
+      };
+    })
+    .filter((item): item is Question => !!item);
+};
+
+const getFinalScore = (answerList: AnswerList, questionsArray: Question[]) => {
+  const correctAnswersCount = Object.entries(answerList).reduce(
+    (sum, [index, answer]) => {
+      const isCorrect =
+        answer.answer === questionsArray[parseInt(index)].correctAnswer ? 1 : 0;
+      return (sum += isCorrect);
     },
-    {
-      completedQuizzes: [],
-      incompletedQuizzes: [],
-    }
+    0
   );
 
-export { getVideoEndSeconds, setQuestionsCount, getAnswers, filterUserQuizzes };
+  return (correctAnswersCount / questionsArray.length) * 100;
+};
+
+export { getVideoEndSeconds, getAnswers, getQuestions, getFinalScore };

@@ -1,17 +1,21 @@
-import { AppState } from "../../types/context";
+import { useContext } from "react";
+import AppContext from "../../store/context";
 import QuizCard from "./QuizCard";
 
-interface QuizListPageProps {
-  appState: AppState;
-}
-
-const QuizListPage = ({ appState }: QuizListPageProps) => {
-  const { availableQuizzes } = appState;
+const QuizListPage = () => {
+  const {
+    appState: { availableQuizzes, userAnswers },
+  } = useContext(AppContext);
 
   return availableQuizzes ? (
     <>
       {Object.entries(availableQuizzes).map(([quizId, quizObj]) => (
-        <QuizCard key={quizId} quizId={quizId} quizObj={quizObj} />
+        <QuizCard
+          key={quizId}
+          quizId={quizId}
+          quizObj={quizObj}
+          finalScore={userAnswers?.[quizId]?.finalScore ?? null}
+        />
       ))}
     </>
   ) : null;

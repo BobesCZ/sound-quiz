@@ -1,7 +1,9 @@
-import { Quizzes } from "./types";
+import { Answers, Questions, Quizzes } from "./types";
 
 export interface AppState {
   availableQuizzes?: Quizzes;
+  userQuestions?: Questions;
+  userAnswers?: Answers;
 }
 
 export interface ContextProps {
@@ -13,8 +15,8 @@ export enum ActionType {
   SetUserAnswer = "SET_USER_ANSWER",
   SetAvailableQuizzes = "SET_AVAILABLE_QUIZZES",
   SetQuestionsToQuiz = "SET_QUESTIONS_TO_QUIZ",
-  SetLoadedAnswers = "SET_LOADED_ANSWERS",
-  ResetAvailableQuizzes = "RESET_AVAILABLE_QUIZZES",
+  SetUserData = "SET_USER_DATA",
+  DeleteUserData = "DELETE_USER_DATA",
 }
 
 export interface Action {

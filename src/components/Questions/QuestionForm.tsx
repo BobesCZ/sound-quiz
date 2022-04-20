@@ -4,10 +4,10 @@ import FormLabel from "@material-ui/core/FormLabel";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import { makeStyles } from "@material-ui/core/styles";
 import { useContext } from "react";
-import AppDispatch from "../../context/AppDispatch";
 import useCurrentQuiz from "../../hooks/useCurrentQuiz";
-import { ActionType, AppState } from "../../types/context";
-import { AnswerObject, Question } from "../../types/types";
+import AppContext from "../../store/context";
+import { ActionType } from "../../types/context";
+import { Question } from "../../types/types";
 import {
   QuestionRadioCorrect,
   QuestionRadioWrong,
@@ -25,22 +25,17 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface QuestionFormProps {
-  appState: AppState;
   questionId: number;
   questionObject: Question;
 }
 
-const QuestionForm = ({
-  appState,
-  questionId,
-  questionObject,
-}: QuestionFormProps) => {
+const QuestionForm = ({ questionId, questionObject }: QuestionFormProps) => {
   const classes = useStyles();
-  const { dispatch } = useContext(AppDispatch);
-  const { quizId, quizObj } = useCurrentQuiz(appState);
+  const { dispatch } = useContext(AppContext);
+  const { quizId, answerObj } = useCurrentQuiz();
 
-  const answer = quizObj?.userAnswers[questionId]?.answer ?? null;
-  const isAnswerChecked = !!quizObj?.userAnswers[questionId]?.isChecked;
+  const answer = answerObj?.answerList?.[questionId]?.answer ?? null;
+  const isAnswerChecked = !!answerObj?.answerList?.[questionId]?.isChecked;
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (answer === null) {
@@ -80,7 +75,6 @@ const QuestionForm = ({
       );
     }
   };
-
   return (
     <>
       <FormControl component="fieldset">
@@ -96,17 +90,14 @@ const QuestionForm = ({
           value={answer}
           onChange={handleChange}
         >
-          {Object.keys(questionObject.answers).map((_, key) => {
-            const answerObject: AnswerObject = questionObject.answers?.[key];
-            return (
-              <FormControlLabel
-                key={answerObject.id}
-                value={answerObject.id}
-                control={getControl(answerObject.id)}
-                label={answerObject.answerText}
-              />
-            );
-          })}
+          {Object.values(questionObject.answers).map(({ id, answerText }) => (
+            <FormControlLabel
+              key={id}
+              value={id}
+              control={getControl(id)}
+              label={answerText}
+            />
+          ))}
         </RadioGroup>
       </FormControl>
     </>

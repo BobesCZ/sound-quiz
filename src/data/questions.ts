@@ -1,7 +1,7 @@
-import { Questions } from "../types/types";
+import { QuizId } from "../types/types";
 
-const questions: Record<string, Questions> = {
-  kcca86d2: [
+export const questionsSource: Record<QuizId, unknown[]> = {
+  "rock-history-kcca86d2": [
     {
       questionText: "Choose the correct release year of the song:",
       video: {
@@ -193,7 +193,7 @@ const questions: Record<string, Questions> = {
       correctAnswer: null,
     },
   ],
-  c4082e41: [
+  "classical-music-c4082e41": [
     {
       questionText:
         "Choose the correct part of Requiem in D minor (W. A. Mozart):",
@@ -420,7 +420,7 @@ const questions: Record<string, Questions> = {
       correctAnswer: null,
     },
   ],
-  f8b5b078: [
+  "metal-subgenres-8b5b078": [
     {
       questionText: "Choose the most suitable genre:",
       video: {
@@ -662,5 +662,3 @@ const questions: Record<string, Questions> = {
     },
   ],
 };
-
-export default questions;

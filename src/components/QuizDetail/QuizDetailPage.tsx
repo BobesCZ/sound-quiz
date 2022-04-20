@@ -14,7 +14,6 @@ import clsx from "clsx";
 import { useEffect } from "react";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import useCurrentQuiz from "../../hooks/useCurrentQuiz";
-import { AppState } from "../../types/context";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -49,14 +48,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-interface QuizDetailPageProps {
-  appState: AppState;
-}
-
-const QuizDetailPage = ({ appState }: QuizDetailPageProps) => {
+const QuizDetailPage = () => {
   const classes = useStyles();
   const navigate = useNavigate();
-  const { quizId, quizObj } = useCurrentQuiz(appState);
+  const { quizId, quizObj, answerObj } = useCurrentQuiz();
 
   useEffect(() => {
     if (!quizObj) {
@@ -68,14 +63,10 @@ const QuizDetailPage = ({ appState }: QuizDetailPageProps) => {
     return null;
   }
 
-  const {
-    name,
-    questionsCount,
-    estimatedMinutes,
-    difficulty,
-    description,
-    finalScore,
-  } = quizObj;
+  const { name, questionsCount, estimatedMinutes, difficulty, description } =
+    quizObj;
+
+  const finalScore = answerObj?.finalScore ?? null;
 
   return (
     <Box my={2}>

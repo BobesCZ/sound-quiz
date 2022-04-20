@@ -8,10 +8,10 @@ import { makeStyles } from "@material-ui/core/styles";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import AppDispatch from "../../context/AppDispatch";
-import questions from "../../data/questions";
+import { questionsSource } from "../../data/questions";
 import useCurrentQuiz from "../../hooks/useCurrentQuiz";
-import { ActionType, AppState } from "../../types/context";
+import AppContext from "../../store/context";
+import { ActionType } from "../../types/context";
 import QuestionControl from "./QuestionControl";
 import ResultControl from "./ResultControl";
 
@@ -39,26 +39,22 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-interface QuestionsPageProps {
-  appState: AppState;
-}
-
-const QuestionsPage = ({ appState }: QuestionsPageProps) => {
+const QuestionsPage = () => {
   const classes = useStyles();
   const navigate = useNavigate();
-  const { dispatch } = useContext(AppDispatch);
-  const { quizId, quizObj } = useCurrentQuiz(appState);
+  const { dispatch } = useContext(AppContext);
+  const { quizId, quizObj, questionsArray, answerObj } = useCurrentQuiz();
 
   useEffect(() => {
     if (!quizObj) {
       navigate(`/quiz/${quizId}`);
-    } else if (quizId && !quizObj?.questions.length) {
+    } else if (quizId && !questionsArray?.length) {
       dispatch({
         type: ActionType.SetQuestionsToQuiz,
-        payload: { quizId, questions: questions[quizId] },
+        payload: { quizId, questions: questionsSource[quizId] },
       });
     }
-  }, [quizId, quizObj, dispatch, navigate]);
+  }, [quizId, quizObj, dispatch, navigate, questionsArray?.length]);
 
   const [activeStep, setActiveStep] = useState(0);
 
@@ -66,27 +62,25 @@ const QuestionsPage = ({ appState }: QuestionsPageProps) => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
-  const questionsArray = quizObj?.questions;
-  if (!questionsArray || questionsArray.length === 0) {
+  if (!quizObj || !questionsArray?.length) {
     return null;
   }
 
   const questionCount = questionsArray.length;
   const showResultText =
-    quizObj.finalScore !== null &&
-    quizObj.userAnswers[activeStep] &&
-    quizObj.userAnswers[activeStep].isChecked;
+    answerObj?.finalScore !== null &&
+    answerObj?.answerList[activeStep] &&
+    answerObj?.answerList[activeStep].isChecked;
 
   const isQuestionChecked =
-    quizObj.userAnswers.hasOwnProperty(activeStep) &&
-    quizObj.userAnswers[activeStep].isChecked;
+    !!answerObj?.answerList.hasOwnProperty(activeStep) &&
+    !!answerObj?.answerList[activeStep].isChecked;
 
   return activeStep === questionCount ? (
-    <ResultControl appState={appState} />
+    <ResultControl />
   ) : (
     <>
       <QuestionControl
-        appState={appState}
         questionObject={questionsArray[activeStep]}
         questionId={activeStep}
         isQuestionChecked={isQuestionChecked}
