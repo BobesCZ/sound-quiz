@@ -4,6 +4,7 @@ import { deepPurple, orange } from "@material-ui/core/colors";
 import { ThemeProvider } from "@material-ui/styles";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import AppContextProvider from "../store/provider";
+import { firebaseDb } from "../utils/firebase";
 import QuestionsPage from "./Questions/QuestionsPage";
 import QuizInfoPage from "./QuizDetail/QuizDetailPage";
 import QuizListPage from "./QuizList/QuizListPage";
@@ -11,6 +12,8 @@ import TopBar from "./TopBar";
 import UserPage from "./User/UserPage";
 
 const App = () => {
+  console.log(firebaseDb);
+
   const theme = createMuiTheme({
     palette: {
       type: "dark",
