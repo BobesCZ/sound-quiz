@@ -9,7 +9,7 @@ const initialState: AppState = {};
 const AppContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [appState, dispatch] = useReducer(reducer, initialState);
 
-  useOnloadSetup(appState, dispatch);
+  useOnloadSetup(dispatch);
 
   return (
     <AppContext.Provider value={{ appState, dispatch }}>

@@ -13,6 +13,9 @@ const firebaseConfig = process.env.REACT_APP_FIREBASE_API_KEY && {
 
 // Initialize Firebase
 const firebaseApp = firebaseConfig ? initializeApp(firebaseConfig) : undefined;
-const firebaseDb = getDatabase(firebaseApp);
+const firebaseDb = getDatabase(
+  firebaseApp,
+  process.env.REACT_APP_FIREBASE_DATABASE_URL
+);
 
 export { firebaseApp, firebaseDb };

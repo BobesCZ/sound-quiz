@@ -19,9 +19,8 @@ const reducer = (state: AppState, { type, payload }: Action) => {
      * Set available quizzes (read-only data)
      */
     case ActionType.SetAvailableQuizzes: {
-      const { availableQuizzesSource }: { availableQuizzesSource: Quizzes } =
-        payload;
-      return { ...state, availableQuizzes: availableQuizzesSource };
+      const { availableQuizzes }: { availableQuizzes: Quizzes } = payload;
+      return { ...state, availableQuizzes };
     }
 
     /**

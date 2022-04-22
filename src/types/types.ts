@@ -6,7 +6,7 @@ export interface Quiz {
   description: string;
   estimatedMinutes: number;
   difficulty: Difficulty;
-  options: Options;
+  options?: Options;
   questionsCount: number;
 }
 
