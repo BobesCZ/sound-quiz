@@ -6,12 +6,10 @@ import MobileStepper from "@material-ui/core/MobileStepper";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { questionsSource } from "../../data/questions";
+import useFetchAvailableQuestions from "../../fetch/useFetchAvailableQuestions";
 import useCurrentQuiz from "../../hooks/useCurrentQuiz";
-import AppContext from "../../store/context";
-import { ActionType } from "../../types/context";
 import QuestionControl from "./QuestionControl";
 import ResultControl from "./ResultControl";
 
@@ -42,19 +40,15 @@ const useStyles = makeStyles((theme) => ({
 const QuestionsPage = () => {
   const classes = useStyles();
   const navigate = useNavigate();
-  const { dispatch } = useContext(AppContext);
   const { quizId, quizObj, questionsArray, answerObj } = useCurrentQuiz();
+
+  useFetchAvailableQuestions(!questionsArray?.length, quizId);
 
   useEffect(() => {
     if (!quizObj) {
       navigate(`/quiz/${quizId}`);
-    } else if (quizId && !questionsArray?.length) {
-      dispatch({
-        type: ActionType.SetQuestionsToQuiz,
-        payload: { quizId, questions: questionsSource[quizId] },
-      });
     }
-  }, [quizId, quizObj, dispatch, navigate, questionsArray?.length]);
+  }, [navigate, quizId, quizObj]);
 
   const [activeStep, setActiveStep] = useState(0);
 

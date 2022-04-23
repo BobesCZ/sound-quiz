@@ -1,17 +1,17 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import useFetchAvailableQuizzes from "../fetch/useFetchAvailableQuizzes";
-import { Action, ActionType } from "../types/context";
+import AppContext from "../store/context";
+import { ActionType } from "../types/context";
 import { loadFromStorage } from "../utils/storage";
 
-/**
- * Setup data on app load
- */
-const useOnloadSetup = (dispatch: React.Dispatch<Action>): void => {
+const Setup = () => {
   useFetchAvailableQuizzes();
 
   /**
    * Load answers from localStorage
    */
+  const { dispatch } = useContext(AppContext);
+
   useEffect(() => {
     const { userQuestions, userAnswers } = loadFromStorage();
     if (!!userQuestions || !!userAnswers) {
@@ -22,6 +22,8 @@ const useOnloadSetup = (dispatch: React.Dispatch<Action>): void => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  return null;
 };
 
-export default useOnloadSetup;
+export default Setup;
