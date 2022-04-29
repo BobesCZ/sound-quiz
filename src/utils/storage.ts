@@ -7,8 +7,8 @@ const saveQuestionsToStorage = (quizId: QuizId, questionsArray: Question[]) => {
     const data =
       JSON.parse(localStorage.getItem(STORAGE_KEY_USER_DATA) ?? "{}") || {};
 
-    data.userQuestions = {
-      ...data.userQuestions,
+    data.availableQuestions = {
+      ...data.availableQuestions,
       [quizId]: questionsArray,
     };
 

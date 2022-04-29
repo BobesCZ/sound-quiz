@@ -15,7 +15,7 @@ interface HookReturn {
  */
 const useCurrentQuiz = (): HookReturn => {
   const {
-    appState: { availableQuizzes, userQuestions, userAnswers },
+    appState: { availableQuizzes, availableQuestions, userAnswers },
   } = useContext(AppContext);
 
   const { id: quizId } = useParams<{ id: string }>();
@@ -32,7 +32,7 @@ const useCurrentQuiz = (): HookReturn => {
   return {
     quizId,
     quizObj: availableQuizzes?.[quizId],
-    questionsArray: userQuestions?.[quizId],
+    questionsArray: availableQuestions?.[quizId],
     answerObj: userAnswers?.[quizId],
   };
 };

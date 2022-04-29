@@ -2,7 +2,7 @@ import { Answers, Questions, Quizzes } from "./types";
 
 export interface AppState {
   availableQuizzes?: Quizzes;
-  userQuestions?: Questions;
+  availableQuestions?: Questions;
   userAnswers?: Answers;
 }
 

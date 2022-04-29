@@ -33,10 +33,9 @@ export interface Options {
 export interface Question {
   questionText: string;
   video: Video;
-  sourceAnswers?: SourceAnswers;
   answerInfo: AnswerInfo;
-  answers: AnswerObject[] | [];
-  correctAnswer: number | null;
+  answers: Record<AnswerId, string>;
+  correctAnswerId: string;
 }
 
 export interface Questions {
@@ -49,26 +48,15 @@ export interface Video {
   endSeconds: number;
 }
 
-export interface SourceAnswers {
-  correctAnswer: string;
-  otherAnswerArray: string[];
-}
-
 export interface AnswerInfo {
   imgUrl: string;
   songName: string;
   albumName: string;
 }
 
-export interface AnswerObject {
-  id: number;
-  answerText: string;
-}
-
 /**
  * Answer
  */
-
 export interface Answer {
   answerList: AnswerList;
   finalScore: number | null;
@@ -78,11 +66,14 @@ export interface Answers {
   [key: QuizId]: Answer;
 }
 
+export type AnswerId = string;
+
 export interface AnswerList {
   [key: string]: AnswerDetail;
 }
 
 export interface AnswerDetail {
-  answer: number;
+  userAnswers: AnswerId[];
+  enteredAnswerId?: AnswerId;
   isChecked: boolean;
 }

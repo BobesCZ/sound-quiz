@@ -11,7 +11,11 @@ import {
   saveAnswersToStorage,
   saveQuestionsToStorage,
 } from "../utils/storage";
-import { getFinalScore, getQuestions } from "../utils/utils";
+import {
+  getEnteredAnswersCount,
+  getFinalScore,
+  getQuestions,
+} from "../utils/utils";
 
 const reducer = (state: AppState, { type, payload }: Action) => {
   switch (type) {
@@ -37,13 +41,27 @@ const reducer = (state: AppState, { type, payload }: Action) => {
       }
 
       const { randomizeAnswers } = quizObj.options || {};
-      const questionsArray = getQuestions(questions, randomizeAnswers);
+      const { questionsArray, answerList } = getQuestions(
+        questions,
+        randomizeAnswers
+      );
 
       saveQuestionsToStorage(quizId, questionsArray);
+      saveAnswersToStorage(quizId, { answerList, finalScore: null });
 
       return {
         ...state,
-        userQuestions: { ...state.userQuestions, [quizId]: questionsArray },
+        availableQuestions: {
+          ...state.availableQuestions,
+          [quizId]: questionsArray,
+        },
+        userAnswers: {
+          ...state.userAnswers,
+          [quizId]: {
+            answerList,
+            finalScore: null,
+          },
+        },
       };
     }
 
@@ -58,18 +76,22 @@ const reducer = (state: AppState, { type, payload }: Action) => {
       }: { quizId: QuizId; questionId: string; answer: AnswerDetail } = payload;
 
       const quiz = state.availableQuizzes?.[quizId];
-      const questionsArray = state.userQuestions?.[quizId];
+      const questionsArray = state.availableQuestions?.[quizId];
+      const oldAnswerList = state?.userAnswers?.[quizId]?.answerList;
 
-      if (!quiz || !questionsArray?.length) {
+      if (!quiz || !questionsArray?.length || !oldAnswerList) {
         return { ...state };
       }
 
       const answerList: AnswerList = {
-        ...state?.userAnswers?.[quizId]?.answerList,
-        [questionId]: answer,
+        ...oldAnswerList,
+        [questionId]: {
+          ...answer,
+          userAnswers: oldAnswerList[questionId].userAnswers,
+        },
       };
 
-      const answersCount = Object.keys(answerList).length;
+      const answersCount = getEnteredAnswersCount(answerList);
 
       let finalScore =
         answersCount === questionsArray.length
@@ -93,8 +115,8 @@ const reducer = (state: AppState, { type, payload }: Action) => {
      * Set user data from external source to state
      */
     case ActionType.SetUserData: {
-      const { userQuestions, userAnswers }: AppState = payload;
-      return { ...state, userQuestions, userAnswers };
+      const { availableQuestions, userAnswers }: AppState = payload;
+      return { ...state, availableQuestions, userAnswers };
     }
 
     /**
@@ -102,7 +124,11 @@ const reducer = (state: AppState, { type, payload }: Action) => {
      */
     case ActionType.DeleteUserData: {
       clearStorage();
-      return { ...state, userQuestions: undefined, userAnswers: undefined };
+      return {
+        ...state,
+        availableQuestions: undefined,
+        userAnswers: undefined,
+      };
     }
     default:
       throw new Error();

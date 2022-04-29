@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 const UserPage = () => {
   const classes = useStyles();
   const {
-    appState: { availableQuizzes, userAnswers, userQuestions },
+    appState: { availableQuizzes, userAnswers, availableQuestions },
     dispatch,
   } = useContext(AppContext);
 
@@ -40,11 +40,11 @@ const UserPage = () => {
         Your quizzes
       </Typography>
 
-      {!!Object.keys(userQuestions || {}).length ? (
+      {!!Object.keys(availableQuestions || {}).length ? (
         <>
           <List className={classes.list}>
             {Object.entries(availableQuizzes || {}).map(([quizId, quizObj]) => {
-              const hasQuestions = !!userQuestions?.[quizId];
+              const hasQuestions = !!availableQuestions?.[quizId];
               const finalScore = userAnswers?.[quizId]?.finalScore ?? null;
 
               return hasQuestions ? (
