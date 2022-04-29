@@ -10,11 +10,9 @@ export interface Quiz {
   questionsCount: number;
 }
 
-export interface Quizzes {
-  [key: QuizId]: Quiz;
-}
-
 export type QuizId = string;
+
+export type QuizzesSource = Record<QuizId, Quiz>;
 
 export enum Difficulty {
   Easy = "EASY",
@@ -38,9 +36,9 @@ export interface Question {
   correctAnswerId: string;
 }
 
-export interface Questions {
-  [key: QuizId]: Question[];
-}
+export type QuestionId = string;
+
+export type QuestionsSource = Record<QuizId, Question[]>;
 
 export interface Video {
   id: string;
@@ -62,11 +60,9 @@ export interface Answer {
   finalScore: number | null;
 }
 
-export interface Answers {
-  [key: QuizId]: Answer;
-}
-
 export type AnswerId = string;
+
+export type AnswersSource = Record<QuizId, Answer>;
 
 export interface AnswerList {
   [key: string]: AnswerDetail;

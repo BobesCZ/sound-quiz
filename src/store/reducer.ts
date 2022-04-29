@@ -4,7 +4,7 @@ import {
   AnswerList,
   Question,
   QuizId,
-  Quizzes,
+  QuizzesSource,
 } from "../types/types";
 import {
   clearStorage,
@@ -23,7 +23,7 @@ const reducer = (state: AppState, { type, payload }: Action) => {
      * Set available quizzes (read-only data)
      */
     case ActionType.SetAvailableQuizzes: {
-      const { availableQuizzes }: { availableQuizzes: Quizzes } = payload;
+      const { availableQuizzes }: { availableQuizzes: QuizzesSource } = payload;
       return { ...state, availableQuizzes };
     }
 

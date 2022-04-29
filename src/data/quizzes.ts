@@ -1,6 +1,6 @@
-import { Difficulty, Quizzes } from "../types/types";
+import { Difficulty, QuizzesSource } from "../types/types";
 
-export const availableQuizzesSource: Quizzes = {
+export const availableQuizzesSource: QuizzesSource = {
   "metal-subgenres-8b5b078": {
     name: "Metal subgenres",
     description:

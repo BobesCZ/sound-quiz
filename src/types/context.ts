@@ -1,9 +1,9 @@
-import { Answers, Questions, Quizzes } from "./types";
+import { AnswersSource, QuestionsSource, QuizzesSource } from "./types";
 
 export interface AppState {
-  availableQuizzes?: Quizzes;
-  availableQuestions?: Questions;
-  userAnswers?: Answers;
+  availableQuizzes?: QuizzesSource;
+  availableQuestions?: QuestionsSource;
+  userAnswers?: AnswersSource;
 }
 
 export interface ContextProps {
