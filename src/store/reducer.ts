@@ -2,22 +2,18 @@ import { Action, ActionType, AppState } from "../types/context";
 import {
   AnswerDetail,
   AnswerList,
-  Question,
+  Questions,
   QuizId,
   QuizzesSource,
 } from "../types/types";
-import {
-  clearStorage,
-  saveAnswersToStorage,
-  saveQuestionsToStorage,
-} from "../utils/storage";
+import { clearStorage, saveAnswersToStorage } from "../utils/storage";
 import {
   getEnteredAnswersCount,
   getFinalScore,
   getQuestions,
 } from "../utils/utils";
 
-const reducer = (state: AppState, { type, payload }: Action) => {
+const reducer = (state: AppState, { type, payload }: Action): AppState => {
   switch (type) {
     /**
      * Set available quizzes (read-only data)
@@ -31,7 +27,7 @@ const reducer = (state: AppState, { type, payload }: Action) => {
      * Resolve Question objects, shuffle questions and answers (user data)
      */
     case ActionType.SetQuestionsToQuiz: {
-      const { quizId, questions }: { quizId: QuizId; questions: Question[] } =
+      const { quizId, questions }: { quizId: QuizId; questions: Questions } =
         payload;
 
       const quizObj = state?.availableQuizzes?.[quizId];
@@ -41,23 +37,27 @@ const reducer = (state: AppState, { type, payload }: Action) => {
       }
 
       const { randomizeAnswers } = quizObj.options || {};
-      const { questionsArray, answerList } = getQuestions(
+      const { questionObj, questionArray, answerList } = getQuestions(
         questions,
         randomizeAnswers
       );
 
-      saveQuestionsToStorage(quizId, questionsArray);
-      saveAnswersToStorage(quizId, { answerList, finalScore: null });
+      saveAnswersToStorage(quizId, {
+        questionArray,
+        answerList,
+        finalScore: null,
+      });
 
       return {
         ...state,
         availableQuestions: {
           ...state.availableQuestions,
-          [quizId]: questionsArray,
+          [quizId]: questionObj,
         },
         userAnswers: {
           ...state.userAnswers,
           [quizId]: {
+            questionArray,
             answerList,
             finalScore: null,
           },
@@ -76,10 +76,11 @@ const reducer = (state: AppState, { type, payload }: Action) => {
       }: { quizId: QuizId; questionId: string; answer: AnswerDetail } = payload;
 
       const quiz = state.availableQuizzes?.[quizId];
-      const questionsArray = state.availableQuestions?.[quizId];
+      const questionObj = state.availableQuestions?.[quizId];
       const oldAnswerList = state?.userAnswers?.[quizId]?.answerList;
+      const oldQuestionArray = state?.userAnswers?.[quizId]?.questionArray;
 
-      if (!quiz || !questionsArray?.length || !oldAnswerList) {
+      if (!quiz || !questionObj || !oldAnswerList || !oldQuestionArray) {
         return { ...state };
       }
 
@@ -87,26 +88,33 @@ const reducer = (state: AppState, { type, payload }: Action) => {
         ...oldAnswerList,
         [questionId]: {
           ...answer,
-          userAnswers: oldAnswerList[questionId].userAnswers,
+          answerArray: oldAnswerList[questionId].answerArray,
         },
       };
 
       const answersCount = getEnteredAnswersCount(answerList);
 
       let finalScore =
-        answersCount === questionsArray.length
-          ? getFinalScore(answerList, questionsArray)
+        answersCount === Object.keys(questionObj).length
+          ? getFinalScore(answerList, questionObj)
           : null;
 
       if (answer.isChecked) {
-        saveAnswersToStorage(quizId, { answerList, finalScore });
+        saveAnswersToStorage(quizId, {
+          answerList,
+          finalScore,
+        });
       }
 
       return {
         ...state,
         userAnswers: {
           ...state.userAnswers,
-          [quizId]: { answerList, finalScore },
+          [quizId]: {
+            questionArray: oldQuestionArray,
+            answerList,
+            finalScore,
+          },
         },
       };
     }
@@ -115,8 +123,8 @@ const reducer = (state: AppState, { type, payload }: Action) => {
      * Set user data from external source to state
      */
     case ActionType.SetUserData: {
-      const { availableQuestions, userAnswers }: AppState = payload;
-      return { ...state, availableQuestions, userAnswers };
+      const { userAnswers }: AppState = payload;
+      return { ...state, userAnswers };
     }
 
     /**

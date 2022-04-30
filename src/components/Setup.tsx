@@ -13,11 +13,11 @@ const Setup = () => {
   const { dispatch } = useContext(AppContext);
 
   useEffect(() => {
-    const { availableQuestions, userAnswers } = loadFromStorage();
-    if (!!availableQuestions || !!userAnswers) {
+    const { userAnswers } = loadFromStorage();
+    if (!!userAnswers) {
       dispatch({
         type: ActionType.SetUserData,
-        payload: { availableQuestions, userAnswers },
+        payload: { userAnswers },
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -22,7 +22,7 @@ export const availableQuizzesSource: QuizzesSource = {
   "rock-history-kcca86d2": {
     name: "Rock history ('60s - '90s)",
     description:
-      "Can you guess, which decade of 19th centrury the song belongs to?",
+      "Can you guess, which decade of 20th centrury the song belongs to?",
     estimatedMinutes: 3,
     difficulty: Difficulty.Easy,
     options: {

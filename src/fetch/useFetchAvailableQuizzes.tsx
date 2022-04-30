@@ -7,7 +7,7 @@ import { QuizzesSource } from "../types/types";
 import { firebaseDb } from "./firebase";
 
 /**
- * Fetch data from BE and set it to AppState
+ * Fetch data from BE (all availableQuizzes) and set it to AppState
  */
 const useFetchAvailableQuizzes = (): void => {
   const { dispatch } = useContext(AppContext);

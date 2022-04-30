@@ -11,7 +11,6 @@ export interface Quiz {
 }
 
 export type QuizId = string;
-
 export type QuizzesSource = Record<QuizId, Quiz>;
 
 export enum Difficulty {
@@ -37,8 +36,9 @@ export interface Question {
 }
 
 export type QuestionId = string;
-
-export type QuestionsSource = Record<QuizId, Question[]>;
+export type QuestionArray = QuestionId[];
+export type Questions = Record<QuestionId, Question>;
+export type QuestionsSource = Record<QuizId, Questions>;
 
 export interface Video {
   id: string;
@@ -56,20 +56,18 @@ export interface AnswerInfo {
  * Answer
  */
 export interface Answer {
+  questionArray: QuestionArray;
   answerList: AnswerList;
   finalScore: number | null;
 }
 
 export type AnswerId = string;
-
+export type AnswerArray = AnswerId[];
+export type AnswerList = Record<QuestionId, AnswerDetail>;
 export type AnswersSource = Record<QuizId, Answer>;
 
-export interface AnswerList {
-  [key: string]: AnswerDetail;
-}
-
 export interface AnswerDetail {
-  userAnswers: AnswerId[];
-  enteredAnswerId?: AnswerId;
   isChecked: boolean;
+  answerArray: AnswerArray;
+  enteredAnswerId?: AnswerId;
 }

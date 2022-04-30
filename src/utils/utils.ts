@@ -1,37 +1,48 @@
 import { shuffle } from "lodash";
-import { Question, AnswerList } from "../types/types";
-import { shuffleArray } from "./common";
-
+import { AnswerList, QuestionArray, Questions } from "../types/types";
 const getVideoEndSeconds = (startSeconds: number, videoDuration = 10) =>
   startSeconds + videoDuration;
 
 const getQuestions = (
-  questions: Question[],
+  questions: Questions,
   randomizeAnswers = true
-): { questionsArray: Question[]; answerList: AnswerList } => {
-  shuffleArray(questions);
-
-  const questionsArray = questions.map(({ video, ...rest }) => ({
-    ...rest,
-    video: {
-      ...video,
-      endSeconds: getVideoEndSeconds(video.startSeconds),
-    },
-  }));
-
-  const answerList = questions.reduce((result, { answers }, index) => {
-    const keys = Object.keys(answers);
-    const userAnswers = randomizeAnswers ? shuffle(keys) : keys;
-    return {
+): {
+  questionObj: Questions;
+  questionArray: QuestionArray;
+  answerList: AnswerList;
+} => {
+  const questionObj = Object.entries(questions).reduce(
+    (result: Questions, [questionId, { video, ...rest }]) => ({
       ...result,
-      [index]: {
-        userAnswers,
-        isChecked: false,
+      [questionId]: {
+        ...rest,
+        video: {
+          ...video,
+          endSeconds: getVideoEndSeconds(video.startSeconds),
+        },
       },
-    };
-  }, {});
+    }),
+    {}
+  );
 
-  return { questionsArray, answerList };
+  const questionArray: QuestionArray = shuffle(Object.keys(questions));
+
+  const answerList = Object.entries(questions).reduce(
+    (result: AnswerList, [questionId, { answers }]) => {
+      const keys = Object.keys(answers);
+      const answerArray = randomizeAnswers ? shuffle(keys) : keys;
+      return {
+        ...result,
+        [questionId]: {
+          answerArray,
+          isChecked: false,
+        },
+      };
+    },
+    {}
+  );
+
+  return { questionObj, questionArray, answerList };
 };
 
 const getEnteredAnswersCount = (answerList: AnswerList) =>
@@ -40,12 +51,11 @@ const getEnteredAnswersCount = (answerList: AnswerList) =>
     0
   );
 
-const getFinalScore = (answerList: AnswerList, questionsArray: Question[]) => {
+const getFinalScore = (answerList: AnswerList, questionObj: Questions) => {
   const correctAnswersCount = Object.entries(answerList).reduce(
-    (sum, [index, answer]) => {
+    (sum, [questionId, answer]) => {
       const isCorrect =
-        answer.enteredAnswerId ===
-        questionsArray[parseInt(index)].correctAnswerId
+        answer.enteredAnswerId === questionObj[questionId].correctAnswerId
           ? 1
           : 0;
       return (sum += isCorrect);
@@ -53,7 +63,7 @@ const getFinalScore = (answerList: AnswerList, questionsArray: Question[]) => {
     0
   );
 
-  return (correctAnswersCount / questionsArray.length) * 100;
+  return (correctAnswersCount / Object.keys(questionObj).length) * 100;
 };
 
 export { getQuestions, getEnteredAnswersCount, getFinalScore };

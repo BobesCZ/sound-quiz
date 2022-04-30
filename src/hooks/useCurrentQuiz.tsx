@@ -1,12 +1,12 @@
 import { useContext } from "react";
 import { useParams } from "react-router-dom";
 import AppContext from "../store/context";
-import { Answer, Question, Quiz } from "../types/types";
+import { Answer, Questions, Quiz } from "../types/types";
 
 interface HookReturn {
   quizId?: string;
   quizObj?: Quiz;
-  questionsArray?: Question[];
+  questionObj?: Questions;
   answerObj?: Answer;
 }
 
@@ -24,7 +24,7 @@ const useCurrentQuiz = (): HookReturn => {
     return {
       quizId: undefined,
       quizObj: undefined,
-      questionsArray: undefined,
+      questionObj: undefined,
       answerObj: undefined,
     };
   }
@@ -32,7 +32,7 @@ const useCurrentQuiz = (): HookReturn => {
   return {
     quizId,
     quizObj: availableQuizzes?.[quizId],
-    questionsArray: availableQuestions?.[quizId],
+    questionObj: availableQuestions?.[quizId],
     answerObj: userAnswers?.[quizId],
   };
 };

@@ -3,11 +3,11 @@ import { useContext, useEffect } from "react";
 import { useList } from "react-firebase-hooks/database";
 import AppContext from "../store/context";
 import { ActionType } from "../types/context";
-import { Question, QuizId } from "../types/types";
+import { Questions, QuizId } from "../types/types";
 import { firebaseDb } from "./firebase";
 
 /**
- * Fetch data from BE and set it to AppState
+ * Fetch data from BE (questions for 1 specific quiz only) and set it to AppState
  */
 const useFetchAvailableQuestions = (
   isEnabled: boolean,
@@ -19,21 +19,24 @@ const useFetchAvailableQuestions = (
     isEnabled && quizId
       ? ref(firebaseDb, `availableQuestions/${quizId}`)
       : undefined;
-  const [availableQuestionsSource, loading] = useList(dbReference);
+  const [questionsSource, loading] = useList(dbReference);
 
   useEffect(() => {
-    if (isEnabled && quizId && !loading && availableQuestionsSource?.length) {
-      const availableQuestions: Question[] = availableQuestionsSource?.reduce(
-        (result: Question[], i) => [...result, i.val()],
-        []
+    if (isEnabled && quizId && !loading && questionsSource?.length) {
+      const questions = questionsSource?.reduce(
+        (result: Questions, i) => ({
+          ...result,
+          [i.key as string]: i.val(),
+        }),
+        {}
       );
 
       dispatch({
         type: ActionType.SetQuestionsToQuiz,
-        payload: { quizId, questions: availableQuestions },
+        payload: { quizId, questions },
       });
     }
-  }, [isEnabled, quizId, loading, availableQuestionsSource, dispatch]);
+  }, [isEnabled, quizId, loading, questionsSource, dispatch]);
 };
 
 export default useFetchAvailableQuestions;

@@ -7,7 +7,7 @@ import { useContext } from "react";
 import useCurrentQuiz from "../../hooks/useCurrentQuiz";
 import AppContext from "../../store/context";
 import { ActionType } from "../../types/context";
-import { Question } from "../../types/types";
+import { Question, QuestionId } from "../../types/types";
 import {
   QuestionRadioCorrect,
   QuestionRadioWrong,
@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface QuestionFormProps {
-  questionId: number;
+  questionId: QuestionId;
   questionObject: Question;
 }
 
@@ -79,6 +79,7 @@ const QuestionForm = ({ questionId, questionObject }: QuestionFormProps) => {
       );
     }
   };
+
   return (
     <>
       <FormControl component="fieldset">
@@ -94,14 +95,16 @@ const QuestionForm = ({ questionId, questionObject }: QuestionFormProps) => {
           value={enteredAnswerId}
           onChange={handleChange}
         >
-          {Object.entries(questionObject.answers).map(([id, answerText]) => (
-            <FormControlLabel
-              key={id}
-              value={id}
-              control={getControl(id)}
-              label={answerText}
-            />
-          ))}
+          {(answerObj?.answerList?.[questionId]?.answerArray || []).map(
+            (answerId) => (
+              <FormControlLabel
+                key={answerId}
+                value={answerId}
+                control={getControl(answerId)}
+                label={questionObject.answers[answerId]}
+              />
+            )
+          )}
         </RadioGroup>
       </FormControl>
     </>
