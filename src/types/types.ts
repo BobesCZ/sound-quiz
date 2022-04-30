@@ -6,15 +6,12 @@ export interface Quiz {
   description: string;
   estimatedMinutes: number;
   difficulty: Difficulty;
-  options: Options;
+  options?: Options;
   questionsCount: number;
 }
 
-export interface Quizzes {
-  [key: QuizId]: Quiz;
-}
-
 export type QuizId = string;
+export type QuizzesSource = Record<QuizId, Quiz>;
 
 export enum Difficulty {
   Easy = "EASY",
@@ -33,25 +30,20 @@ export interface Options {
 export interface Question {
   questionText: string;
   video: Video;
-  sourceAnswers?: SourceAnswers;
   answerInfo: AnswerInfo;
-  answers: AnswerObject[] | [];
-  correctAnswer: number | null;
+  answers: Record<AnswerId, string>;
+  correctAnswerId: string;
 }
 
-export interface Questions {
-  [key: QuizId]: Question[];
-}
+export type QuestionId = string;
+export type QuestionArray = QuestionId[];
+export type Questions = Record<QuestionId, Question>;
+export type QuestionsSource = Record<QuizId, Questions>;
 
 export interface Video {
   id: string;
   startSeconds: number;
   endSeconds: number;
-}
-
-export interface SourceAnswers {
-  correctAnswer: string;
-  otherAnswerArray: string[];
 }
 
 export interface AnswerInfo {
@@ -60,29 +52,22 @@ export interface AnswerInfo {
   albumName: string;
 }
 
-export interface AnswerObject {
-  id: number;
-  answerText: string;
-}
-
 /**
  * Answer
  */
-
 export interface Answer {
+  questionArray: QuestionArray;
   answerList: AnswerList;
   finalScore: number | null;
 }
 
-export interface Answers {
-  [key: QuizId]: Answer;
-}
-
-export interface AnswerList {
-  [key: string]: AnswerDetail;
-}
+export type AnswerId = string;
+export type AnswerArray = AnswerId[];
+export type AnswerList = Record<QuestionId, AnswerDetail>;
+export type AnswersSource = Record<QuizId, Answer>;
 
 export interface AnswerDetail {
-  answer: number;
   isChecked: boolean;
+  answerArray: AnswerArray;
+  enteredAnswerId?: AnswerId;
 }

@@ -1,6 +1,6 @@
-import { Difficulty, Quizzes } from "../types/types";
+import { Difficulty, QuizzesSource } from "../types/types";
 
-export const availableQuizzesSource: Quizzes = {
+export const availableQuizzesSource: QuizzesSource = {
   "metal-subgenres-8b5b078": {
     name: "Metal subgenres",
     description:
@@ -22,7 +22,7 @@ export const availableQuizzesSource: Quizzes = {
   "rock-history-kcca86d2": {
     name: "Rock history ('60s - '90s)",
     description:
-      "Can you guess, which decade of 19th centrury the song belongs to?",
+      "Can you guess, which decade of 20th centrury the song belongs to?",
     estimatedMinutes: 3,
     difficulty: Difficulty.Easy,
     options: {

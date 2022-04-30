@@ -6,12 +6,10 @@ import MobileStepper from "@material-ui/core/MobileStepper";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { questionsSource } from "../../data/questions";
+import useFetchAvailableQuestions from "../../fetch/useFetchAvailableQuestions";
 import useCurrentQuiz from "../../hooks/useCurrentQuiz";
-import AppContext from "../../store/context";
-import { ActionType } from "../../types/context";
 import QuestionControl from "./QuestionControl";
 import ResultControl from "./ResultControl";
 
@@ -42,47 +40,53 @@ const useStyles = makeStyles((theme) => ({
 const QuestionsPage = () => {
   const classes = useStyles();
   const navigate = useNavigate();
-  const { dispatch } = useContext(AppContext);
-  const { quizId, quizObj, questionsArray, answerObj } = useCurrentQuiz();
+  const { quizId, quizObj, questionObj, answerObj } = useCurrentQuiz();
+  const questionCount = Object.keys(questionObj || {})?.length;
+
+  useFetchAvailableQuestions(!questionCount, quizId);
 
   useEffect(() => {
     if (!quizObj) {
       navigate(`/quiz/${quizId}`);
-    } else if (quizId && !questionsArray?.length) {
-      dispatch({
-        type: ActionType.SetQuestionsToQuiz,
-        payload: { quizId, questions: questionsSource[quizId] },
-      });
     }
-  }, [quizId, quizObj, dispatch, navigate, questionsArray?.length]);
+  }, [navigate, quizId, quizObj]);
 
   const [activeStep, setActiveStep] = useState(0);
+
+  const activeQuestionId = useMemo(
+    () => answerObj?.questionArray?.[activeStep],
+    [answerObj, activeStep]
+  );
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
-  if (!quizObj || !questionsArray?.length) {
+  if (activeStep === questionCount) {
+    return <ResultControl />;
+  } else if (
+    !quizObj ||
+    !questionCount ||
+    !activeQuestionId ||
+    !questionObj?.[activeQuestionId]
+  ) {
     return null;
   }
 
-  const questionCount = questionsArray.length;
   const showResultText =
     answerObj?.finalScore !== null &&
-    answerObj?.answerList[activeStep] &&
-    answerObj?.answerList[activeStep].isChecked;
+    !!answerObj?.answerList[activeQuestionId] &&
+    answerObj?.answerList[activeQuestionId].isChecked;
 
   const isQuestionChecked =
-    !!answerObj?.answerList.hasOwnProperty(activeStep) &&
-    !!answerObj?.answerList[activeStep].isChecked;
+    !!answerObj?.answerList.hasOwnProperty(activeQuestionId) &&
+    !!answerObj?.answerList[activeQuestionId].isChecked;
 
-  return activeStep === questionCount ? (
-    <ResultControl />
-  ) : (
+  return (
     <>
       <QuestionControl
-        questionObject={questionsArray[activeStep]}
-        questionId={activeStep}
+        questionObject={questionObj[activeQuestionId]}
+        questionId={activeQuestionId}
         isQuestionChecked={isQuestionChecked}
       />
 
@@ -107,7 +111,7 @@ const QuestionsPage = () => {
             className={classes.title}
             gutterBottom
           >
-            Question {activeStep + 1}/{questionsArray.length}
+            Question {activeStep + 1}/{questionCount}
           </Typography>
 
           <MobileStepper

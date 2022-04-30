@@ -7,6 +7,7 @@ import AppContextProvider from "../store/provider";
 import QuestionsPage from "./Questions/QuestionsPage";
 import QuizInfoPage from "./QuizDetail/QuizDetailPage";
 import QuizListPage from "./QuizList/QuizListPage";
+import Setup from "./Setup";
 import TopBar from "./TopBar";
 import UserPage from "./User/UserPage";
 
@@ -28,6 +29,7 @@ const App = () => {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <AppContextProvider>
+          <Setup />
           <TopBar />
           <Container maxWidth="sm">
             <Routes>

@@ -1,6 +1,5 @@
 import { initializeApp } from "firebase/app";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import { getDatabase } from "firebase/database";
 
 const firebaseConfig = process.env.REACT_APP_FIREBASE_API_KEY && {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -14,5 +13,9 @@ const firebaseConfig = process.env.REACT_APP_FIREBASE_API_KEY && {
 
 // Initialize Firebase
 const firebaseApp = firebaseConfig ? initializeApp(firebaseConfig) : undefined;
+const firebaseDb = getDatabase(
+  firebaseApp,
+  process.env.REACT_APP_FIREBASE_DATABASE_URL
+);
 
-export { firebaseApp };
+export { firebaseApp, firebaseDb };

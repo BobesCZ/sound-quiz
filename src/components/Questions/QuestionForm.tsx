@@ -7,7 +7,7 @@ import { useContext } from "react";
 import useCurrentQuiz from "../../hooks/useCurrentQuiz";
 import AppContext from "../../store/context";
 import { ActionType } from "../../types/context";
-import { Question } from "../../types/types";
+import { Question, QuestionId } from "../../types/types";
 import {
   QuestionRadioCorrect,
   QuestionRadioWrong,
@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface QuestionFormProps {
-  questionId: number;
+  questionId: QuestionId;
   questionObject: Question;
 }
 
@@ -34,12 +34,16 @@ const QuestionForm = ({ questionId, questionObject }: QuestionFormProps) => {
   const { dispatch } = useContext(AppContext);
   const { quizId, answerObj } = useCurrentQuiz();
 
-  const answer = answerObj?.answerList?.[questionId]?.answer ?? null;
+  const enteredAnswerId =
+    answerObj?.answerList?.[questionId]?.enteredAnswerId ?? null;
   const isAnswerChecked = !!answerObj?.answerList?.[questionId]?.isChecked;
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (answer === null) {
-      const answer = { answer: parseInt(event.target.value), isChecked: false };
+    if (enteredAnswerId === null) {
+      const answer = {
+        enteredAnswerId: event.target.value,
+        isChecked: false,
+      };
       dispatch({
         type: ActionType.SetUserAnswer,
         payload: { quizId, questionId, answer },
@@ -47,7 +51,7 @@ const QuestionForm = ({ questionId, questionObject }: QuestionFormProps) => {
 
       setTimeout(() => {
         const answer = {
-          answer: parseInt(event.target.value),
+          enteredAnswerId: event.target.value,
           isChecked: true,
         };
         dispatch({
@@ -58,23 +62,24 @@ const QuestionForm = ({ questionId, questionObject }: QuestionFormProps) => {
     }
   };
 
-  const getControl = (id: number) => {
-    if (questionObject.correctAnswer === id) {
+  const getControl = (id: string) => {
+    if (questionObject.correctAnswerId === id) {
       return (
         <QuestionRadioCorrect
           waitingAnimation={!isAnswerChecked}
-          isCorrect={questionObject.correctAnswer === id}
+          isCorrect={questionObject.correctAnswerId === id}
         />
       );
     } else {
       return (
         <QuestionRadioWrong
           waitingAnimation={!isAnswerChecked}
-          isCorrect={questionObject.correctAnswer === id}
+          isCorrect={questionObject.correctAnswerId === id}
         />
       );
     }
   };
+
   return (
     <>
       <FormControl component="fieldset">
@@ -87,17 +92,19 @@ const QuestionForm = ({ questionId, questionObject }: QuestionFormProps) => {
         <RadioGroup
           aria-label="question"
           name="question1"
-          value={answer}
+          value={enteredAnswerId}
           onChange={handleChange}
         >
-          {Object.values(questionObject.answers).map(({ id, answerText }) => (
-            <FormControlLabel
-              key={id}
-              value={id}
-              control={getControl(id)}
-              label={answerText}
-            />
-          ))}
+          {(answerObj?.answerList?.[questionId]?.answerArray || []).map(
+            (answerId) => (
+              <FormControlLabel
+                key={answerId}
+                value={answerId}
+                control={getControl(answerId)}
+                label={questionObject.answers[answerId]}
+              />
+            )
+          )}
         </RadioGroup>
       </FormControl>
     </>
