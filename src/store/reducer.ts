@@ -1,3 +1,4 @@
+import { saveQuestionsToQuiz, saveUserAnswer } from "../fetch/updateUtils";
 import { Action, ActionType, AppState } from "../types/context";
 import {
   AnswerDetail,
@@ -6,7 +7,7 @@ import {
   QuizId,
   QuizzesSource,
 } from "../types/types";
-import { clearStorage, saveAnswersToStorage } from "../utils/storage";
+import { clearStorage } from "../utils/storage";
 import {
   getEnteredAnswersCount,
   getFinalScore,
@@ -42,11 +43,13 @@ const reducer = (state: AppState, { type, payload }: Action): AppState => {
         randomizeAnswers
       );
 
-      saveAnswersToStorage(quizId, {
+      const resultAnswer = {
         questionArray,
         answerList,
         finalScore: null,
-      });
+      };
+
+      saveQuestionsToQuiz(quizId, resultAnswer);
 
       return {
         ...state,
@@ -56,11 +59,7 @@ const reducer = (state: AppState, { type, payload }: Action): AppState => {
         },
         userAnswers: {
           ...state.userAnswers,
-          [quizId]: {
-            questionArray,
-            answerList,
-            finalScore: null,
-          },
+          [quizId]: resultAnswer,
         },
       };
     }
@@ -100,10 +99,7 @@ const reducer = (state: AppState, { type, payload }: Action): AppState => {
           : null;
 
       if (answer.isChecked) {
-        saveAnswersToStorage(quizId, {
-          answerList,
-          finalScore,
-        });
+        saveUserAnswer(quizId, questionId, answer, finalScore);
       }
 
       return {

@@ -1,4 +1,6 @@
+import { Box, CircularProgress } from "@material-ui/core";
 import { useContext, useEffect } from "react";
+import useAuthentication from "../fetch/useAuthentication";
 import useFetchAvailableQuizzes from "../fetch/useFetchAvailableQuizzes";
 import AppContext from "../store/context";
 import { ActionType } from "../types/context";
@@ -6,6 +8,7 @@ import { loadFromStorage } from "../utils/storage";
 
 const Setup = () => {
   useFetchAvailableQuizzes();
+  const { loading } = useAuthentication();
 
   /**
    * Load answers from localStorage
@@ -23,7 +26,11 @@ const Setup = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return null;
+  return loading ? (
+    <Box my={10} display="flex" justifyContent="center">
+      <CircularProgress />
+    </Box>
+  ) : null;
 };
 
 export default Setup;

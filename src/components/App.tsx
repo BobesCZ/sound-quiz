@@ -29,9 +29,9 @@ const App = () => {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <AppContextProvider>
-          <Setup />
           <TopBar />
           <Container maxWidth="sm">
+            <Setup />
             <Routes>
               <Route path="/" element={<QuizListPage />} />
               <Route path="/quiz/:id" element={<QuizInfoPage />} />

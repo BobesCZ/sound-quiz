@@ -1,8 +1,16 @@
+import { DataSnapshot } from "firebase/database";
 import { shuffle } from "lodash";
 import { AnswerList, QuestionArray, Questions } from "../types/types";
+
 const getVideoEndSeconds = (startSeconds: number, videoDuration = 10) =>
   startSeconds + videoDuration;
 
+/**
+ * From `questions` source:
+ * 1. resolve objects in `questions`
+ * 2. Generates random order of questions
+ * 3. Generates random order of answers in each question
+ */
 const getQuestions = (
   questions: Questions,
   randomizeAnswers = true
@@ -66,4 +74,18 @@ const getFinalScore = (answerList: AnswerList, questionObj: Questions) => {
   return (correctAnswersCount / Object.keys(questionObj).length) * 100;
 };
 
-export { getQuestions, getEnteredAnswersCount, getFinalScore };
+const resolveFetchedData = <T>(source: DataSnapshot[]): T =>
+  source?.reduce(
+    (result: T, i) => ({
+      ...result,
+      [i.key as string]: i.val(),
+    }),
+    {} as T
+  );
+
+export {
+  getQuestions,
+  getEnteredAnswersCount,
+  getFinalScore,
+  resolveFetchedData,
+};
