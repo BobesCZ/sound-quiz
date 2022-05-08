@@ -1,30 +1,20 @@
 import { Box, CircularProgress } from "@material-ui/core";
-import { useContext, useEffect } from "react";
 import useAuthentication from "../fetch/useAuthentication";
 import useFetchAvailableQuizzes from "../fetch/useFetchAvailableQuizzes";
-import AppContext from "../store/context";
-import { ActionType } from "../types/context";
-import { loadFromStorage } from "../utils/storage";
+import useFetchUserAnswers from "../fetch/useFetchUserData";
 
 const Setup = () => {
-  useFetchAvailableQuizzes();
   const { loading } = useAuthentication();
 
   /**
-   * Load answers from localStorage
+   * Load all availableQuizzes
    */
-  const { dispatch } = useContext(AppContext);
+  useFetchAvailableQuizzes();
 
-  useEffect(() => {
-    const { userAnswers } = loadFromStorage();
-    if (!!userAnswers) {
-      dispatch({
-        type: ActionType.SetUserData,
-        payload: { userAnswers },
-      });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  /**
+   * Load user answers
+   */
+  useFetchUserAnswers();
 
   return loading ? (
     <Box my={10} display="flex" justifyContent="center">

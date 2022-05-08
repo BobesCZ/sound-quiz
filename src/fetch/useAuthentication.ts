@@ -1,7 +1,6 @@
-import { signInAnonymously } from "firebase/auth";
 import { useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { firebaseAuth } from "./firebase";
+import { firebaseAuth, loginUser } from "./firebase";
 
 /**
  * Authenticate user
@@ -10,7 +9,7 @@ const useAuthentication = (): { loading: boolean } => {
   const [, loading] = useAuthState(firebaseAuth);
 
   useEffect(() => {
-    signInAnonymously(firebaseAuth);
+    loginUser();
   }, []);
 
   return { loading };

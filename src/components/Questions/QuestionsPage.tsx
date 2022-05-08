@@ -74,7 +74,8 @@ const QuestionsPage = () => {
   }
 
   const showResultText =
-    answerObj?.finalScore !== null &&
+    activeStep === questionCount - 1 &&
+    (answerObj?.finalScore ?? -1) >= 0 &&
     !!answerObj?.answerList[activeQuestionId] &&
     answerObj?.answerList[activeQuestionId].isChecked;
 

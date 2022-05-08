@@ -7,7 +7,6 @@ import {
   QuizId,
   QuizzesSource,
 } from "../types/types";
-import { clearStorage } from "../utils/storage";
 import {
   getEnteredAnswersCount,
   getFinalScore,
@@ -43,10 +42,10 @@ const reducer = (state: AppState, { type, payload }: Action): AppState => {
         randomizeAnswers
       );
 
-      const resultAnswer = {
+      const resultAnswer = state?.userAnswers?.[quizId] ?? {
         questionArray,
         answerList,
-        finalScore: null,
+        finalScore: -1,
       };
 
       saveQuestionsToQuiz(quizId, resultAnswer);
@@ -96,7 +95,7 @@ const reducer = (state: AppState, { type, payload }: Action): AppState => {
       let finalScore =
         answersCount === Object.keys(questionObj).length
           ? getFinalScore(answerList, questionObj)
-          : null;
+          : -1;
 
       if (answer.isChecked) {
         saveUserAnswer(quizId, questionId, answer, finalScore);
@@ -127,10 +126,8 @@ const reducer = (state: AppState, { type, payload }: Action): AppState => {
      * Delete all user quiz data from external source and state
      */
     case ActionType.DeleteUserData: {
-      clearStorage();
       return {
         ...state,
-        availableQuestions: undefined,
         userAnswers: undefined,
       };
     }

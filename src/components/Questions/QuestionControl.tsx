@@ -31,7 +31,7 @@ const QuestionControl = ({
   const classes = useStyles();
 
   const videoObject = questionObject.video;
-  const answerInfo = isQuestionChecked ? questionObject.answerInfo : null;
+  const answerInfo = isQuestionChecked ? questionObject.answerInfo : undefined;
 
   const [playerObject, setPlayerObject] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);

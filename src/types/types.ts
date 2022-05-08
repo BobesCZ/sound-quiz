@@ -58,7 +58,7 @@ export interface AnswerInfo {
 export interface Answer {
   questionArray: QuestionArray;
   answerList: AnswerList;
-  finalScore: number | null;
+  finalScore: number;
 }
 
 export type AnswerId = string;

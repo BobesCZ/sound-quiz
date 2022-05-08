@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
+import { getAuth, signInAnonymously, signOut } from "firebase/auth";
 import { getDatabase } from "firebase/database";
 
 const firebaseConfig = process.env.REACT_APP_FIREBASE_API_KEY && {
@@ -22,4 +22,7 @@ const firebaseDb = getDatabase(
 
 const firebaseAuth = getAuth(firebaseApp);
 
-export { firebaseApp, firebaseDb, firebaseAuth };
+const loginUser = () => signInAnonymously(firebaseAuth);
+const logoutUser = () => signOut(firebaseAuth);
+
+export { firebaseApp, firebaseDb, firebaseAuth, loginUser, logoutUser };
