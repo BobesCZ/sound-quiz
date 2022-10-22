@@ -14,7 +14,8 @@ You can use it online at [SoundQuiz](https://sound-quiz-a2b00.web.app/) (hosted 
 ## Features
 
 - Uses YouTube Player API under the hood
-- Saves your answers continuously in localStorage
+- Data are stored in Firebase Database (also user's answers are continuously saved there)
+- Order of questions (and optionally answers) in quiz is randomized before the quiz starts
 
 ## Installing
 
