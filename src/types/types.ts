@@ -71,3 +71,10 @@ export interface AnswerDetail {
   answerArray: AnswerArray;
   enteredAnswerId?: AnswerId;
 }
+
+/**
+ * UserData
+ */
+export interface UserData {
+  nickName: string;
+}

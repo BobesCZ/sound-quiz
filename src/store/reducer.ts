@@ -1,4 +1,9 @@
-import { saveQuestionsToQuiz, saveUserAnswer } from "../fetch/updateUtils";
+import {
+  saveFinalScore,
+  saveQuestionsToQuiz,
+  saveUserAnswer,
+  saveUserNickName,
+} from "../fetch/updateUtils";
 import { Action, ActionType, AppState } from "../types/context";
 import {
   AnswerDetail,
@@ -6,6 +11,7 @@ import {
   Questions,
   QuizId,
   QuizzesSource,
+  UserData,
 } from "../types/types";
 import {
   getEnteredAnswersCount,
@@ -77,6 +83,7 @@ const reducer = (state: AppState, { type, payload }: Action): AppState => {
       const questionObj = state.availableQuestions?.[quizId];
       const oldAnswerList = state?.userAnswers?.[quizId]?.answerList;
       const oldQuestionArray = state?.userAnswers?.[quizId]?.questionArray;
+      const oldFinalScore = state?.userAnswers?.[quizId]?.finalScore ?? -1;
 
       if (!quiz || !questionObj || !oldAnswerList || !oldQuestionArray) {
         return { ...state };
@@ -90,15 +97,8 @@ const reducer = (state: AppState, { type, payload }: Action): AppState => {
         },
       };
 
-      const answersCount = getEnteredAnswersCount(answerList);
-
-      let finalScore =
-        answersCount === Object.keys(questionObj).length
-          ? getFinalScore(answerList, questionObj)
-          : -1;
-
       if (answer.isChecked) {
-        saveUserAnswer(quizId, questionId, answer, finalScore);
+        saveUserAnswer(quizId, questionId, answer);
       }
 
       return {
@@ -108,6 +108,49 @@ const reducer = (state: AppState, { type, payload }: Action): AppState => {
           [quizId]: {
             questionArray: oldQuestionArray,
             answerList,
+            finalScore: oldFinalScore,
+          },
+        },
+      };
+    }
+    /**
+     * Process user score
+     */
+    case ActionType.SetFinalScore: {
+      const {
+        quizId,
+        nickName,
+      }: { quizId: QuizId; nickName?: UserData["nickName"] } = payload;
+
+      const quiz = state.availableQuizzes?.[quizId];
+      const questionObj = state.availableQuestions?.[quizId];
+      const answerObj = state?.userAnswers?.[quizId];
+      const answerList = state?.userAnswers?.[quizId]?.answerList;
+
+      if (!quiz || !questionObj || !answerObj || !answerList) {
+        return { ...state };
+      }
+
+      const answersCount = getEnteredAnswersCount(answerList);
+
+      if (answersCount !== Object.keys(questionObj).length) {
+        return { ...state };
+      }
+
+      let finalScore = getFinalScore(answerList, questionObj);
+
+      saveFinalScore(quizId, finalScore);
+
+      if (nickName) {
+        saveUserNickName(nickName);
+      }
+
+      return {
+        ...state,
+        userAnswers: {
+          ...state.userAnswers,
+          [quizId]: {
+            ...answerObj,
             finalScore,
           },
         },
@@ -118,8 +161,8 @@ const reducer = (state: AppState, { type, payload }: Action): AppState => {
      * Set user data from external source to state
      */
     case ActionType.SetUserData: {
-      const { userAnswers }: AppState = payload;
-      return { ...state, userAnswers };
+      const { userAnswers, userData }: AppState = payload;
+      return { ...state, userAnswers, userData };
     }
 
     /**
@@ -129,6 +172,7 @@ const reducer = (state: AppState, { type, payload }: Action): AppState => {
       return {
         ...state,
         userAnswers: undefined,
+        userData: undefined,
       };
     }
     default:

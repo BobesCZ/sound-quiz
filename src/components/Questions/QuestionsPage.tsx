@@ -11,7 +11,6 @@ import { useNavigate } from "react-router-dom";
 import useFetchAvailableQuestions from "../../fetch/useFetchAvailableQuestions";
 import useCurrentQuiz from "../../hooks/useCurrentQuiz";
 import QuestionControl from "./QuestionControl";
-import ResultControl from "./ResultControl";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -62,9 +61,13 @@ const QuestionsPage = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
-  if (activeStep === questionCount) {
-    return <ResultControl />;
-  } else if (
+  useEffect(() => {
+    if (activeStep > 0 && activeStep === questionCount) {
+      navigate(`/quiz/${quizId}/result`);
+    }
+  }, [navigate, quizId, activeStep, questionCount]);
+
+  if (
     !quizObj ||
     !questionCount ||
     !activeQuestionId ||

@@ -7,6 +7,7 @@ import AppContextProvider from "../store/provider";
 import QuestionsPage from "./Questions/QuestionsPage";
 import QuizInfoPage from "./QuizDetail/QuizDetailPage";
 import QuizListPage from "./QuizList/QuizListPage";
+import ResultPage from "./Result/ResultPage";
 import Setup from "./Setup";
 import TopBar from "./TopBar";
 import UserPage from "./User/UserPage";
@@ -36,6 +37,7 @@ const App = () => {
               <Route path="/" element={<QuizListPage />} />
               <Route path="/quiz/:id" element={<QuizInfoPage />} />
               <Route path="/quiz/:id/questions" element={<QuestionsPage />} />
+              <Route path="/quiz/:id/result" element={<ResultPage />} />
               <Route path="/user" element={<UserPage />} />
             </Routes>
           </Container>
