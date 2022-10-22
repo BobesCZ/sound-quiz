@@ -1,3 +1,9 @@
+import {
+  saveFinalScore,
+  saveQuestionsToQuiz,
+  saveUserAnswer,
+  saveUserNickName,
+} from "../fetch/updateUtils";
 import { Action, ActionType, AppState } from "../types/context";
 import {
   AnswerDetail,
@@ -5,8 +11,8 @@ import {
   Questions,
   QuizId,
   QuizzesSource,
+  UserData,
 } from "../types/types";
-import { clearStorage, saveAnswersToStorage } from "../utils/storage";
 import {
   getEnteredAnswersCount,
   getFinalScore,
@@ -42,11 +48,13 @@ const reducer = (state: AppState, { type, payload }: Action): AppState => {
         randomizeAnswers
       );
 
-      saveAnswersToStorage(quizId, {
+      const resultAnswer = state?.userAnswers?.[quizId] ?? {
         questionArray,
         answerList,
-        finalScore: null,
-      });
+        finalScore: -1,
+      };
+
+      saveQuestionsToQuiz(quizId, resultAnswer);
 
       return {
         ...state,
@@ -56,11 +64,7 @@ const reducer = (state: AppState, { type, payload }: Action): AppState => {
         },
         userAnswers: {
           ...state.userAnswers,
-          [quizId]: {
-            questionArray,
-            answerList,
-            finalScore: null,
-          },
+          [quizId]: resultAnswer,
         },
       };
     }
@@ -79,6 +83,7 @@ const reducer = (state: AppState, { type, payload }: Action): AppState => {
       const questionObj = state.availableQuestions?.[quizId];
       const oldAnswerList = state?.userAnswers?.[quizId]?.answerList;
       const oldQuestionArray = state?.userAnswers?.[quizId]?.questionArray;
+      const oldFinalScore = state?.userAnswers?.[quizId]?.finalScore ?? -1;
 
       if (!quiz || !questionObj || !oldAnswerList || !oldQuestionArray) {
         return { ...state };
@@ -92,18 +97,8 @@ const reducer = (state: AppState, { type, payload }: Action): AppState => {
         },
       };
 
-      const answersCount = getEnteredAnswersCount(answerList);
-
-      let finalScore =
-        answersCount === Object.keys(questionObj).length
-          ? getFinalScore(answerList, questionObj)
-          : null;
-
       if (answer.isChecked) {
-        saveAnswersToStorage(quizId, {
-          answerList,
-          finalScore,
-        });
+        saveUserAnswer(quizId, questionId, answer);
       }
 
       return {
@@ -113,6 +108,49 @@ const reducer = (state: AppState, { type, payload }: Action): AppState => {
           [quizId]: {
             questionArray: oldQuestionArray,
             answerList,
+            finalScore: oldFinalScore,
+          },
+        },
+      };
+    }
+    /**
+     * Process user score
+     */
+    case ActionType.SetFinalScore: {
+      const {
+        quizId,
+        nickName,
+      }: { quizId: QuizId; nickName?: UserData["nickName"] } = payload;
+
+      const quiz = state.availableQuizzes?.[quizId];
+      const questionObj = state.availableQuestions?.[quizId];
+      const answerObj = state?.userAnswers?.[quizId];
+      const answerList = state?.userAnswers?.[quizId]?.answerList;
+
+      if (!quiz || !questionObj || !answerObj || !answerList) {
+        return { ...state };
+      }
+
+      const answersCount = getEnteredAnswersCount(answerList);
+
+      if (answersCount !== Object.keys(questionObj).length) {
+        return { ...state };
+      }
+
+      let finalScore = getFinalScore(answerList, questionObj);
+
+      saveFinalScore(quizId, finalScore);
+
+      if (nickName) {
+        saveUserNickName(nickName);
+      }
+
+      return {
+        ...state,
+        userAnswers: {
+          ...state.userAnswers,
+          [quizId]: {
+            ...answerObj,
             finalScore,
           },
         },
@@ -123,19 +161,18 @@ const reducer = (state: AppState, { type, payload }: Action): AppState => {
      * Set user data from external source to state
      */
     case ActionType.SetUserData: {
-      const { userAnswers }: AppState = payload;
-      return { ...state, userAnswers };
+      const { userAnswers, userData }: AppState = payload;
+      return { ...state, userAnswers, userData };
     }
 
     /**
      * Delete all user quiz data from external source and state
      */
     case ActionType.DeleteUserData: {
-      clearStorage();
       return {
         ...state,
-        availableQuestions: undefined,
         userAnswers: undefined,
+        userData: undefined,
       };
     }
     default:

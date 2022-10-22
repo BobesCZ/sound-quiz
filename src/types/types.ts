@@ -58,7 +58,7 @@ export interface AnswerInfo {
 export interface Answer {
   questionArray: QuestionArray;
   answerList: AnswerList;
-  finalScore: number | null;
+  finalScore: number;
 }
 
 export type AnswerId = string;
@@ -70,4 +70,11 @@ export interface AnswerDetail {
   isChecked: boolean;
   answerArray: AnswerArray;
   enteredAnswerId?: AnswerId;
+}
+
+/**
+ * UserData
+ */
+export interface UserData {
+  nickName: string;
 }

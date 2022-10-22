@@ -1,4 +1,5 @@
 import { initializeApp } from "firebase/app";
+import { getAuth, signInAnonymously, signOut } from "firebase/auth";
 import { getDatabase } from "firebase/database";
 
 const firebaseConfig = process.env.REACT_APP_FIREBASE_API_KEY && {
@@ -13,9 +14,15 @@ const firebaseConfig = process.env.REACT_APP_FIREBASE_API_KEY && {
 
 // Initialize Firebase
 const firebaseApp = firebaseConfig ? initializeApp(firebaseConfig) : undefined;
+
 const firebaseDb = getDatabase(
   firebaseApp,
   process.env.REACT_APP_FIREBASE_DATABASE_URL
 );
 
-export { firebaseApp, firebaseDb };
+const firebaseAuth = getAuth(firebaseApp);
+
+const loginUser = () => signInAnonymously(firebaseAuth);
+const logoutUser = () => signOut(firebaseAuth);
+
+export { firebaseApp, firebaseDb, firebaseAuth, loginUser, logoutUser };

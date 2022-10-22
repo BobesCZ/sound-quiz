@@ -46,10 +46,7 @@ const QuizCard = ({
 
   return (
     <Card
-      className={clsx(
-        classes.root,
-        finalScore !== null && classes.rootCompleted
-      )}
+      className={clsx(classes.root, finalScore >= 0 && classes.rootCompleted)}
     >
       <CardContent>
         <Typography variant="h5" component="h2" gutterBottom>
@@ -74,7 +71,7 @@ const QuizCard = ({
         >
           {difficulty[0].toUpperCase() + difficulty.slice(1)}
         </Button>
-        {finalScore !== null ? (
+        {finalScore >= 0 ? (
           <Button
             variant="text"
             className={clsx(classes.infoButton, classes.conversionButton)}

@@ -14,7 +14,7 @@ const QuizListPage = () => {
           key={quizId}
           quizId={quizId}
           quizObj={quizObj}
-          finalScore={userAnswers?.[quizId]?.finalScore ?? null}
+          finalScore={userAnswers?.[quizId]?.finalScore ?? -1}
         />
       ))}
     </>

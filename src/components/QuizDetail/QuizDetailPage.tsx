@@ -66,7 +66,7 @@ const QuizDetailPage = () => {
   const { name, questionsCount, estimatedMinutes, difficulty, description } =
     quizObj;
 
-  const finalScore = answerObj?.finalScore ?? null;
+  const finalScore = answerObj?.finalScore ?? -1;
 
   return (
     <Box my={2}>
@@ -106,7 +106,7 @@ const QuizDetailPage = () => {
         <Typography>{description}</Typography>
       </Box>
 
-      {finalScore !== null && (
+      {finalScore >= 0 && (
         <Box my={1} className={clsx(classes.infoRow, classes.scoreTextColor)}>
           <EqualizerIcon
             className={clsx(classes.infoIcon, classes.scoreTextColor)}
@@ -123,7 +123,7 @@ const QuizDetailPage = () => {
 
       <Divider className={classes.divider} />
 
-      {finalScore !== null ? (
+      {finalScore >= 0 ? (
         <Box my={3}>
           <Alert
             icon={<CheckIcon fontSize="inherit" />}
@@ -180,7 +180,7 @@ const QuizDetailPage = () => {
           component={RouterLink}
           to={`/quiz/${quizId}/questions`}
         >
-          {finalScore !== null ? "View your answers" : "Start a quiz"}
+          {finalScore >= 0 ? "View your answers" : "Start a quiz"}
         </Button>
       </Box>
     </Box>

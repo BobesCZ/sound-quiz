@@ -6,6 +6,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 import Alert from "@material-ui/lab/Alert";
 import { useContext } from "react";
+import { loginUser, logoutUser } from "../../fetch/firebase";
 import AppContext from "../../store/context";
 import { ActionType } from "../../types/context";
 import UserQuizItem from "./UserQuizItem";
@@ -26,12 +27,14 @@ const useStyles = makeStyles((theme) => ({
 const UserPage = () => {
   const classes = useStyles();
   const {
-    appState: { availableQuizzes, userAnswers, availableQuestions },
+    appState: { availableQuizzes, userAnswers },
     dispatch,
   } = useContext(AppContext);
 
-  const handleDeleteClick = () => {
+  const handleDeleteClick = async () => {
+    await logoutUser();
     dispatch({ type: ActionType.DeleteUserData, payload: {} });
+    await loginUser();
   };
 
   return (
@@ -40,22 +43,23 @@ const UserPage = () => {
         Your quizzes
       </Typography>
 
-      {!!Object.keys(availableQuestions || {}).length ? (
+      {!!Object.keys(userAnswers || {}).length ? (
         <>
           <List className={classes.list}>
-            {Object.entries(availableQuizzes || {}).map(([quizId, quizObj]) => {
-              const hasQuestions = !!availableQuestions?.[quizId];
-              const finalScore = userAnswers?.[quizId]?.finalScore ?? null;
+            {Object.entries(userAnswers || {}).map(
+              ([quizId, { finalScore }]) => {
+                const quizObj = availableQuizzes?.[quizId];
 
-              return hasQuestions ? (
-                <UserQuizItem
-                  key={quizId}
-                  quizId={quizId}
-                  quizObj={quizObj}
-                  finalScore={finalScore}
-                />
-              ) : null;
-            })}
+                return !!quizObj ? (
+                  <UserQuizItem
+                    key={quizId}
+                    quizId={quizId}
+                    quizObj={quizObj}
+                    finalScore={finalScore}
+                  />
+                ) : null;
+              }
+            )}
           </List>
 
           <Box className={classes.buttonRow}>

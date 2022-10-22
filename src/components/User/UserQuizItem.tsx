@@ -38,7 +38,7 @@ const UserQuizItem = ({ quizId, quizObj, finalScore }: UserQuizItemProps) => {
       key={quizId}
       className={clsx(
         classes.secondaryAction,
-        finalScore === null ? classes.incompleted : null
+        finalScore === -1 && classes.incompleted
       )}
     >
       <ListItemText
@@ -57,9 +57,9 @@ const UserQuizItem = ({ quizId, quizObj, finalScore }: UserQuizItemProps) => {
         <Button
           variant="text"
           className={classes.scoreText}
-          startIcon={finalScore !== null ? <CheckIcon /> : null}
+          startIcon={finalScore >= 0 ? <CheckIcon /> : null}
         >
-          {finalScore !== null ? `${finalScore}%` : "Incompleted"}
+          {finalScore >= 0 ? `${finalScore}%` : "Incompleted"}
         </Button>
       </ListItemSecondaryAction>
     </ListItem>

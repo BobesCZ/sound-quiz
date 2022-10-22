@@ -4,6 +4,7 @@ import { useList } from "react-firebase-hooks/database";
 import AppContext from "../store/context";
 import { ActionType } from "../types/context";
 import { Questions, QuizId } from "../types/types";
+import { resolveFetchedData } from "../utils/utils";
 import { firebaseDb } from "./firebase";
 
 /**
@@ -23,13 +24,7 @@ const useFetchAvailableQuestions = (
 
   useEffect(() => {
     if (isEnabled && quizId && !loading && questionsSource?.length) {
-      const questions = questionsSource?.reduce(
-        (result: Questions, i) => ({
-          ...result,
-          [i.key as string]: i.val(),
-        }),
-        {}
-      );
+      const questions = resolveFetchedData<Questions>(questionsSource);
 
       dispatch({
         type: ActionType.SetQuestionsToQuiz,

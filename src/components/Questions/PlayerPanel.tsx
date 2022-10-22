@@ -79,7 +79,7 @@ interface PlayerPanelProps {
   isLoading: boolean;
   startSeconds: Video["startSeconds"];
   progress: number;
-  answerInfo: AnswerInfo | null;
+  answerInfo?: AnswerInfo;
 }
 
 const PlayerPanel = ({
